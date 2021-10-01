@@ -1,0 +1,50 @@
+@import "./variables.scss";
+
+@font-face {
+    font-family: NotoSanse;
+    src: url("./assets/fonts/NotoSansTC-Regular.otf") format("opentype");
+}
+
+html, body, * {
+    padding: 0;
+    margin: 0;
+    background-color: $background-color;
+    color: $text-color;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbarstyle {
+    background-color: $foreground-color;
+}
+.search {
+    background-color: $text-color;
+    color: $background-color;
+}
+
+.navbutton {
+    width: 100%;
+    height: 100%;
+    background-color: $foreground-color;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    user-select: none;
+    cursor: pointer;
+    margin-right: 4px;
+    margin-left: 4px;
+
+    &:hover {
+        background-color: $hover-color;
+    }
+}

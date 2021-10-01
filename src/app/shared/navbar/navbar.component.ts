@@ -1,0 +1,29 @@
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { NavService } from 'src/app/services/nav-service/nav.service';
+
+@Component({
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
+})
+export class NavbarComponent implements OnInit {
+
+  constructor(private navService: NavService) { }
+  shouldShowSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  suggestions: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
+  ngOnInit(): void {
+    this.navService.showSearch.subscribe(shouldShowSearch => {
+      console.log(shouldShowSearch);
+      this.shouldShowSearch.next(shouldShowSearch);
+    });
+  }
+
+  keyUp(event: any) {
+    const navbarText = (document.getElementById('navbar-search') as HTMLInputElement).value;
+    console.log(navbarText);
+    this.suggestions.next(['1', 'five', 'three', '6']);
+  }
+
+}
