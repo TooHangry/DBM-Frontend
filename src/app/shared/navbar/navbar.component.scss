@@ -2,54 +2,62 @@
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: center;
 
-    .buttons {
-        margin-left: 8px;
+    .navbar-container {
+        width: calc(100% - 16px);
+        height: calc(100% - 16px);
         display: flex;
         align-items: center;
-        width: calc(50% - 132px);
-        height: 48px;
-        .button {
-            width: 128px;
-            height: 100%;
-        }
-    }
 
-
-
-    .search-area {
-        width: 50%;
-        .search {
-            width: 256px;
-            height: 32px;
-            border-radius: 6px;
+        .buttons {
+            margin-left: 8px;
             display: flex;
             align-items: center;
-            input {
-                all: unset;
-                padding-left: 8px;
-                padding-right: 8px;
-                width: 100%;
-              }
+            width: calc(50% - 132px);
+            height: 48px;
+            .button {
+                width: 128px;
+                height: 100%;
+            }
+        }
+
+        .search-area {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            .search {
+                width: 256px;
+                height: 32px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                input {
+                    all: unset;
+                    padding-left: 8px;
+                    padding-right: 8px;
+                    width: 100%;
+                }
+            }
+        }
+
+        .dropdown {
+            width: 256px;
+            min-height: 80px;
+            max-height: 256px;
+            position: absolute;
+            top: 40px;
+
+            display: flex;
+            flex-direction: column;
+
+            .suggestion {
+                margin-left: 8px;
+                width: calc(100%-16px);
+                height: 16px;
+            }
         }
     }
-
-    .dropdown {
-        width: 256px;
-        min-height: 80px;
-        max-height: 256px;
-        position: absolute;
-        top: 40px;
-
-        display: flex;
-        flex-direction: column;
-        
-
-        .suggestion {
-            width: 100%;
-            height: 16px;
-        }
-    }
-   
 }

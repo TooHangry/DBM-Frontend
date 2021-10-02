@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavService } from 'src/app/services/nav-service/nav.service';
+import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
   selector: 'app-main',
@@ -8,14 +9,16 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private navService: NavService) { }
+  constructor(private navService: NavService, private userService: UserService) { }
 
   ngOnInit(): void {
 
-    setInterval(() => {
-      //toggle search
-      this.navService.toggleSearch();
-    }, 500)
+    this.userService.login('rec73@uakron.edu', 'password1');
+
+    // setInterval(() => {
+    //   //toggle search
+    //   this.navService.toggleSearch();
+    // }, 500)
 
   }
 

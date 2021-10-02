@@ -1,22 +1,24 @@
-<div class="container nav-container navbarstyle">
-    <div class="buttons navbarstyle">
-        <div class="button flex navbutton">
-            My Homes
+<div class="nav-container">
+    <div class="navbar-container navbar navbarstyle card">
+        <div class="buttons navbarstyle">
+            <div class="button flex navbutton">
+                My Homes
+            </div>
+            <div class="button flex navbutton">
+                My Lists
+            </div>
         </div>
-        <div class="button flex navbutton">
-            My Lists
-        </div>
-    </div>
-    
-    <!-- *ngIf="shouldShowSearch | async" -->
-    <div class="search-area navbarstyle"> 
-        <div class="search">
-            <input type="text" id="navbar-search" placeholder="Search" (keyup)="keyUp($event)">
 
-            <div class="dropdown search">
-                <div class="suggestion" *ngFor="let suggestion of (suggestions | async)">
-                    {{suggestion}}
-                </div>
+        <!-- *ngIf="shouldShowSearch | async" -->
+        <div class="search-area navbarstyle">
+            <div class="search">
+                <input type="text" id="navbar-search" placeholder="Search" (keyup)="keyUp($event)">
+
+                <!-- <div class="dropdown search">
+                    <div class="suggestion search" *ngFor="let suggestion of (suggestions | async)">
+                        {{suggestion}}
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
