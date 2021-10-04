@@ -2,12 +2,12 @@
     position: absolute;
     top: 0;
     left: 20%;
-    width: 80%;
+    width: calc(80% - 8px);
     height: 100%;
 
     .nav {
         height: 72px;
-        width: 80%;
+        width: calc(80% - 8px);
         position: fixed;
         z-index: 100;
     }

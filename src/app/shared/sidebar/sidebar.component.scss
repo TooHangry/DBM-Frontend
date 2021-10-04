@@ -1,6 +1,9 @@
+@import "../../../variables.scss";
+
 .sidebar-container {
-    width: 100%;
+    width: calc(100% - 8px);
     height: 100%;
+    margin-left: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,7 +36,7 @@
                     max-width: 48px;
                     min-height: 48px;
                     max-height: 48px;
-                    background-color: blue;
+                    background-color: $element-color;
                     border-radius: 6px;
                 }
                 .name {
@@ -44,7 +47,6 @@
         .content {
             height: 75%;
             width: 100%;
-            background-color: blue;
         }
     }
 }
