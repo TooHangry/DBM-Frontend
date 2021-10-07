@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Home } from 'src/app/models/home.models';
+import { User } from 'src/app/models/user.models';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { HomeService } from 'src/app/services/home-service/home.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 import { UserService } from 'src/app/services/user-service/user.service';
 
@@ -9,17 +14,28 @@ import { UserService } from 'src/app/services/user-service/user.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private navService: NavService, private userService: UserService) { }
+  user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  selectedHome: BehaviorSubject<Home | null> = new BehaviorSubject<Home | null>(null);
+  homes: BehaviorSubject<Home[]> = new BehaviorSubject<Home[]>([]);
+  
+  constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe((user: User | null) => {
+      if (user) {
+        this.user.next(user);
+        if (user.homes) {
+          this.homes.next(user.homes);
+        }
+      }
+    });
+  }
 
-    this.userService.login('rec73@uakron.edu', 'password1');
-
-    // setInterval(() => {
-    //   //toggle search
-    //   this.navService.toggleSearch();
-    // }, 500)
-
+  homeSelected(homeEvent: Home): void {
+    this.homeService.getHomeInfo(homeEvent).subscribe((home) => {
+      console.table(home);
+      this.selectedHome.next(home);
+    })
   }
 
 }

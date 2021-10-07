@@ -38,6 +38,13 @@ html, body {
     background-color: $foreground-color;
 }
 
+.hover {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &:hover {
+        background-color: $hover-color;
+    }
+}
 .search {
     background-color: $text-color;
     color: $background-color;
@@ -59,8 +66,4 @@ html, body {
     cursor: pointer;
     margin-right: 4px;
     margin-left: 4px;
-
-    &:hover {
-        background-color: $hover-color;
-    }
 }

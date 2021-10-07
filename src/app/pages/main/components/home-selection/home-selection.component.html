@@ -1,0 +1,20 @@
+<div class="container ">
+    <div class="home-selection">
+        <div *ngFor="let home of homes" class="home navbarstyle hover card" (click)="selectHome(home)">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M1,11,12,2l11,9" fill="none" />
+                    <path d="M20,8.5V22H4V8.5" fill="none" />
+                    <polyline points="9.5 22 9.5 14 14.5 14 14.5 22" fill="none" />
+                </svg>
+            </div>
+            <div class="title flex">
+                {{home.nickname}}
+                <div *ngIf="home.isAdmin" class="stats">
+                    Admin
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

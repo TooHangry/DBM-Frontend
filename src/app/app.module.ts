@@ -8,6 +8,9 @@ import { MainComponent } from './pages/main/main.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { UserComponent } from './pages/user/user.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeSelectionComponent } from './pages/main/components/home-selection/home-selection.component';
+import { HomeItemsComponent } from './pages/main/components/home-items/home-items.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { UserComponent } from './pages/user/user.component';
     MainComponent,
     NavbarComponent,
     SidebarComponent,
-    UserComponent
+    UserComponent,
+    LoginComponent,
+    HomeSelectionComponent,
+    HomeItemsComponent
   ],
   imports: [
     BrowserModule,
