@@ -1,10 +1,49 @@
-<div class="home-container container flex">
+<div *ngIf="home" class="home-container container flex">
 
     <div class="home navbarstyle card">
-        <div class="title">
+        <div class="info">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M1,11,12,2l11,9" fill="none" />
+                    <path d="M20,8.5V22H4V8.5" fill="none" />
+                    <polyline points="9.5 22 9.5 14 14.5 14 14.5 22" fill="none" />
+                </svg>
+            </div>
+            <div class="title flex">
+                {{home.nickname}}
+                <div *ngIf="home.isAdmin" class="stats">
+                    Admin
+                </div>
+            </div>
         </div>
-        <div class="category">
-            <div class="stats"></div>
+       
+        <div class="home-stats">
+            <div class="stat">
+                <div class="title">
+                    Users
+                </div>
+                <div class="data">
+                    -
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="title">
+                    Items
+                </div>
+                <div class="data">
+                    {{home.items.length}}
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="title">
+                    Lists
+                </div>
+                <div class="data">
+                    -
+                </div>
+            </div>
         </div>
     </div>
 
@@ -27,5 +66,10 @@
         <div class="item item-card"></div>
         <div class="item item-card"></div>
         <div class="item item-card"></div>
+        <div class="item item-card"></div>
+        <div class="item item-card"></div>
     </div>
+
 </div>
+
+<div class="fab"></div>

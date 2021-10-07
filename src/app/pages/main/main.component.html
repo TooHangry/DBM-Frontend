@@ -1,5 +1,5 @@
 <div class="home-container container">
     <app-home-selection *ngIf="(homes | async) && !(selectedHome | async)" [homes]="homes | async" (homeSelected)="homeSelected($event)"></app-home-selection>
-    <app-home-items *ngIf="(selectedHome | async)"></app-home-items>
+    <app-home-items *ngIf="(selectedHome | async)" [home]="selectedHome | async"></app-home-items>
    
 </div>

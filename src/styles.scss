@@ -54,6 +54,12 @@ html, body {
     box-shadow: 2px 2px 2px #000000;
     border-radius: 6px;
     background-color: $hover-color;
+    transition: all 0.2s ease;
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(125%);
+    }
 }
 
 .navbutton {

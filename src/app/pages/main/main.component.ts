@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Home } from 'src/app/models/home.models';
+import { Home, HomeInfo } from 'src/app/models/home.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
@@ -15,7 +15,7 @@ import { UserService } from 'src/app/services/user-service/user.service';
 export class MainComponent implements OnInit {
 
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
-  selectedHome: BehaviorSubject<Home | null> = new BehaviorSubject<Home | null>(null);
+  selectedHome: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
   homes: BehaviorSubject<Home[]> = new BehaviorSubject<Home[]>([]);
   
   constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService) { }
@@ -34,6 +34,8 @@ export class MainComponent implements OnInit {
   homeSelected(homeEvent: Home): void {
     this.homeService.getHomeInfo(homeEvent).subscribe((home) => {
       console.table(home);
+      const oldHome = this.homes.value.find(h => h.id == homeEvent.id);
+      home.isAdmin = oldHome ? oldHome.isAdmin : false;
       this.selectedHome.next(home);
     })
   }

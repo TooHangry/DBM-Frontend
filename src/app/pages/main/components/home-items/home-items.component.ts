@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HomeInfo } from 'src/app/models/home.models';
 
 @Component({
   selector: 'app-home-items',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeItemsComponent implements OnInit {
 
+  @Input() home: HomeInfo | null = null;
   constructor() { }
 
   ngOnInit(): void {
