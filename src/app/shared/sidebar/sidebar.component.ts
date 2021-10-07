@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { HomeInfo } from 'src/app/models/home.models';
+import { NavService } from 'src/app/services/nav-service/nav.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,13 +11,36 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  categories: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  home: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
+  constructor(private router: Router, private navService: NavService) { }
 
   ngOnInit(): void {
+    this.navService.activeHome.subscribe(home => {
+        this.home.next(home);
+        this.navService.activeCategories.subscribe((categories: string[]) => {
+          this.categories.next(categories);
+        });
+    });   
   }
 
   navigateToUser(): void {
     this.router.navigate(['/user']);
   }
 
+  chooseNewHome(): void {
+    this.navService.activeHome.next(null);
+  }
+
+  getNickname(): string {
+    return this.home.value ? this.home.value.nickname : '';
+  }
+
+  select(category: string): void {
+    this.navService.selectedCategory.next(category);
+  }
+
+  isSelected(category: string): boolean {
+    return category == this.navService.selectedCategory.value;
+  }
 }

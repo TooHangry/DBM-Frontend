@@ -1,0 +1,73 @@
+<div class="container">
+
+    <div class="edge" (click)="cancel()"></div>
+
+    <div class="modal-container">
+        <div class="content">
+
+            <div class="header">
+                Add an Item
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    Item
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search">
+                        <input type="text" id="item-name" placeholder="Enter item name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    Category
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search">
+                        <select name="Category" id="item-category">
+                            <option *ngFor="let category of categories" class="search" [value]="category">{{category}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    Quantity
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search">
+                        <input type="number" id="item-quantity" placeholder="Enter item quantity">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    Alert Threshold
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search">
+                        <input type="number" id="item-threshold" placeholder="Enter alert threshold">
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="button flex navbutton negative" (click)="cancel()">
+                    Cancel
+                </div>
+
+                <div class="button flex navbutton positive" (click)="save()">
+                    Save Item
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="edge" (click)="cancel()"></div>
+</div>

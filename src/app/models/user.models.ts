@@ -8,4 +8,5 @@ export interface User {
     dateJoined: Date;
     token: string;
     homes?: Home[];
+    categories: string[];
 }

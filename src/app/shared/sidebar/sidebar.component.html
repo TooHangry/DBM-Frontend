@@ -11,7 +11,14 @@
             </div>
         </div>
         <div class="content">
-
+            <div *ngIf="home | async" class="data">
+                <div class="home" (click)="chooseNewHome()">
+                    {{getNickname()}}
+                </div>
+                <div *ngFor="let category of (categories | async)" class="category" [ngClass]="{'k': isSelected(category)}" (click)="select(category)">
+                    {{category}}
+                </div>
+            </div>
         </div>
     </div>
 </div>

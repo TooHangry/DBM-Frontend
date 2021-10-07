@@ -11,6 +11,7 @@ import { UserComponent } from './pages/user/user.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeSelectionComponent } from './pages/main/components/home-selection/home-selection.component';
 import { HomeItemsComponent } from './pages/main/components/home-items/home-items.component';
+import { ItemModalComponent } from './pages/main/components/item-modal/item-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HomeItemsComponent } from './pages/main/components/home-items/home-item
     UserComponent,
     LoginComponent,
     HomeSelectionComponent,
-    HomeItemsComponent
+    HomeItemsComponent,
+    ItemModalComponent
   ],
   imports: [
     BrowserModule,

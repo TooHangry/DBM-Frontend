@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="home-stats">
             <div class="stat">
                 <div class="title">
@@ -49,27 +49,58 @@
 
 
     <div class="list navbarstyle card">
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
-        <div class="item item-card"></div>
+
+        <div class="item">
+            <div class="attribute flex">
+                Item Name
+            </div>
+
+            <div class="attribute flex">
+                Quantity
+            </div>
+
+            <div class="attribute flex">
+                Alert Threshold
+            </div>
+
+            <div class="attribute flex">
+                Quick Actions
+            </div>
+        </div>
+
+        <div *ngFor="let item of (items | async)" class="item item-card">
+            <div class="attribute flex">
+                {{item.item}}
+            </div>
+
+            <div class="attribute flex">
+                {{item.quantity}}
+            </div>
+
+            <div class="attribute flex">
+                {{item.alertThreshold}}
+            </div>
+
+            <div class="attribute flex">
+                <div class="action flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <polyline points="3 7 5 7 21 7" fill="none" />
+                        <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
+                        <line x1="13.5" y1="16.5" x2="13.5" y2="11.5" fill="none" />
+                        <line x1="10.5" y1="16.5" x2="10.5" y2="11.5" fill="none" />
+                    </svg>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
 
-<div class="fab"></div>
+<div class="fab flex" (click)="addItem.emit()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <polygon points="7.5 16.5 8 13.5 18.5 3 19.5 3 21 4.5 21 5.5 10.5 16 7.5 16.5" fill="none"
+            stroke-miterlimit="10" />
+        <line x1="16.5" y1="4.5" x2="19.5" y2="7.5" fill="none" stroke-miterlimit="10" />
+        <polyline points="16.5 15.5 16.5 21.5 2.5 21.5 2.5 7.5 8.5 7.5" fill="none" />
+    </svg>
+</div>

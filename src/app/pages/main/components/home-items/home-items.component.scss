@@ -88,6 +88,23 @@
             margin: 8px;
             height: 64px;
             border-radius: 6px;
+
+            display: flex;
+            justify-content: space-evenly;
+
+            .attribute {
+                width: 25%;
+                font-size: 16px;
+
+                .action {
+                    height: 100%;
+                    svg {
+                        height: 50%;
+                        stroke: $negative-action;
+                    }
+                }
+            }
+
         }
     }
 }
@@ -101,11 +118,20 @@
     background-color: $element-color;
     z-index: 1000;
     border-radius: 50%;
-    box-shadow: 1px 1px 1px #000000;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
+
+    svg {
+        position: absolute;
+        top: 20%;
+        left: 30%;
+        width: 50%;
+        stroke: $text-color;
+    }
+
     &:hover {
         transform: scale(1.1);
         background-color: #606fdd;
     }
 }
+

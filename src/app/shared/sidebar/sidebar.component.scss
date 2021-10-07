@@ -47,6 +47,53 @@
         .content {
             height: 75%;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .data {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                .home {
+                    width: calc(100% - 32px);
+                    height: 64px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: $hover-color;
+                    border-radius: 6px;
+                    margin: 16px 0;
+                    cursor: pointer;
+                    &:hover {
+                        filter: brightness(125%);
+                    }
+                }
+
+                .category {
+                    width: calc(100% - 32px);
+                    height: 48px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 6px;
+                    margin: 8px 0;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        filter: brightness(125%);
+                        transform: scale(1.01);
+                    }
+                }
+            }
         }
     }
+}
+
+.k {
+    background-color: $element-color;
 }

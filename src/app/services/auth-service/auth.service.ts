@@ -75,6 +75,10 @@ export class AuthService {
       );
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 
   getToken(): string {
     const token : string | null = localStorage.getItem('token');
