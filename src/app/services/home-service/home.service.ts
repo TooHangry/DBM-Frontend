@@ -25,6 +25,7 @@ export class HomeService {
     formData.append('threshold', item.alertThreshold.toString());
     formData.append('category', item.category);
     formData.append('quantity', item.quantity.toString());
+    
     this.client.post(`${this.apiURL}/items/${home.id}`, formData).pipe(map((res: any) => res)).subscribe((home: HomeInfo) => {
       this.navService.activeHome.next(home);
       this.navService.activeCategories.next(home.categories);

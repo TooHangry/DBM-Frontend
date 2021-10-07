@@ -14,7 +14,6 @@ export class UserService {
     formData.append('username', email);
     formData.append('password', password);
 
-
     this.client.post(`${this.apiBase}/users/login`, formData).subscribe(x => console.log(x));
   }
 }
