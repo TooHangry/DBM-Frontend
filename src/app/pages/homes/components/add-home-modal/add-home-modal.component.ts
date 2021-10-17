@@ -34,8 +34,17 @@ export class AddHomeModalComponent implements OnInit {
   }
 
   checkEmail(event: any): void {
+    const email = (document.getElementById('home-email') as HTMLInputElement).value;
+
     if (event.keyCode === 13 || event.key === 'Enter') {
       this.getEmail();
+    }
+    
+    if (!this.emailRegx.test(email)) {
+      (document.getElementById('email-container') as HTMLInputElement).style.border = '2px solid red';
+    }
+    else {
+      (document.getElementById('email-container') as HTMLInputElement).style.border = '0';
     }
   }
 
