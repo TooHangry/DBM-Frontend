@@ -30,6 +30,7 @@ export class SidebarComponent implements OnInit {
 
   chooseNewHome(): void {
     this.navService.activeHome.next(null);
+    this.router.navigate(['/homes']);
   }
 
   getNickname(): string {

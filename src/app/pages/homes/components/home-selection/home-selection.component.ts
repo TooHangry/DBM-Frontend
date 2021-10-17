@@ -10,6 +10,7 @@ export class HomeSelectionComponent implements OnInit {
 
   @Input() homes: Home[] | null = [];
   @Output() homeSelected: EventEmitter<Home> = new EventEmitter();
+  @Output() addHome: EventEmitter<null> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {

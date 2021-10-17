@@ -88,7 +88,7 @@ export class AuthService {
   private logUserIn(user: User): void {
     this.setToken(user.token);
     this.user.next(user);
-    this.router.navigate(['/home']);
+    this.router.navigate(['/homes']);
   }
 
   private setToken(token: string): void {

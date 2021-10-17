@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
@@ -9,7 +10,7 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private navService: NavService) { }
+  constructor(private navService: NavService, private router: Router) { }
   shouldShowSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   suggestions: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
@@ -26,4 +27,7 @@ export class NavbarComponent implements OnInit {
     this.suggestions.next(['1', 'five', 'three', '6']);
   }
 
+  route(url: string): void {
+    this.router.navigate([url]);
+  }
 }

@@ -9,9 +9,12 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { UserComponent } from './pages/user/user.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HomeSelectionComponent } from './pages/main/components/home-selection/home-selection.component';
 import { HomeItemsComponent } from './pages/main/components/home-items/home-items.component';
 import { ItemModalComponent } from './pages/main/components/item-modal/item-modal.component';
+import { ListsComponent } from './pages/lists/lists.component';
+import { HomesComponent } from './pages/homes/homes.component';
+import { HomeSelectionComponent } from './pages/homes/components/home-selection/home-selection.component';
+import { AddHomeModalComponent } from './pages/homes/components/add-home-modal/add-home-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { ItemModalComponent } from './pages/main/components/item-modal/item-moda
     LoginComponent,
     HomeSelectionComponent,
     HomeItemsComponent,
-    ItemModalComponent
+    ItemModalComponent,
+    ListsComponent,
+    HomesComponent,
+    AddHomeModalComponent
   ],
   imports: [
     BrowserModule,

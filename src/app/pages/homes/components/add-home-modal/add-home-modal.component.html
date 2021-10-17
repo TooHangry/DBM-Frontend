@@ -1,0 +1,73 @@
+<div class="container">
+
+    <div class="edge" (click)="cancel()"></div>
+
+    <div class="modal-container">
+        <div class="content">
+
+            <div class="header">
+                Create a New Home
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    Home Name
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search" (keyup)="checkSave()">
+                        <input type="text" id="home-name" placeholder="Enter home name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    Users
+                </div>
+                <div class="search-area navbarstyle" (keyup)="checkEmail($event)">
+                    <div class="search" id="email-container">
+                        <input type="email" id="home-email" placeholder="Enter user email and press enter">
+                    </div>
+
+                    <div class="search-button flex" (click)="getEmail()">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="6.5" fill="none" />
+                            <path d="M11,7.5A3.5,3.5,0,0,1,14.5,11" fill="none"/>
+                            <line x1="20.4" y1="20.5" x2="15.5" y2="15.7" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emails">
+                <div class="email" *ngFor="let email of (emails | async)">
+                    <div class="user">
+                        {{email}}
+                    </div>
+                    <div class="action flex" (click)="removeEmail(email)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polyline points="3 7 5 7 21 7" fill="none" />
+                            <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
+                            <line x1="13.5" y1="16.5" x2="13.5" y2="11.5" fill="none" />
+                            <line x1="10.5" y1="16.5" x2="10.5" y2="11.5" fill="none" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+          
+
+            <div class="footer">
+                <div class="button flex navbutton negative" (click)="cancel()">
+                    Cancel
+                </div>
+
+                <div class="button flex navbutton positive" *ngIf="canSave | async" (click)="save()">
+                    Create Home!
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="edge" (click)="cancel()"></div>
+</div>

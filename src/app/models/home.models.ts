@@ -10,3 +10,8 @@ export interface HomeInfo extends Home{
     categories: string[];
     items: Item[];
 }
+
+export interface HomeToAdd {
+    nickname: string;
+    invites: string[];
+}
