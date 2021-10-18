@@ -18,11 +18,16 @@ export class NavbarComponent implements OnInit {
     this.navService.showSearch.subscribe(shouldShowSearch => {
       this.shouldShowSearch.next(shouldShowSearch);
     });
+
+    this.navService.emptySearch.subscribe(() => {
+      (document.getElementById('navbar-search') as HTMLInputElement).value = '';
+    })
   }
 
   keyUp(event: any) {
     const navbarText = (document.getElementById('navbar-search') as HTMLInputElement).value;
     this.suggestions.next(['1', 'five', 'three', '6']);
+    this.navService.activeSearch.next(navbarText.toLowerCase());
   }
 
   route(url: string): void {

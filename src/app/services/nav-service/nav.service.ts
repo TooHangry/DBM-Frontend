@@ -12,7 +12,9 @@ export class NavService {
   activeCategories: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   selectedCategory: BehaviorSubject<string> = new BehaviorSubject<string>('');
   activeHome: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
-
+  activeSearch: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  emptySearch: BehaviorSubject<null> = new BehaviorSubject<null>(null);
+  
   toggleSearch() {
     const current = this.showSearch.value;
     this.showSearch.next(!current);

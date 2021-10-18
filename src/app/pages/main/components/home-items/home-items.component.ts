@@ -15,15 +15,39 @@ export class HomeItemsComponent implements OnInit {
   @Output() addItem: EventEmitter<null> = new EventEmitter();
   items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
   constructor(private navService: NavService) { }
+  category = '';
+  isFiltering = false;
 
   ngOnInit(): void {
+    this.navService.emptySearch.subscribe(() => this.isFiltering = false);
+    
+    this.navService.activeSearch.subscribe(keyword => {
+      if (keyword.length > 0 && this.home) {
+        this.items.next(this.home.items.filter(item => item.item.toLowerCase().includes(keyword)));
+        this.isFiltering = true;
+        this.navService.selectedCategory.next('');
+      } else {
+        if (this.home) {
+          this.items.next(this.home.items);
+          this.isFiltering = false;
+          this.navService.emptySearch.next(null);
+        }
+      }
+    });
+
     this.navService.activeHome.subscribe(home => {
       this.home = home;
     })
-    
+
     this.navService.selectedCategory.subscribe(category => {
-      if (this.home) {
-        this.items.next(this.home.items.filter(item => item.category === category));
+      if (this.home && !this.isFiltering) {
+        this.category = category;
+        if (category.length > 0) {
+          this.items.next(this.home.items.filter(item => item.category === category));
+        }
+        else {
+          this.items.next(this.home.items);
+        }
       }
     })
   }

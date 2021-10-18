@@ -30,6 +30,7 @@ export class SidebarComponent implements OnInit {
 
   chooseNewHome(): void {
     this.navService.activeHome.next(null);
+    this.navService.emptySearch.next(null);
     this.router.navigate(['/homes']);
   }
 
@@ -38,6 +39,7 @@ export class SidebarComponent implements OnInit {
   }
 
   select(category: string): void {
+    this.navService.emptySearch.next(null);
     this.navService.selectedCategory.next(category);
   }
 
