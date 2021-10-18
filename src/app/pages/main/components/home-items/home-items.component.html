@@ -56,7 +56,7 @@
             </div>
 
             <div class="attribute flex">
-                Quantity
+                Available Quantity
             </div>
 
             <div class="attribute flex">
@@ -70,7 +70,7 @@
 
         <div *ngFor="let item of (items | async)" class="item item-card">
             <div class="attribute flex">
-                {{item.item}}
+                {{getPascalCase(item.item)}}
             </div>
 
             <div class="attribute flex">
