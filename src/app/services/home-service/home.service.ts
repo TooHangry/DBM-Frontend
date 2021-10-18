@@ -20,13 +20,12 @@ export class HomeService {
   }
 
   addItem(home: Home, item: Item): void {
-    console.log(item)
     const formData = new FormData();
     formData.append('name', item.item);
     formData.append('threshold', item.alertThreshold.toString());
     formData.append('category', item.category);
     formData.append('quantity', item.quantity.toString());
-    
+
     this.client.post(`${this.apiURL}/items/${home.id}`, formData).pipe(map((res: any) => res)).subscribe((home: HomeInfo) => {
       this.navService.activeHome.next(home);
       this.navService.activeCategories.next(home.categories);
@@ -37,18 +36,17 @@ export class HomeService {
 
   createHome(homeToAdd: HomeToAdd): void {
 
-    this.authService.getUser().subscribe(user => {
-      if (user) {
+    const userID = this.authService.getUserId();
+    const email = this.authService.getUserEmail();
+    const formData = new FormData();
+    formData.append('name', homeToAdd.nickname);
+    formData.append('admin', userID.toString());
+    formData.append('invites', JSON.stringify(homeToAdd.invites.filter((invite: string) => invite !== email)));
 
-        const formData = new FormData();
-        formData.append('name', homeToAdd.nickname);
-        formData.append('admin', user.id.toString());
-        formData.append('invites', JSON.stringify(homeToAdd.invites.filter((invite: string) => invite !== user.email)));
-
-        this.client.post(`${this.apiURL}/home/add`, formData).subscribe(x => console.log(x))
+    this.client.post(`${this.apiURL}/home/add`, formData).pipe(map((res: any) => res)).subscribe((home: Home) => {
+      if (this.authService.user.value) {
+        this.authService.addHome(home);
       }
     })
-    
-
   }
 }

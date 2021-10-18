@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Home, HomeInfo, HomeToAdd } from 'src/app/models/home.models';
@@ -10,7 +10,8 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
 @Component({
   selector: 'app-homes',
   templateUrl: './homes.component.html',
-  styleUrls: ['./homes.component.scss']
+  styleUrls: ['./homes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomesComponent implements OnInit {
 

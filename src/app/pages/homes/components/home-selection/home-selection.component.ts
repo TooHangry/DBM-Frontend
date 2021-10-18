@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Home } from 'src/app/models/home.models';
 
 @Component({
   selector: 'app-home-selection',
   templateUrl: './home-selection.component.html',
-  styleUrls: ['./home-selection.component.scss']
+  styleUrls: ['./home-selection.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeSelectionComponent implements OnInit {
 

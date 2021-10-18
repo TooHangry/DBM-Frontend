@@ -5,6 +5,7 @@ import { EnvService } from '../env-service/env.service';
 import { first, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Home } from 'src/app/models/home.models';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,27 @@ export class AuthService {
   getToken(): string {
     const token : string | null = localStorage.getItem('token');
     return token ? token : '';
+  }
+
+  getUserId(): string {
+    return this.user.value ? JSON.stringify(this.user.value.id) : '';
+  }
+
+  getUserEmail(): string {
+    return this.user.value ? this.user.value.email : '';
+  }
+
+  addHome(home: Home): void {
+    if (this.user.value) {
+      const homes: Home[] = this.user.value.homes ? this.user.value.homes : []
+      homes.concat(home);
+
+      this.user.next(({
+        ...this.user.value,
+        homes
+      }));
+      window.location.reload(); // Find a way to update home selection
+    }
   }
 
   private logUserIn(user: User): void {

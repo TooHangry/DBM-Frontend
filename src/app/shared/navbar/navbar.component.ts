@@ -16,14 +16,12 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.navService.showSearch.subscribe(shouldShowSearch => {
-      console.log(shouldShowSearch);
       this.shouldShowSearch.next(shouldShowSearch);
     });
   }
 
   keyUp(event: any) {
     const navbarText = (document.getElementById('navbar-search') as HTMLInputElement).value;
-    console.log(navbarText);
     this.suggestions.next(['1', 'five', 'three', '6']);
   }
 

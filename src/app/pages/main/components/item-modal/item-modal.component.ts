@@ -38,5 +38,4 @@ export class ItemModalComponent implements OnInit {
   cancel(): void {
     this.cancelModal.emit();
   }
-
 }
