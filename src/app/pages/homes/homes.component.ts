@@ -68,7 +68,7 @@ export class HomesComponent implements OnInit {
   }
 
   createHome(event: HomeToAdd): void {
-    console.log(event);
+    this.homeService.createHome(event);
     this.closeAddModal();
   }
 }
