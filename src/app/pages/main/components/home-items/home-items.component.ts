@@ -52,4 +52,8 @@ export class HomeItemsComponent implements OnInit {
     })
   }
 
+  getPascalCase(itemName: string): string {
+    return itemName.toUpperCase();
+  }
+
 }

@@ -20,7 +20,7 @@ export class ItemModalComponent implements OnInit {
   }
 
   save(): void {
-    const itemName = (document.getElementById('item-name') as HTMLInputElement).value;
+    const itemName = (document.getElementById('item-name') as HTMLInputElement).value.toLowerCase();
     const quantity = (document.getElementById('item-quantity') as HTMLInputElement).value;
     const threshold = (document.getElementById('item-threshold') as HTMLInputElement).value;
     const category = (document.getElementById('item-category') as HTMLSelectElement).value;
