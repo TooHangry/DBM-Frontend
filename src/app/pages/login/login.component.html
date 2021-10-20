@@ -1,13 +1,109 @@
 <div class="container">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
+    <div class="login-container flex navbarstyle card">
 
-    <button (click)="login()">Submit</button>
+        <div class="form" *ngIf="isLogin">
+            <div class="content">
 
-    <input type="text" id="first-name" placeholder="First Name">
-    <input type="text" id="last-name" placeholder="Last Name">
-    <input type="email" id="signup-email" placeholder="Email">
-    <input type="password" id="signup-password" placeholder="Password">
+                <div class="header">
+                    Login
+                </div>
 
-    <button (click)="signup()">signup</button>
+                <div class="text">
+                    <div class="label">
+                        Email
+                    </div>
+                    <div class="search-area navbarstyle">
+                        <div class="search">
+                            <input type="email" id="login-email" placeholder="Email">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text">
+                    <div class="label">
+                        Password
+                    </div>
+                    <div class="search-area navbarstyle">
+                        <div class="search">
+                            <input type="password" id="login-password" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    <div class="button flex positive" (click)="login()">
+                        Login
+                    </div>
+                    <div class="button-small flex" (click)="toggleLogin()">
+                        Signup Instead
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form" *ngIf="!isLogin">
+            <div class="content">
+
+                <div class="header">
+                    Sign up
+                </div>
+
+                <div class="text">
+                    <div class="label">
+                        Name
+                    </div>
+                    <div class="search-area navbarstyle">
+                        <div class="search">
+                            <input type="fname" id="signup-fname" placeholder="First Name">
+                        </div>
+
+                        <div class="search">
+                            <input type="lname" id="signup-lname" placeholder="Last Name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text">
+                    <div class="label">
+                        Email
+                    </div>
+                    <div class="search-area navbarstyle">
+                        <div class="search">
+                            <input type="email" id="signup-email" placeholder="Email">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text">
+                    <div class="label">
+                        Password
+                    </div>
+                    <div class="search-area navbarstyle">
+                        <div class="search">
+                            <input type="password" id="signup-password1" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text">
+                    <div class="label">
+                        Confirm Password
+                    </div>
+                    <div class="search-area navbarstyle">
+                        <div class="search">
+                            <input type="password" id="signup-password2" placeholder="Password (again)">
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button flex positive" (click)="signup()">
+                        Signup
+                    </div>
+                    <div class="button-small flex" (click)="toggleLogin()">
+                        Login Instead
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
