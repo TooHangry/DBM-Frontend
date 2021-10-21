@@ -35,10 +35,18 @@ export class HomeService {
     formData.append('quantity', item.quantity.toString());
 
     // POST request to backend to create a new item
-    this.client.post(`${this.getBaseURL()}/items/${home.id}`, formData).pipe(map((res: any) => res)).subscribe((home: HomeInfo) => {
+    this.client.post(`${this.getBaseURL()}/items/${home.id}`, formData).pipe(map((res: any) => res)).subscribe((returnedHome: HomeInfo) => {
+      const newHome: HomeInfo = {
+        nickname: returnedHome.nickname,
+        id: returnedHome.id,
+        isAdmin: home.isAdmin,
+        categories: returnedHome.categories,
+        items: returnedHome.items
+      };
+      
       // Sets the active category to the new item category, adds the item to the frontend-instance of the home
-      this.navService.activeHome.next(home);
-      this.navService.activeCategories.next(home.categories);
+      this.navService.activeHome.next(newHome);
+      this.navService.activeCategories.next(newHome.categories);
       this.navService.selectedCategory.next(item.category);
 
       this.snackbarService.setState(true, `Added ${pascalCase(item.item)} to ${home.nickname}`, 2500)

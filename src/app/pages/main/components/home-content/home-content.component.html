@@ -1,5 +1,4 @@
 <div *ngIf="home" class="home-container container flex">
-
     <div class="home navbarstyle card">
         <div class="info">
             <div class="icon">
@@ -18,7 +17,7 @@
         </div>
 
         <div class="home-stats">
-            <div class="stat">
+            <div class="stat hover" (click)="setState('users')">
                 <div class="title">
                     Users
                 </div>
@@ -27,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="stat">
+            <div class="stat hover" (click)="setState('items')">
                 <div class="title">
                     Items
                 </div>
@@ -36,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="stat">
+            <div class="stat hover" (click)="setState('lists')">
                 <div class="title">
                     Lists
                 </div>
@@ -47,51 +46,16 @@
         </div>
     </div>
 
+    <div class="list navbarstyle card" *ngIf="(currentState | async) === 'items'">
+        <app-home-items [home]="home" (addItem)="addItem.emit($event)" (deleteItem)="deleteItem.emit($event)"></app-home-items>
+    </div>
 
-    <div class="list navbarstyle card">
+    <div class="list navbarstyle card" *ngIf="(currentState | async) === 'users'">
+        <app-home-users></app-home-users>
+    </div>
 
-        <div class="item">
-            <div class="attribute flex">
-                Item Name
-            </div>
-
-            <div class="attribute flex">
-                Available Quantity
-            </div>
-
-            <div class="attribute flex">
-                Alert Threshold
-            </div>
-
-            <div class="attribute flex">
-                Quick Actions
-            </div>
-        </div>
-
-        <div *ngFor="let item of (items | async)" class="item item-card">
-            <div class="attribute flex">
-                {{getPascalCase(item.item)}}
-            </div>
-
-            <div class="attribute flex">
-                {{item.quantity}}
-            </div>
-
-            <div class="attribute flex">
-                {{item.alertThreshold}}
-            </div>
-
-            <div class="attribute flex">
-                <div class="action flex" (click)="deleteItem.emit(item)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <polyline points="3 7 5 7 21 7" fill="none" />
-                        <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
-                        <line x1="13.5" y1="16.5" x2="13.5" y2="11.5" fill="none" />
-                        <line x1="10.5" y1="16.5" x2="10.5" y2="11.5" fill="none" />
-                    </svg>
-                </div>
-            </div>
-        </div>
+    <div class="list navbarstyle card" *ngIf="(currentState | async) === 'lists'">
+        <app-home-lists></app-home-lists>
     </div>
 
 </div>

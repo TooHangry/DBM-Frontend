@@ -38,11 +38,20 @@ export class ItemModalComponent implements OnInit {
     };
 
     this.addItem.emit(item);
+    this.clearForm();    
   }
 
   // Precondition: Activated when 'cancel' or area outside of modal is clicked
   // Postcondition: Emits the 'cancelModal' event to parent component
   cancel(): void {
     this.cancelModal.emit();
+  }
+
+
+  private clearForm(): void {
+    (document.getElementById('item-name') as HTMLInputElement).value = "";
+    (document.getElementById('item-quantity') as HTMLInputElement).value = "";
+    (document.getElementById('item-threshold') as HTMLInputElement).value = "";
+    (document.getElementById('item-category') as HTMLSelectElement).value = this.categories.length > 0 ? this.categories[0] : '';
   }
 }

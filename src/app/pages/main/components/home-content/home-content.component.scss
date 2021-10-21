@@ -15,6 +15,7 @@
         justify-content: flex-start;
         
         .info {
+            user-select: none;
             width: 25%;
             height: 100%;
             display: flex;
@@ -49,16 +50,21 @@
             width: 75%;
             height: 100%;
             display: flex;
+            align-items: center;
             .stat {
-                width: calc(33% - 8px);
-                height: 100%;
+                width: calc(33% - 24px);
+                height: calc(100% - 32px);
+                border-radius: 6px;
+                margin: 0 8px 0 8px;
                 .title {
+                    margin-left: 16px;
                     height: 33%;
                     display: flex;
                     align-items: center;
                     font-size: 36px;
                 }
                 .data {
+                    margin-left: 16px;
                     height: calc(66% - 8px);
                     width: 100%;
                     display: flex;
@@ -81,30 +87,8 @@
         border-radius: 6px;
         overflow-x: hidden;
         overflow-y: auto;
+        user-select: none;
 
-        .item {
-            width: calc(100% - 16px);
-            margin: 8px;
-            height: 64px;
-            border-radius: 6px;
-
-            display: flex;
-            justify-content: space-evenly;
-
-            .attribute {
-                width: 25%;
-                font-size: 16px;
-
-                .action {
-                    height: 100%;
-                    svg {
-                        height: 50%;
-                        stroke: $negative-action;
-                    }
-                }
-            }
-
-        }
     }
 }
 

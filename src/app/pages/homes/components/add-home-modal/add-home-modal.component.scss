@@ -13,11 +13,12 @@
     }
 
     .modal-container {
+        min-width: 500px;
         width: 33%;
+        max-height: 650px;
         height: 100%;
         background-color: $foreground-color;
         border-radius: 6px;
-        margin: 16px 16px 0 16px;
 
         display: flex;
         flex-direction: column;
@@ -94,6 +95,7 @@
         }
 
         .emails {
+            margin-top: 32px;
             height: 50%;
             width: 100%;
             overflow-y: auto;

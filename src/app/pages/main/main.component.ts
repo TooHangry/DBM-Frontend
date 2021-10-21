@@ -84,7 +84,6 @@ export class MainComponent implements OnInit {
   // Precondition: Nothing
   // Postcondition: Removes the item from the home
   removeItem(): void {
-    console.log(this.selectedItem);
     if (this.selectedItem && this.selectedHome.value) {
       this.homeService.removeItem(this.selectedHome.value, this.selectedItem).subscribe(
         (item) => {
@@ -95,7 +94,8 @@ export class MainComponent implements OnInit {
         });
 
         this.navService.activeHome.next(this.selectedHome.value);
-        this.snackbarService.setState(true, 'Item Deleted', 2500);
+        this.navService.selectedCategory.next(this.selectedItem ? this.selectedItem.category : '');
+        this.snackbarService.setState(true, `${this.selectedItem?.item} Deleted From ${this.selectedHome.value?.nickname}`, 2500);
       },
       (error) => {
         this.snackbarService.setState(false, 'Could Not Delete Item', 2500);
