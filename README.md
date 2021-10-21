@@ -1,6 +1,8 @@
 # Frontend
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.6.
+
+## PREREQUISITES
+Angular requires [npm](https://docs.npmjs.com/cli/v7/configuring-npm/install), [Angular CLI](https://angular.io/cli), and [Node.js](https://nodejs.org/en/).
 
 Run `npm install` to install packages
 

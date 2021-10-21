@@ -9,8 +9,7 @@
             </div>
         </div>
 
-        <!-- *ngIf="shouldShowSearch | async" -->
-        <div class="search-area navbarstyle">
+        <div class="search-area navbarstyle" *ngIf="shouldShowSearch | async">
             <div class="search">
                 <input type="text" id="navbar-search" placeholder="Search Home" (keyup)="keyUp($event)">
 

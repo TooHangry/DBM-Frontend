@@ -12,14 +12,18 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-
+  // Local Variables
+  flag = false;
+  homes: BehaviorSubject<Home[]> = new BehaviorSubject<Home[]>([]);
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   selectedHome: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
-  homes: BehaviorSubject<Home[]> = new BehaviorSubject<Home[]>([]);
-  flag = false;
+
+  // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService) { }
 
+  // Initialization function to run once
   ngOnInit(): void {
+    // Subscribes to the current user and sets home accordingly
     this.authService.getUser().subscribe((user: User | null) => {
       if (user) {
         this.user.next(user);
@@ -33,27 +37,19 @@ export class MainComponent implements OnInit {
     });
   }
 
-  homeSelected(homeEvent: Home): void {
-    this.homeService.getHomeInfo(homeEvent).subscribe((home) => {
-      this.flag = true;
-      const oldHome = this.homes.value.find(h => h.id == homeEvent.id);
-      home.isAdmin = oldHome ? oldHome.isAdmin : false;
-      home.categories = home.categories.sort((a, b) => a.localeCompare(b));
-      this.selectedHome.next(home);
-      this.navService.activeCategories.next(home.categories);
-      this.navService.activeHome.next(home);
-      const activeCategory = home.categories.length > 0 ? home.categories[0] : '';
-      this.navService.selectedCategory.next(activeCategory);
-    });
-  }
-
+  // Precondition: The homeItem creation event emitted from child component
+  // Postcondition: Adds the item to the home
   addItem(homeItem: any): void {
     if (this.selectedHome.value) {
+      // TODO: Add logic here to verify that the item does not exist within the home.
+      //      Only close modal if it doesn't exist. Else, show an error
       this.homeService.addItem(this.selectedHome.value, homeItem);
       this.closeAddModal();
     }
   }
 
+  // Precondition: Activated when user clicks 'Add Item' FAB
+  // Postcondition: Opens the add item modal
   openAddModal(): void {
     const modal = (document.getElementById('add-modal') as HTMLDivElement);
     modal.style.transform = 'scale(1)';
@@ -62,6 +58,8 @@ export class MainComponent implements OnInit {
     }, 250)
   }
 
+  // Precondition: Activated when 'closeModal' event is received from the modal
+  // Postcondition: Closes the modal
   closeAddModal(): void {
     const modal = (document.getElementById('add-modal') as HTMLDivElement);
     modal.style.backgroundColor = 'rgba(0,0,0,0)';
@@ -71,8 +69,9 @@ export class MainComponent implements OnInit {
     }, 150)
   }
 
+  // Precondition: Nothing
+  // Postcondition: Gets the current home categories (if exists, else empty list)
   getCategories(): string[] {
     return this.user.value ? this.user.value.categories.sort((a, b) => a.localeCompare(b)) : [];
   }
-
 }

@@ -9,10 +9,11 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 })
 export class UserComponent implements OnInit {
 
+  // Constructor for service injections
   constructor(private authService: AuthService) { }
 
+  // Initialization function to run once
   ngOnInit(): void {
     this.authService.logout();
   }
-
 }

@@ -8,17 +8,22 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
   styleUrls: ['./item-modal.component.scss']
 })
 export class ItemModalComponent implements OnInit {
-  
-  // TODO: Query categories on start
+  // Inputs and outputs
   @Input() categories: string[] = [];
   @Output() addItem: EventEmitter<Item> = new EventEmitter();
   @Output() cancelModal: EventEmitter<null> = new EventEmitter();
-  constructor(private navService: NavService) { }
+  
+  // Local variables
 
+  // Constructor for service injection
+  constructor() { }
+
+  // Initialization function (to run once)
   ngOnInit(): void {
-
   }
 
+  // Precondition: Nothing
+  // Postcondition: Emits a new item event to parent component
   save(): void {
     const itemName = (document.getElementById('item-name') as HTMLInputElement).value.toLowerCase();
     const quantity = (document.getElementById('item-quantity') as HTMLInputElement).value;
@@ -35,6 +40,8 @@ export class ItemModalComponent implements OnInit {
     this.addItem.emit(item);
   }
 
+  // Precondition: Activated when 'cancel' or area outside of modal is clicked
+  // Postcondition: Emits the 'cancelModal' event to parent component
   cancel(): void {
     this.cancelModal.emit();
   }

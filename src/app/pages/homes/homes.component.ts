@@ -14,16 +14,19 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomesComponent implements OnInit {
-
+  // Local variables
   selectedHome: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
   homes: BehaviorSubject<Home[]> = new BehaviorSubject<Home[]>([]);
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
+  // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService, private router: Router) { }
 
+  // Initialization function (runs once)
   ngOnInit(): void {
     this.navService.activeHome.next(null);
 
+    // Gets logged in user and subsequent homes
     this.authService.getUser().subscribe((user: User | null) => {
       if (user) {
         this.user.next(user);
@@ -32,11 +35,15 @@ export class HomesComponent implements OnInit {
         }
       }
     });
+
+    // Sets the active home (if applicable)
     this.navService.activeHome.subscribe(home => {
         this.selectedHome.next(home);
     });
   }
 
+  // Precondition: The home event received from child component
+  // Postcondition: Selects the home as 'active'
   homeSelected(homeEvent: Home): void {
     this.homeService.getHomeInfo(homeEvent).subscribe((home) => {
       const oldHome = this.homes.value.find(h => h.id == homeEvent.id);
@@ -47,10 +54,15 @@ export class HomesComponent implements OnInit {
       this.navService.activeHome.next(home);
       const activeCategory = home.categories.length > 0 ? home.categories[0] : '';
       this.navService.selectedCategory.next(activeCategory);
+      
+      // Routes to selected home
       this.router.navigate(['/home']);
     });
   }
 
+
+  // Precondition: Active when 'add' floating-action button is clicked
+  // Postcondition: Makes the modal visible
   openAddModal(): void {
     const modal = (document.getElementById('add-home-modal') as HTMLDivElement);
     modal.style.transform = 'scale(1)';
@@ -59,6 +71,8 @@ export class HomesComponent implements OnInit {
     }, 250)
   }
 
+  // Precondition: Nothing
+  // Postcondition: Hides the add modal
   closeAddModal(): void {
     const modal = (document.getElementById('add-home-modal') as HTMLDivElement);
     modal.style.backgroundColor = 'rgba(0,0,0,0)';
@@ -68,6 +82,8 @@ export class HomesComponent implements OnInit {
     }, 150)
   }
 
+  // Precondition: The homeToAddEvent (bubbled-up from child component (modal))
+  // Postcondition: Creates a new home and closes modal
   createHome(event: HomeToAdd): void {
     this.homeService.createHome(event);
     this.closeAddModal();

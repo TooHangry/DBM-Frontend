@@ -9,27 +9,41 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(private navService: NavService, private router: Router) { }
+  // Local Variables
   shouldShowSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  suggestions: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  
+  // Constructor to inject services
+  constructor(private navService: NavService, private router: Router) { }
 
+  // Initialization function to run once
   ngOnInit(): void {
+    // Subscribes to visibility property
     this.navService.showSearch.subscribe(shouldShowSearch => {
       this.shouldShowSearch.next(shouldShowSearch);
     });
 
+    // Clears the search bar if triggered
     this.navService.emptySearch.subscribe(() => {
-      (document.getElementById('navbar-search') as HTMLInputElement).value = '';
+      const searchBar = document.getElementById('navbar-search') as HTMLInputElement;
+      if (searchBar) {
+        searchBar.value = '';
+      }
     })
   }
 
+  // Precondition: A keyup event (From HTML)
+  // Postcondition: Emits a filter event on the serach property
   keyUp(event: any) {
-    const navbarText = (document.getElementById('navbar-search') as HTMLInputElement).value;
-    this.suggestions.next(['1', 'five', 'three', '6']);
-    this.navService.activeSearch.next(navbarText.toLowerCase());
+    const searchBar = document.getElementById('navbar-search') as HTMLInputElement;
+    if (searchBar) {
+      const navbarText = searchBar.value;
+      this.navService.activeSearch.next(navbarText.toLowerCase());
+    }
+
   }
 
+  // Precondition: The URL to route to
+  // Postcondition: Routes to the URL
   route(url: string): void {
     this.router.navigate([url]);
   }
