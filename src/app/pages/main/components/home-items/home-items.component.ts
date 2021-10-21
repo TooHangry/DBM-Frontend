@@ -36,6 +36,9 @@ export class HomeItemsComponent implements OnInit {
     // Subscribes to active home
     this.navService.activeHome.subscribe(home => {
       this.home = home;
+      if (this.home){
+        this.items.next(this.home.items);
+      }
     });
 
     // Subscribes to active category

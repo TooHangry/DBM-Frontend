@@ -65,7 +65,7 @@ export class HomeService {
   }
 
   removeItem(home: Home, itemToRemove: Item): Observable<Item> {
-    return this.client.delete(`${this.getBaseURL()}/items/delete/${home.id}/${itemToRemove.item}`).pipe(map((res:any) => res));
+    return this.client.delete(`${this.getBaseURL()}/items/delete/${home.id}/${itemToRemove.id}`).pipe(map((res:any) => res));
   }
 
   // Precondition: Nothing

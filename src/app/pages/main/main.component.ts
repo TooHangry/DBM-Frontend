@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-main',
@@ -21,7 +22,8 @@ export class MainComponent implements OnInit {
   selectedItem: Item | null = null;
 
   // Constructor for service injections
-  constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService) { }
+  constructor(private navService: NavService, private homeService: HomeService,
+    private authService: AuthService, private snackbarService: SnackbarService) { }
 
   // Initialization function to run once
   ngOnInit(): void {
@@ -84,9 +86,20 @@ export class MainComponent implements OnInit {
   removeItem(): void {
     console.log(this.selectedItem);
     if (this.selectedItem && this.selectedHome.value) {
-      this.homeService.removeItem(this.selectedHome.value, this.selectedItem).subscribe(item => {
+      this.homeService.removeItem(this.selectedHome.value, this.selectedItem).subscribe(
+        (item) => {
+        if (item && this.selectedHome.value)
+        this.selectedHome.next({
+          ...this.selectedHome.value,
+          items: this.selectedHome.value?.items.filter(i => i.id !== item.id)
+        });
 
-      })
+        this.navService.activeHome.next(this.selectedHome.value);
+        this.snackbarService.setState(true, 'Item Deleted', 2500);
+      },
+      (error) => {
+        this.snackbarService.setState(false, 'Could Not Delete Item', 2500);
+      });
     }
     this.closeDeleteModal();
   }
