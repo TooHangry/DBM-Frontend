@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Home } from 'src/app/models/home.models';
 import { NavService } from '../nav-service/nav.service';
+import { SnackbarService } from '../snackbar/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService {
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
   // Constructor to inject services
-  constructor(private client: HttpClient, private envService: EnvService, private router: Router, private navService: NavService) { }
+  constructor(private client: HttpClient, private envService: EnvService, private router: Router,
+    private navService: NavService, private snackbarService: SnackbarService) { }
 
   // Precondition: Nothing
   // Postcondition: Returns an observable user
@@ -72,9 +74,11 @@ export class AuthService {
       (user: User) => {
         // If the user is returned, 'log them in' on the frontend
         this.logUserIn(user);
+        this.snackbarService.setState(true, 'Logged in Successfully', 2000);
       },
       (error: any) => {
         // If the user is not returned, show the error in the console
+        this.snackbarService.setState(false, 'Oops! Your Credentials Don\'t Match', 3000);
         console.log(error);
       }
     );
@@ -94,9 +98,11 @@ export class AuthService {
       (user: User) => {
         // Logs the user in if valid request
         this.logUserIn(user);
+        this.snackbarService.setState(true, 'Logged in Successfully', 2000);
       },
       (error: any) => {
         // TODO: Show an error if the request is invalid
+        this.snackbarService.setState(false, 'That Email is Already Being Used!', 3000);
         console.log(error);
       }
     );
@@ -106,7 +112,9 @@ export class AuthService {
   // Postcondition: Deletes the user's token and reroutes to the login page
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(() => {
+      this.snackbarService.setState(true, 'Logged Out Successfully.', 3000);
+    });
   }
 
   // Precondition: Nothing
@@ -139,7 +147,12 @@ export class AuthService {
         ...this.user.value,
         homes
       }));
-      window.location.reload(); // Find a way to update home selection
+
+      this.snackbarService.setState(true, `Created Home '${home.nickname}'. Reloading!`, 2500);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000)
     }
   }
 

@@ -4,16 +4,19 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Home, HomeInfo, HomeToAdd } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
+import { pascalCase } from 'src/app/utils/casing.utils';
 import { AuthService } from '../auth-service/auth.service';
 import { EnvService } from '../env-service/env.service';
 import { NavService } from '../nav-service/nav.service';
+import { SnackbarService } from '../snackbar/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
   // Constructor for service injections
-  constructor(private envService: EnvService, private client: HttpClient, private navService: NavService, private authService: AuthService) { }
+  constructor(private envService: EnvService, private client: HttpClient, private navService: NavService,
+    private authService: AuthService, private snackbarService: SnackbarService) { }
 
   // Precondition: The home to query
   // Postcondition: Returns an obervable with the home details and items
@@ -37,6 +40,8 @@ export class HomeService {
       this.navService.activeHome.next(home);
       this.navService.activeCategories.next(home.categories);
       this.navService.selectedCategory.next(item.category);
+
+      this.snackbarService.setState(true, `Added ${pascalCase(item.item)} to ${home.nickname}`, 2500)
     });
   }
 

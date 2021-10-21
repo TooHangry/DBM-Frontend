@@ -15,6 +15,7 @@ import { ListsComponent } from './pages/lists/lists.component';
 import { HomesComponent } from './pages/homes/homes.component';
 import { HomeSelectionComponent } from './pages/homes/components/home-selection/home-selection.component';
 import { AddHomeModalComponent } from './pages/homes/components/add-home-modal/add-home-modal.component';
+import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AddHomeModalComponent } from './pages/homes/components/add-home-modal/a
     ItemModalComponent,
     ListsComponent,
     HomesComponent,
-    AddHomeModalComponent
+    AddHomeModalComponent,
+    SnackbarComponent
   ],
   imports: [
     BrowserModule,

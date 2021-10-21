@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HomeInfo } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 import { NavService } from 'src/app/services/nav-service/nav.service';
+import { pascalCase } from 'src/app/utils/casing.utils';
 
 @Component({
   selector: 'app-home-items',
@@ -48,7 +49,7 @@ export class HomeItemsComponent implements OnInit {
   // Precondition: The name of the item to transform
   // Postcondition: Converts the item name to have capital letters at the start of each word
   getPascalCase(itemName: string): string {
-    return itemName.split(' ').map(word => word[0].toUpperCase() + word.substr(1).toLowerCase()).join(' ');
+    return pascalCase(itemName);
   }
 
   // Precondition: The category to filter on

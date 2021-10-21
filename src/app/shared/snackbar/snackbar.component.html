@@ -1,0 +1,23 @@
+<div class="wrapper">
+    <div class="snackbar-container" [ngClass]="{'failure': !(isSuccess | async), 'success': (isSuccess | async)}">
+        <div class="header">
+            <div class="icon" *ngIf="isSuccess | async">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="none" />
+                    <polyline points="8 12 11 15 16 10" fill="none" stroke-miterlimit="10" />
+                </svg>
+            </div>
+            <div class="icon" *ngIf="!(isSuccess | async)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="none"/>
+                    <line x1="9" y1="15" x2="15" y2="9" fill="none" stroke-miterlimit="10" />
+                    <line x1="9" y1="9" x2="15" y2="15" fill="none" stroke-miterlimit="10" />
+                </svg>
+            </div>
+        </div>
+        <div class="content">
+            <div class="title">{{header | async}}</div>
+            <div class="message">{{content | async}}</div>
+        </div>
+    </div>
+</div>

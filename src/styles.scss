@@ -30,7 +30,6 @@ html, body {
 
 
 .card {
-    box-shadow: 2px 2px 2px #000000;
     border-radius: 6px;
 }
 
@@ -51,7 +50,6 @@ html, body {
 }
 
 .item-card {
-    box-shadow: 2px 2px 2px #000000;
     border-radius: 6px;
     background-color: $hover-color;
     transition: all 0.2s ease;

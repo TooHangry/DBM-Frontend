@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SnackbarService } from './services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
   title = 'frontend';
-  constructor() {}
 
+  // Constructor for service injection
+  constructor(private snackbarService: SnackbarService) {}
+
+  // Initialization function to run once
   ngOnInit(): void {
+    this.snackbarService.snackbarState.subscribe(snackbar => {
+      if (snackbar) {
+        const snackage = document.getElementById('snakcbar') as HTMLDivElement;
+        if (snackage) {
+          snackage.style.transform = 'translateX(0%)';
+      console.log(snackbar);
+          
+          setTimeout(() => {
+            snackage.style.transform = 'translateX(100%)';
+          }, snackbar.durationInMS)
+        }
+      }
+    })
   }
 }

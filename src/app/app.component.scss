@@ -34,3 +34,15 @@
     width: 20%;
     height: 100%;
 }
+
+.snackbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10000;
+    width: 25%;
+    height: 150px;
+    transition: all 0.2s ease;
+
+    transform: translateX(100%);
+}
