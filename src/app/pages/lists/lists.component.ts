@@ -28,10 +28,10 @@ export class ListsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  // Precondition: File change event
+  // Postcondition: Processes images
   onFileChanged(event: any): void {
     const image = event.target.files[0];
-    console.log(image);
 
     Tesseract.recognize(image)
     .then((res: any) => {
@@ -49,9 +49,9 @@ export class ListsComponent implements OnInit {
   // Precondition: List words as array of inidivudal words, word list from picture
   // Postcondition: Returns overlapping words
   private getOverlappingWords(listWords: string[], wordsFromPic: string[]): string[] {
-
     let matchingWords: string[] = [];
 
+    // Compares lists, appends valid words
     listWords.forEach(item => {
       wordsFromPic.forEach(list => {
         if (list.length > 3 && (list.includes(item) || item.includes(list))) {
