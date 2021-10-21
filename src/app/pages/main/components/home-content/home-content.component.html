@@ -17,7 +17,7 @@
         </div>
 
         <div class="home-stats">
-            <div class="stat hover" (click)="setState('users')">
+            <div class="stat hover" (click)="setState('users')" [ngClass]="{'selected': (currentState | async) === 'users'}">
                 <div class="title">
                     Users
                 </div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="stat hover" (click)="setState('items')">
+            <div class="stat hover" (click)="setState('items')" [ngClass]="{'selected': (currentState | async) === 'items'}">
                 <div class="title">
                     Items
                 </div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="stat hover" (click)="setState('lists')">
+            <div class="stat hover" (click)="setState('lists')" [ngClass]="{'selected': (currentState | async) === 'lists'}">
                 <div class="title">
                     Lists
                 </div>
