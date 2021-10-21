@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Home, HomeInfo } from 'src/app/models/home.models';
+import { Item } from 'src/app/models/item.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
@@ -17,6 +18,7 @@ export class MainComponent implements OnInit {
   homes: BehaviorSubject<Home[]> = new BehaviorSubject<Home[]>([]);
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   selectedHome: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
+  selectedItem: Item | null = null;
 
   // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService) { }
@@ -52,26 +54,64 @@ export class MainComponent implements OnInit {
   // Postcondition: Opens the add item modal
   openAddModal(): void {
     const modal = (document.getElementById('add-modal') as HTMLDivElement);
-    modal.style.transform = 'scale(1)';
-    setTimeout(() => {
-      modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    }, 250)
+    this.openModal(modal);
   }
 
   // Precondition: Activated when 'closeModal' event is received from the modal
   // Postcondition: Closes the modal
   closeAddModal(): void {
     const modal = (document.getElementById('add-modal') as HTMLDivElement);
-    modal.style.backgroundColor = 'rgba(0,0,0,0)';
-    
-    setTimeout(() => {
-      modal.style.transform = 'scale(0)';
-    }, 150)
+    this.closeModal(modal);
+  }
+
+  // Precondition: Activated when user clicks 'delete' on item. The item to delete
+  // Postcondition: Opens the add item modal
+  openDeleteModal(itemToDelete: Item): void {
+    this.selectedItem = itemToDelete;
+    const modal = (document.getElementById('delete-modal') as HTMLDivElement);
+    this.openModal(modal);
+  }
+
+  // Precondition: Activated when 'closeModal' event is received from the modal
+  // Postcondition: Closes the modal
+  closeDeleteModal(): void {
+    const modal = (document.getElementById('delete-modal') as HTMLDivElement);
+    this.closeModal(modal);
+  }
+
+  // Precondition: Nothing
+  // Postcondition: Removes the item from the home
+  removeItem(): void {
+    console.log(this.selectedItem);
+    if (this.selectedItem && this.selectedHome.value) {
+      this.homeService.removeItem(this.selectedHome.value, this.selectedItem).subscribe(item => {
+
+      })
+    }
+    this.closeDeleteModal();
   }
 
   // Precondition: Nothing
   // Postcondition: Gets the current home categories (if exists, else empty list)
   getCategories(): string[] {
     return this.user.value ? this.user.value.categories.sort((a, b) => a.localeCompare(b)) : [];
+  }
+
+  // Precondition: The div element to 'open'
+  // Postcondition: Changes the styling on the element
+  private openModal(modal: HTMLDivElement): void {
+    modal.style.transform = 'scale(1)';
+    setTimeout(() => {
+      modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    }, 250);
+  }
+
+  // Precondition: The div element to 'close'
+  // Postcondition: Changes the styling on the element
+  private closeModal(modal: HTMLDivElement): void {
+    modal.style.backgroundColor = 'rgba(0,0,0,0)';
+    setTimeout(() => {
+      modal.style.transform = 'scale(0)';
+    }, 150)
   }
 }

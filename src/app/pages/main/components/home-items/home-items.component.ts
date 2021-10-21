@@ -14,6 +14,7 @@ export class HomeItemsComponent implements OnInit {
   // Inputs and outputs
   @Input() home: HomeInfo | null = null;
   @Output() addItem: EventEmitter<null> = new EventEmitter();
+  @Output() deleteItem: EventEmitter<Item> = new EventEmitter();
 
   // Local variables
   items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
