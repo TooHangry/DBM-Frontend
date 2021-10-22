@@ -47,7 +47,10 @@
     </div>
 
     <div class="list navbarstyle card" *ngIf="(currentState | async) === 'items'">
-        <app-home-items [home]="home" (addItem)="addItem.emit($event)" (deleteItem)="deleteItem.emit($event)"></app-home-items>
+        <app-home-items *ngIf="home && home.items.length > 0" [home]="home" (addItem)="addItem.emit($event)" (deleteItem)="deleteItem.emit($event)"></app-home-items>
+        <div class="container flex" *ngIf="home && home.items.length < 1">
+            Hit the "New Item" button in the bottom right corner to add items to your home!
+        </div>
     </div>
 
     <div class="list navbarstyle card" *ngIf="(currentState | async) === 'users'">
@@ -68,3 +71,5 @@
         <polyline points="16.5 15.5 16.5 21.5 2.5 21.5 2.5 7.5 8.5 7.5" fill="none" />
     </svg>
 </div>
+
+

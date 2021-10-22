@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="homes && homes.length > 0">
     <div class="home-selection">
         <div *ngFor="let home of homes" class="home navbarstyle hover card" (click)="selectHome(home)">
             <div class="icon">
@@ -15,7 +15,13 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 
+
+<div class="container flex" *ngIf="homes && homes.length < 1">
+    Hit the "+" button in the bottom right corner to create a new home!
+</div>
 
