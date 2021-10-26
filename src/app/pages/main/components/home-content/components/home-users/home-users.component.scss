@@ -40,6 +40,10 @@
         background-color: $hover-color;
         transition: all 0.2s ease;
 
+        .positive {
+            color: $positive-action;
+        }
+
         .attribute {
             width: 25%;
             font-size: 16px;

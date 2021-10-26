@@ -58,6 +58,7 @@
                 width: calc(33% - 24px);
                 height: calc(100% - 32px);
                 border-radius: 6px;
+                user-select: none;
                 margin: 0 8px 0 8px;
                 .title {
                     margin-left: 16px;
