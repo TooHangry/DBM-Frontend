@@ -20,7 +20,6 @@ export class ListsComponent implements OnInit {
     'bananas'
   ]
 
-
   // Constructor for service injection
   constructor() { }
 

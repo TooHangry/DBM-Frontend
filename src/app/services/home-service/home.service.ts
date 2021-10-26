@@ -41,7 +41,9 @@ export class HomeService {
         id: returnedHome.id,
         isAdmin: home.isAdmin,
         categories: returnedHome.categories,
-        items: returnedHome.items
+        items: returnedHome.items,
+        users: returnedHome.users,
+        invites: returnedHome.invites
       };
       
       // Sets the active category to the new item category, adds the item to the frontend-instance of the home

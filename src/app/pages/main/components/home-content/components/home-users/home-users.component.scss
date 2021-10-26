@@ -1,0 +1,83 @@
+@import "../../../../../../../variables.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .users {
+        margin-top: 16px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .header {
+            font-size: 24px;
+            width: calc(100% - 32px);
+            margin-bottom: 8px;
+        }
+    }
+
+    .invites {
+        margin-top: 16px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .header {
+            font-size: 24px;
+            width: calc(100% - 32px);
+            margin-bottom: 8px;
+        }
+    }
+
+    .user {
+        width: calc(100% - 32px);
+        margin: 8px;
+        height: 64px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-evenly;
+        background-color: $hover-color;
+        transition: all 0.2s ease;
+
+        .attribute {
+            width: 25%;
+            font-size: 16px;
+
+            .action {
+                height: 100%;
+                transition: all 0.2s ease;
+
+                svg {
+                    height: 50%;
+                    stroke: $negative-action;
+                }
+
+                &:hover {
+                    transform: scale(1.1);
+                    filter: brightness(1.1);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+
+    transition: all 0.3s ease;
+    transform: scale(0);
+    app-remove-user-modal {
+        width: 100%;
+        height: calc(90% - 16px);
+    }
+}

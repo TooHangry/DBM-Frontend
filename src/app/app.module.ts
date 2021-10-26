@@ -20,6 +20,7 @@ import { DeleteModalComponent } from './pages/main/components/delete-modal/delet
 import { HomeContentComponent } from './pages/main/components/home-content/home-content.component';
 import { HomeUsersComponent } from './pages/main/components/home-content/components/home-users/home-users.component';
 import { HomeListsComponent } from './pages/main/components/home-content/components/home-lists/home-lists.component';
+import { RemoveUserModalComponent } from './pages/main/components/home-content/components/home-users/remove-user-modal/remove-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { HomeListsComponent } from './pages/main/components/home-content/compone
     DeleteModalComponent,
     HomeContentComponent,
     HomeUsersComponent,
-    HomeListsComponent
+    HomeListsComponent,
+    RemoveUserModalComponent,
   ],
   imports: [
     BrowserModule,

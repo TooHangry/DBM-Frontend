@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { closeModal, openModal } from 'src/app/utils/animations.utils';
 
 @Component({
   selector: 'app-main',
@@ -56,14 +57,14 @@ export class MainComponent implements OnInit {
   // Postcondition: Opens the add item modal
   openAddModal(): void {
     const modal = (document.getElementById('add-modal') as HTMLDivElement);
-    this.openModal(modal);
+    openModal(modal);
   }
 
   // Precondition: Activated when 'closeModal' event is received from the modal
   // Postcondition: Closes the modal
   closeAddModal(): void {
     const modal = (document.getElementById('add-modal') as HTMLDivElement);
-    this.closeModal(modal);
+    closeModal(modal);
   }
 
   // Precondition: Activated when user clicks 'delete' on item. The item to delete
@@ -71,14 +72,14 @@ export class MainComponent implements OnInit {
   openDeleteModal(itemToDelete: Item): void {
     this.selectedItem = itemToDelete;
     const modal = (document.getElementById('delete-modal') as HTMLDivElement);
-    this.openModal(modal);
+    openModal(modal);
   }
 
   // Precondition: Activated when 'closeModal' event is received from the modal
   // Postcondition: Closes the modal
   closeDeleteModal(): void {
     const modal = (document.getElementById('delete-modal') as HTMLDivElement);
-    this.closeModal(modal);
+    closeModal(modal);
   }
 
   // Precondition: Nothing
@@ -108,23 +109,5 @@ export class MainComponent implements OnInit {
   // Postcondition: Gets the current home categories (if exists, else empty list)
   getCategories(): string[] {
     return this.user.value ? this.user.value.categories.sort((a, b) => a.localeCompare(b)) : [];
-  }
-
-  // Precondition: The div element to 'open'
-  // Postcondition: Changes the styling on the element
-  private openModal(modal: HTMLDivElement): void {
-    modal.style.transform = 'scale(1)';
-    setTimeout(() => {
-      modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    }, 250);
-  }
-
-  // Precondition: The div element to 'close'
-  // Postcondition: Changes the styling on the element
-  private closeModal(modal: HTMLDivElement): void {
-    modal.style.backgroundColor = 'rgba(0,0,0,0)';
-    setTimeout(() => {
-      modal.style.transform = 'scale(0)';
-    }, 150)
   }
 }

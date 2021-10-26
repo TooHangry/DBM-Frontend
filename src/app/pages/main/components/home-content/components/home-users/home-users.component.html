@@ -1,1 +1,52 @@
-<div class="container flex">SHOW USERS (with add and delete for admin)</div>
+<div *ngIf="home" class="container">
+    <div class="users" *ngIf="home && home.users.length > 0">
+        <div class="header">
+            Users
+        </div>
+        <div class="user" *ngFor="let user of home.users">
+            <div class="attribute flex">
+                {{user.fname}} {{user.lname}}
+            </div>
+            <div class="attribute flex">
+                {{user.email}}
+            </div>
+            <div class="attribute flex">
+                <div class="action flex" (click)="selectUserToRemove(user)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <polyline points="3 7 5 7 21 7" fill="none" />
+                        <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
+                        <line x1="13.5" y1="16.5" x2="13.5" y2="11.5" fill="none" />
+                        <line x1="10.5" y1="16.5" x2="10.5" y2="11.5" fill="none" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="invites" *ngIf="home && home.invites.length > 0">
+        <div class="header">
+            Pending Invites
+        </div>
+        <div class="user" *ngFor="let user of home.invites">
+            <div class="attribute flex">
+                {{user.email}}
+            </div>
+            <div class="attribute flex">
+            </div>
+            <div class="attribute flex">
+                <div class="action flex" (click)="selectInviteToRemove(user)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <polyline points="3 7 5 7 21 7" fill="none" />
+                        <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
+                        <line x1="13.5" y1="16.5" x2="13.5" y2="11.5" fill="none" />
+                        <line x1="10.5" y1="16.5" x2="10.5" y2="11.5" fill="none" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="remove-user-modal">
+    <app-remove-user-modal (deleteItem)="removeItem()" (cancelModal)="closeDeleteModal()"></app-remove-user-modal>
+</div>

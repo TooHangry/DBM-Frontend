@@ -22,7 +22,10 @@
                     Users
                 </div>
                 <div class="data">
-                    -
+                    {{home.users.length}}
+                    <div class="subdata" *ngIf="home.invites.length > 0">
+                        {{home.invites.length}} invites
+                    </div>
                 </div>
             </div>
 
@@ -32,6 +35,9 @@
                 </div>
                 <div class="data">
                     {{home.items.length}}
+                    <div class="subdata">
+                        0 items in lists
+                    </div>
                 </div>
             </div>
 
@@ -40,7 +46,9 @@
                     Lists
                 </div>
                 <div class="data">
-                    -
+                    0
+                    <div class="subdata">
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,7 +62,10 @@
     </div>
 
     <div class="list navbarstyle card" *ngIf="(currentState | async) === 'users'">
-        <app-home-users></app-home-users>
+        <app-home-users *ngIf="home" [home]="home"></app-home-users>
+        <div class="container flex" *ngIf="home && home.users.length < 1">
+            No users in your home!
+        </div>
     </div>
 
     <div class="list navbarstyle card" *ngIf="(currentState | async) === 'lists'">

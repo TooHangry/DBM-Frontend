@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="edge" (click)="cancel()"></div>
+
+    <div class="modal-container">
+        <div class="content">
+            <div class="header">
+                Are you sure you want to remove this user?
+            </div>
+            <div class="footer">
+                <div class="button flex navbutton positive" (click)="cancel()">
+                    Cancel
+                </div>
+
+                <div class="button flex navbutton negative" (click)="delete()">
+                    DELETE
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="edge" (click)="cancel()"></div>
+</div>
