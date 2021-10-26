@@ -63,4 +63,10 @@ export class HomeUsersComponent implements OnInit {
     const modal = (document.getElementById('remove-user-modal') as HTMLDivElement);
     closeModal(modal);
   }
+
+  // Precondition: The member to check
+  // Postcondition: Returns a boolean
+  isNotAdmin(member: Member): boolean {
+   return member.email !== this.home?.admin;
+  }
 }

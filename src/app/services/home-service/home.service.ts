@@ -38,6 +38,7 @@ export class HomeService {
     this.client.post(`${this.getBaseURL()}/items/${home.id}`, formData).pipe(map((res: any) => res)).subscribe((returnedHome: HomeInfo) => {
       const newHome: HomeInfo = {
         nickname: returnedHome.nickname,
+        admin: returnedHome.admin,
         id: returnedHome.id,
         isAdmin: home.isAdmin,
         categories: returnedHome.categories,

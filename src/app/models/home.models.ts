@@ -11,7 +11,7 @@ export interface HomeInfo extends Home{
     items: Item[];
     users: Member[];    
     invites: Invite[];
-
+    admin: string;
 }
 
 export interface HomeToAdd {

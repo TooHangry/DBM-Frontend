@@ -51,6 +51,7 @@
             }
 
             .search-area {
+                margin-bottom: 16px;
                 width: 100%;
                 height: 100%;
                 display: flex;
@@ -96,7 +97,7 @@
 
         .emails {
             margin-top: 32px;
-            height: 50%;
+            height: 45%;
             width: 100%;
             overflow-y: auto;
             overflow-x: hidden;
