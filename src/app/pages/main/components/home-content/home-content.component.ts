@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HomeInfo } from 'src/app/models/home.models';
+import { HomeInfo, Invite, Member } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 
 @Component({
@@ -13,6 +13,8 @@ export class HomeContentComponent implements OnInit {
   @Input() home: HomeInfo | null = null;
   @Output() addItem: EventEmitter<null> = new EventEmitter();
   @Output() deleteItem: EventEmitter<Item> = new EventEmitter();
+  @Output() removeInvite: EventEmitter<Invite> = new EventEmitter();
+  @Output() removeMember: EventEmitter<Member> = new EventEmitter();
 
   // Local Variables
   currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');

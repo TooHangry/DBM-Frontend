@@ -10,7 +10,8 @@ import { closeModal, openModal } from 'src/app/utils/animations.utils';
 export class HomeUsersComponent implements OnInit {
   // Inputs and outputs
   @Input() home: HomeInfo | null = null;
-  @Output() deleteMember: EventEmitter<Member> = new EventEmitter();
+  @Output() removeInvite: EventEmitter<Invite> = new EventEmitter();
+  @Output() removeMember: EventEmitter<Member> = new EventEmitter();
 
   // Local variables
   userToDelete: Member | null = null;
@@ -47,13 +48,12 @@ export class HomeUsersComponent implements OnInit {
   removeItem(): void {
     const isUser = this.userToDelete !== null;
 
-    if (isUser) {
-      console.log("Removing ", this.userToDelete);
+    if (isUser && this.userToDelete) {
+      this.removeMember.emit(this.userToDelete);
     }
-    else {
-      console.log("Removing, ", this.inviteToDelete);
+    else if (this.inviteToDelete) {
+      this.removeInvite.emit(this.inviteToDelete);
     }
-
     this.closeDeleteModal();
   }
 

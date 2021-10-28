@@ -1,5 +1,10 @@
 <div class="home-container container">
-    <app-home-content *ngIf="(selectedHome | async)" [home]="selectedHome | async" (addItem)="openAddModal()" (deleteItem)="openDeleteModal($event)"></app-home-content>
+    <app-home-content *ngIf="(selectedHome | async)"
+    [home]="selectedHome | async" 
+    (addItem)="openAddModal()" 
+    (deleteItem)="openDeleteModal($event)"
+    (removeMember)="removeMember($event)"
+    (removeInvite)="removeInvite($event)"></app-home-content>
 </div>
 
 <div class="modal" id="add-modal">

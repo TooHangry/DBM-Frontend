@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Home, HomeInfo } from 'src/app/models/home.models';
+import { Home, HomeInfo, Invite, Member } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -103,6 +103,19 @@ export class MainComponent implements OnInit {
       });
     }
     this.closeDeleteModal();
+  }
+
+  removeInvite(event: Invite): void {
+    console.log("Removing invite ", event);
+    this.authService.removeInvite(event.id);
+  }
+
+  removeMember(event: Member): void {
+    const home = this.selectedHome.value;
+    if (home) {
+      console.log("Removing member ", event);
+      this.authService.removeUser(home.id, event.id);
+    }
   }
 
   // Precondition: Nothing

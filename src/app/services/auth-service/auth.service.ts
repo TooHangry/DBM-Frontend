@@ -156,6 +156,43 @@ export class AuthService {
     }
   }
 
+  removeInvite(id: number): void {
+    this.client.delete(`${this.getBaseURL()}/removeinvite/${id}`).pipe(map(res => res)).subscribe(
+      (res) => {
+        this.snackbarService.setState(true, "Invite Deleted", 2500);
+
+        const oldHome = this.navService.activeHome.value;
+        if (oldHome) {
+          oldHome
+          this.navService.activeHome.next({
+            ...oldHome,
+            invites: oldHome.invites.length > 0 ? oldHome.invites.filter(inv => inv.id !== id) : oldHome.invites
+          });
+        }
+      },
+      (err) => {
+        this.snackbarService.setState(false, "Could Not Delete Invite", 2500);
+      });
+  }
+
+  removeUser(homeID: number, userID: number): void {
+    this.client.delete(`${this.getBaseURL()}/removeuser/${homeID}/${userID}`).pipe(map(res => res)).subscribe(
+      (res) => {
+        this.snackbarService.setState(true, "User Removed", 2500);
+        const oldHome = this.navService.activeHome.value;
+        if (oldHome) {
+          oldHome
+          this.navService.activeHome.next({
+            ...oldHome,
+            users: oldHome.users.length > 0 ? oldHome.users.filter(usr => usr.id !== userID) : oldHome.users
+          });
+        }
+      },
+      (err) => {
+        this.snackbarService.setState(false, "Could Not Remove User", 2500);
+      });
+  }
+
   // Precondition: The user instance returned from backend
   // Postcondition: Saves user token in local storage, sets the local variable, and reroutes to /homes
   private logUserIn(user: User): void {
