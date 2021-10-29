@@ -19,22 +19,6 @@
         width: 0;
     }
 
-    &:hover {
-        .arrows {
-            margin-left: 0px;
-            height: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            svg {
-                z-index: 999;
-                width: 40px;
-                stroke-width: 3px;
-                stroke: $text-color;
-            }
-        }
-    }
-
     .attribute {
         width: 25%;
         font-size: 16px;
@@ -42,12 +26,24 @@
         justify-content: center;
         align-items: center;
 
-        
-
+        &:hover {
+            .arrows {
+                margin-left: 0px;
+                height: 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                svg {
+                    z-index: 999;
+                    width: 40px;
+                    stroke-width: 3px;
+                    stroke: $text-color;
+                }
+            }
+        }
         .action {
             height: 100%;
             margin: 0 8px 0 8px;
-
         }
 
         .negative {

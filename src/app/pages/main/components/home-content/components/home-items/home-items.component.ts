@@ -17,6 +17,9 @@ export class HomeItemsComponent implements OnInit {
   @Output() deleteItem: EventEmitter<Item> = new EventEmitter();
   @Output() increaseItem: EventEmitter<Item> = new EventEmitter();
   @Output() decreaseItem: EventEmitter<Item> = new EventEmitter();
+  @Output() increaseThreshold: EventEmitter<Item> = new EventEmitter();
+  @Output() decreaseThreshold: EventEmitter<Item> = new EventEmitter();
+  @Output() saveItem: EventEmitter<Item> = new EventEmitter();
 
   // Local variables
   items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
@@ -69,12 +72,33 @@ export class HomeItemsComponent implements OnInit {
   // Precondition: The item to deacrease
   // Postcondition: Marks the item and emits it
   decrease(item: Item): void {
-    this.markItem(item);
-    this.decreaseItem.emit(item);
+    if (item.quantity > 0) {
+      this.markItem(item);
+      this.decreaseItem.emit(item);
+    }
   }
 
+  // Precondition: The item to increase
+  // Postcondition: Marks the item and emits it
+  increaseThresholdValue(item: Item): void {
+    this.markItem(item);
+    this.increaseThreshold.emit(item);
+  }
+
+  // Precondition: The item to deacrease
+  // Postcondition: Marks the item and emits it
+  decreaseThresholdValue(item: Item): void {
+    if (item.alertThreshold > 0) {
+      this.markItem(item);
+      this.decreaseThreshold.emit(item);
+    }
+  }
+
+  // Precondition: The item to save
+  // Postcondition: Unmarks the item and emits it to be saved
   saveChanges(item: Item) {
     this.markedItems.next(this.markedItems.value.filter(i => i.id !== item.id));
+    this.saveItem.emit(item);
 
     const itemDiv = (document.getElementById('item' + item.id) as HTMLDivElement);
     if (itemDiv) {
@@ -82,9 +106,11 @@ export class HomeItemsComponent implements OnInit {
     }
   }
 
+  // Check if the item is marked
   itemIsMarked(item: Item) {
     return this.markedItems.value && this.markedItems.value.includes(item);
   }
+
   // Precondition: The item to mark
   // Postcondition: Marks the item for saving
   private markItem(item: Item): void {

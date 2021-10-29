@@ -110,19 +110,24 @@ export class MainComponent implements OnInit {
     this.closeDeleteModal();
   }
 
+  // Precondition: The invite to remove
+  // Postcondition: Removes the invite
   removeInvite(event: Invite): void {
     console.log("Removing invite ", event);
     this.authService.removeInvite(event.id);
   }
 
+  // Precondition: The member to remove
+  // Postcondition: Removes the member
   removeMember(event: Member): void {
     const home = this.selectedHome.value;
     if (home) {
-      console.log("Removing member ", event);
       this.authService.removeUser(home.id, event.id);
     }
   }
 
+  // Precondition: The item to increase
+  // Postcondition: Increases the item
   increaseItem(event: Item) {
     const currentHome = this.navService.activeHome.value;
     if (currentHome) {
@@ -135,6 +140,8 @@ export class MainComponent implements OnInit {
     }
   }
 
+  // Precondition: The item to decrease
+  // Postcondition: Decreases the item
   decreaseItem(event: Item) {
     const currentHome = this.navService.activeHome.value;
     if (currentHome) {
@@ -144,6 +151,42 @@ export class MainComponent implements OnInit {
         }
       })
       this.navService.activeHome.next(currentHome);
+    }
+  }
+
+    // Precondition: The item to increase
+  // Postcondition: Increases the item
+  increaseThreshold(event: Item) {
+    const currentHome = this.navService.activeHome.value;
+    if (currentHome) {
+      currentHome.items.map(item => {
+        if (item && item.id && item.id == event.id) {
+          ++item.alertThreshold;
+        }
+      })
+      this.navService.activeHome.next(currentHome);
+    }
+  }
+
+  // Precondition: The item to decrease
+  // Postcondition: Decreases the item
+  decreaseThreshold(event: Item) {
+    const currentHome = this.navService.activeHome.value;
+    if (currentHome) {
+      currentHome.items.map(item => {
+        if (item && item.id && item.id == event.id && item.alertThreshold > 0) {
+          --item.alertThreshold;
+        }
+      })
+      this.navService.activeHome.next(currentHome);
+    }
+  }
+
+  // Precondition: The item to save
+  // Postcondition: Saves the item
+  saveItem(event: Item): void {
+    if (this.selectedHome.value) {
+      this.homeService.saveItem(event, this.selectedHome.value.id);
     }
   }
 

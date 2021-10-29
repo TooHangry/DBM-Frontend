@@ -25,7 +25,6 @@
         <div class="attribute">
             <div class="level">
                 {{item.quantity}}
-
             </div>
             <div class="arrows">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increase(item)">
@@ -37,8 +36,18 @@
             </div>
         </div>
 
-        <div class="attribute flex">
-            {{item.alertThreshold}}
+        <div class="attribute">
+            <div class="level">
+                {{item.alertThreshold}}
+            </div>
+            <div class="arrows">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increaseThresholdValue(item)">
+                    <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="decreaseThresholdValue(item)">
+                    <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
+                </svg>
+            </div>
         </div>
 
         <div class="attribute">

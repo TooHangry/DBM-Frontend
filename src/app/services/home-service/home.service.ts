@@ -59,6 +59,28 @@ export class HomeService {
     });
   }
 
+  // Precondition: The item to save and the home ID
+  // Postcondition: Saves the item
+  saveItem(item: Item, homeID: number): void {
+    const formData = new FormData();
+    formData.append('name', item.item);
+    formData.append('threshold', item.alertThreshold.toString());
+    formData.append('category', item.category);
+    formData.append('quantity', item.quantity.toString());
+
+    this.loadingService.isLoading.next(true);
+    this.client.put(`${this.getBaseURL()}/items/update/${item.id}/${homeID}`, formData).pipe(map((res: any) => res)).subscribe(
+      (res) => {
+        this.snackbarService.setState(true, `Updated Quantity of ${pascalCase(item.item)} to ${item.quantity}`, 2500);
+        this.loadingService.isLoading.next(false);
+      },
+      (err) => {
+        this.snackbarService.setState(false, `Could Not Save Changes To ${pascalCase(item.item)}`, 2500);
+        this.loadingService.isLoading.next(false);
+      }
+    )
+  }
+
   // Precondition: The new home instance to add
   // Postcondition: Creates a new home
   createHome(homeToAdd: HomeToAdd): void {

@@ -61,7 +61,10 @@
         <app-home-items *ngIf="home && home.items.length > 0" [home]="home" (addItem)="addItem.emit($event)"
             (deleteItem)="deleteItem.emit($event)"
             (increaseItem)="increaseItem.emit($event)"
-            (decreaseItem)="decreaseItem.emit($event)"></app-home-items>
+            (decreaseItem)="decreaseItem.emit($event)"
+            (saveItem)="saveItem.emit($event)"
+            (increaseThreshold)="increaseThreshold.emit($event)"
+            (decreaseThreshold)="decreaseThreshold.emit($event)"></app-home-items>
         <div class="container flex" *ngIf="home && home.items.length < 1">
             Hit the "New Item" button in the bottom right corner to add items to your home!
         </div>

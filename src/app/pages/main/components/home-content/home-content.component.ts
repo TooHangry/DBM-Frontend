@@ -17,6 +17,9 @@ export class HomeContentComponent implements OnInit {
   @Output() removeMember: EventEmitter<Member> = new EventEmitter();
   @Output() increaseItem: EventEmitter<Item> = new EventEmitter();
   @Output() decreaseItem: EventEmitter<Item> = new EventEmitter();
+  @Output() saveItem: EventEmitter<Item> = new EventEmitter();
+  @Output() increaseThreshold: EventEmitter<Item> = new EventEmitter();
+  @Output() decreaseThreshold: EventEmitter<Item> = new EventEmitter();
 
   // Local Variables
   currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');
