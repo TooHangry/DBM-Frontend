@@ -15,6 +15,8 @@ export class HomeContentComponent implements OnInit {
   @Output() deleteItem: EventEmitter<Item> = new EventEmitter();
   @Output() removeInvite: EventEmitter<Invite> = new EventEmitter();
   @Output() removeMember: EventEmitter<Member> = new EventEmitter();
+  @Output() increaseItem: EventEmitter<Item> = new EventEmitter();
+  @Output() decreaseItem: EventEmitter<Item> = new EventEmitter();
 
   // Local Variables
   currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');

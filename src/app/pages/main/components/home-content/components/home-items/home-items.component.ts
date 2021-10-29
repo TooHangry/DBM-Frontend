@@ -15,11 +15,14 @@ export class HomeItemsComponent implements OnInit {
   @Input() home: HomeInfo | null = null;
   @Output() addItem: EventEmitter<null> = new EventEmitter();
   @Output() deleteItem: EventEmitter<Item> = new EventEmitter();
+  @Output() increaseItem: EventEmitter<Item> = new EventEmitter();
+  @Output() decreaseItem: EventEmitter<Item> = new EventEmitter();
 
   // Local variables
   items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
   category = '';
   isFiltering = false;
+  markedItems: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
 
   // Constructor for service injection
   constructor(private navService: NavService) { }
@@ -36,7 +39,7 @@ export class HomeItemsComponent implements OnInit {
     // Subscribes to active home
     this.navService.activeHome.subscribe(home => {
       this.home = home;
-      if (this.home){
+      if (this.home) {
         this.items.next(this.home.items);
       }
     });
@@ -54,6 +57,42 @@ export class HomeItemsComponent implements OnInit {
   // Postcondition: Converts the item name to have capital letters at the start of each word
   getPascalCase(itemName: string): string {
     return pascalCase(itemName);
+  }
+
+  // Precondition: The item to increase
+  // Postcondition: Marks the item and emits it
+  increase(item: Item): void {
+    this.markItem(item);
+    this.increaseItem.emit(item);
+  }
+
+  // Precondition: The item to deacrease
+  // Postcondition: Marks the item and emits it
+  decrease(item: Item): void {
+    this.markItem(item);
+    this.decreaseItem.emit(item);
+  }
+
+  saveChanges(item: Item) {
+    this.markedItems.next(this.markedItems.value.filter(i => i.id !== item.id));
+
+    const itemDiv = (document.getElementById('item' + item.id) as HTMLDivElement);
+    if (itemDiv) {
+      itemDiv.style.border = '0';
+    }
+  }
+
+  itemIsMarked(item: Item) {
+    return this.markedItems.value && this.markedItems.value.includes(item);
+  }
+  // Precondition: The item to mark
+  // Postcondition: Marks the item for saving
+  private markItem(item: Item): void {
+    const itemDiv = (document.getElementById('item' + item.id) as HTMLDivElement);
+    if (itemDiv) {
+      itemDiv.style.border = '2px solid #4fd64f';
+    }
+    this.markedItems.next([...this.markedItems.value, item]);
   }
 
   // Precondition: The category to filter on

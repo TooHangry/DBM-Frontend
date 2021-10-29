@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { LoadingService } from './services/loading/loading.service';
 import { SnackbarService } from './services/snackbar/snackbar.service';
 
 @Component({
@@ -8,9 +10,10 @@ import { SnackbarService } from './services/snackbar/snackbar.service';
 })
 export class AppComponent implements OnInit{
   title = 'frontend';
+  loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   // Constructor for service injection
-  constructor(private snackbarService: SnackbarService) {}
+  constructor(private snackbarService: SnackbarService, private loadingService: LoadingService) {}
 
   // Initialization function to run once
   ngOnInit(): void {
@@ -19,13 +22,14 @@ export class AppComponent implements OnInit{
         const snackage = document.getElementById('snakcbar') as HTMLDivElement;
         if (snackage) {
           snackage.style.transform = 'translateX(0%)';
-      console.log(snackbar);
           
           setTimeout(() => {
             snackage.style.transform = 'translateX(100%)';
           }, snackbar.durationInMS)
         }
       }
-    })
+    });
+
+    this.loadingService.isLoading.subscribe(value => this.loading.next(value));
   }
 }

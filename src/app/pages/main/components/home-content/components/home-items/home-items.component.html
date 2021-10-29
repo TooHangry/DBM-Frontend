@@ -17,21 +17,32 @@
         </div>
     </div>
 
-    <div *ngFor="let item of (items | async)" class="item item-card">
+    <div *ngFor="let item of (items | async)" class="item item-card" [id]="'item' + item.id">
         <div class="attribute flex">
             {{getPascalCase(item.item)}}
         </div>
 
-        <div class="attribute flex">
-            {{item.quantity}}
+        <div class="attribute">
+            <div class="level">
+                {{item.quantity}}
+
+            </div>
+            <div class="arrows">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increase(item)">
+                    <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="decrease(item)">
+                    <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
+                </svg>
+            </div>
         </div>
 
         <div class="attribute flex">
             {{item.alertThreshold}}
         </div>
 
-        <div class="attribute flex">
-            <div class="action flex" (click)="deleteItem.emit(item)">
+        <div class="attribute">
+            <div class="action negative flex" (click)="deleteItem.emit(item)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <polyline points="3 7 5 7 21 7" fill="none" />
                     <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
@@ -39,10 +50,16 @@
                     <line x1="10.5" y1="16.5" x2="10.5" y2="11.5" fill="none" />
                 </svg>
             </div>
+
+            <div class="action positive flex" (click)="saveChanges(item)" *ngIf="itemIsMarked(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <polygon points="21 6.5 21 21 3 21 3 3 17.5 3 21 6.5" fill="none"
+                        stroke-miterlimit="10" />
+                    <polyline points="7 21 7 13 17 13 17 21" fill="none" stroke-miterlimit="10" />
+                    <polyline points="8 3 8 7 16 7 16 3" fill="none" stroke-miterlimit="10" />
+                </svg>
+            </div>
         </div>
     </div>
 
 </div>
-
-
-  

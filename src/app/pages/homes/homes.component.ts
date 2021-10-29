@@ -5,6 +5,7 @@ import { Home, HomeInfo, HomeToAdd } from 'src/app/models/home.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class HomesComponent implements OnInit {
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
   // Constructor for service injections
-  constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService, private router: Router) { }
+  constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService,
+    private router: Router, private loadingService: LoadingService) { }
 
   // Initialization function (runs once)
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class HomesComponent implements OnInit {
   // Precondition: The home event received from child component
   // Postcondition: Selects the home as 'active'
   homeSelected(homeEvent: Home): void {
+    this.loadingService.isLoading.next(true);
     this.homeService.getHomeInfo(homeEvent).subscribe((home) => {
       const oldHome = this.homes.value.find(h => h.id == homeEvent.id);
       home.isAdmin = oldHome ? oldHome.isAdmin : false;
@@ -56,6 +59,7 @@ export class HomesComponent implements OnInit {
       this.navService.selectedCategory.next(activeCategory);
       
       // Routes to selected home
+      this.loadingService.isLoading.next(false);
       this.router.navigate(['/home']);
     });
   }

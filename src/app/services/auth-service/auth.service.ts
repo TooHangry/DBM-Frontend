@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Home } from 'src/app/models/home.models';
 import { NavService } from '../nav-service/nav.service';
 import { SnackbarService } from '../snackbar/snackbar.service';
+import { LoadingService } from '../loading/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
 
   // Constructor to inject services
   constructor(private client: HttpClient, private envService: EnvService, private router: Router,
-    private navService: NavService, private snackbarService: SnackbarService) { }
+    private navService: NavService, private snackbarService: SnackbarService, private loadingService: LoadingService) { }
 
   // Precondition: Nothing
   // Postcondition: Returns an observable user
@@ -50,14 +51,17 @@ export class AuthService {
     formData.append('token', this.getToken());
 
     // POST request to obtain user base on token
+    this.loadingService.isLoading.next(true);
     this.client.post(`${this.getBaseURL()}/login/token`, formData).pipe(map((res: any) => res)).subscribe(
       (user: User) => {
         // If the user exists, return it
         this.logUserIn(user);
+        this.loadingService.isLoading.next(false);
       },
       (error: any) => {
         // If the user does not exist, log the error
         console.log(error);
+        this.loadingService.isLoading.next(false);
       }
     );
   }
@@ -70,15 +74,18 @@ export class AuthService {
     formData.append('password', password);
 
     // POST request to backend with user credentials
+    this.loadingService.isLoading.next(true);
     this.client.post(`${this.getBaseURL()}/login`, formData).pipe(map((res: any) => res)).subscribe(
       (user: User) => {
         // If the user is returned, 'log them in' on the frontend
         this.logUserIn(user);
         this.snackbarService.setState(true, 'Logged in Successfully', 2000);
+        this.loadingService.isLoading.next(false);
       },
       (error: any) => {
         // If the user is not returned, show the error in the console
         this.snackbarService.setState(false, 'Oops! Your Credentials Don\'t Match', 3000);
+        this.loadingService.isLoading.next(false);
         console.log(error);
       }
     );
@@ -94,15 +101,19 @@ export class AuthService {
     formData.append('password', password);
 
     // POST request to backend to create a new user
+    this.loadingService.isLoading.next(true);
     this.client.post(`${this.getBaseURL()}/signup`, formData).pipe(map((res: any) => res)).subscribe(
       (user: User) => {
         // Logs the user in if valid request
         this.logUserIn(user);
         this.snackbarService.setState(true, 'Logged in Successfully', 2000);
+        this.loadingService.isLoading.next(false);
+
       },
       (error: any) => {
         // TODO: Show an error if the request is invalid
         this.snackbarService.setState(false, 'That Email is Already Being Used!', 3000);
+        this.loadingService.isLoading.next(false);
         console.log(error);
       }
     );

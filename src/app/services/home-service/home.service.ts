@@ -7,6 +7,7 @@ import { Item } from 'src/app/models/item.models';
 import { pascalCase } from 'src/app/utils/casing.utils';
 import { AuthService } from '../auth-service/auth.service';
 import { EnvService } from '../env-service/env.service';
+import { LoadingService } from '../loading/loading.service';
 import { NavService } from '../nav-service/nav.service';
 import { SnackbarService } from '../snackbar/snackbar.service';
 
@@ -16,7 +17,7 @@ import { SnackbarService } from '../snackbar/snackbar.service';
 export class HomeService {
   // Constructor for service injections
   constructor(private envService: EnvService, private client: HttpClient, private navService: NavService,
-    private authService: AuthService, private snackbarService: SnackbarService) { }
+    private authService: AuthService, private snackbarService: SnackbarService, private loadingService: LoadingService) { }
 
   // Precondition: The home to query
   // Postcondition: Returns an obervable with the home details and items
@@ -35,6 +36,7 @@ export class HomeService {
     formData.append('quantity', item.quantity.toString());
 
     // POST request to backend to create a new item
+    this.loadingService.isLoading.next(true);
     this.client.post(`${this.getBaseURL()}/items/${home.id}`, formData).pipe(map((res: any) => res)).subscribe((returnedHome: HomeInfo) => {
       const newHome: HomeInfo = {
         nickname: returnedHome.nickname,
@@ -53,6 +55,7 @@ export class HomeService {
       this.navService.selectedCategory.next(item.category);
 
       this.snackbarService.setState(true, `Added ${pascalCase(item.item)} to ${home.nickname}`, 2500)
+      this.loadingService.isLoading.next(false);
     });
   }
 
@@ -67,10 +70,12 @@ export class HomeService {
     formData.append('invites', JSON.stringify(homeToAdd.invites.filter((invite: string) => invite !== email)));
 
     // POST request to backend to create a new home
+    this.loadingService.isLoading.next(true);
     this.client.post(`${this.getBaseURL()}/home/add`, formData).pipe(map((res: any) => res)).subscribe((home: Home) => {
       if (this.authService.user.value) {
         // Adds the home to the frontend list
         this.authService.addHome(home);
+        this.loadingService.isLoading.next(false);
       }
     });
   }

@@ -5,6 +5,7 @@ import { Item } from 'src/app/models/item.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { closeModal, openModal } from 'src/app/utils/animations.utils';
@@ -24,7 +25,8 @@ export class MainComponent implements OnInit {
 
   // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService,
-    private authService: AuthService, private snackbarService: SnackbarService) { }
+    private authService: AuthService, private snackbarService: SnackbarService,
+    private loadingService: LoadingService) { }
 
   // Initialization function to run once
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class MainComponent implements OnInit {
       }
     });
     this.navService.activeHome.subscribe(home => {
-        this.selectedHome.next(home);
+      this.selectedHome.next(home);
     });
   }
 
@@ -86,21 +88,24 @@ export class MainComponent implements OnInit {
   // Postcondition: Removes the item from the home
   removeItem(): void {
     if (this.selectedItem && this.selectedHome.value) {
+      this.loadingService.isLoading.next(true);
       this.homeService.removeItem(this.selectedHome.value, this.selectedItem).subscribe(
         (item) => {
-        if (item && this.selectedHome.value)
-        this.selectedHome.next({
-          ...this.selectedHome.value,
-          items: this.selectedHome.value?.items.filter(i => i.id !== item.id)
-        });
+          if (item && this.selectedHome.value)
+            this.selectedHome.next({
+              ...this.selectedHome.value,
+              items: this.selectedHome.value?.items.filter(i => i.id !== item.id)
+            });
 
-        this.navService.activeHome.next(this.selectedHome.value);
-        this.navService.selectedCategory.next(this.selectedItem ? this.selectedItem.category : '');
-        this.snackbarService.setState(true, `${this.selectedItem?.item} Deleted From ${this.selectedHome.value?.nickname}`, 2500);
-      },
-      (error) => {
-        this.snackbarService.setState(false, 'Could Not Delete Item', 2500);
-      });
+          this.navService.activeHome.next(this.selectedHome.value);
+          this.navService.selectedCategory.next(this.selectedItem ? this.selectedItem.category : '');
+          this.snackbarService.setState(true, `${this.selectedItem?.item} Deleted From ${this.selectedHome.value?.nickname}`, 2500);
+          this.loadingService.isLoading.next(false);
+        },
+        (error) => {
+          this.snackbarService.setState(false, 'Could Not Delete Item', 2500);
+          this.loadingService.isLoading.next(false);
+        });
     }
     this.closeDeleteModal();
   }
@@ -115,6 +120,30 @@ export class MainComponent implements OnInit {
     if (home) {
       console.log("Removing member ", event);
       this.authService.removeUser(home.id, event.id);
+    }
+  }
+
+  increaseItem(event: Item) {
+    const currentHome = this.navService.activeHome.value;
+    if (currentHome) {
+      currentHome.items.map(item => {
+        if (item && item.id && item.id == event.id) {
+          ++item.quantity;
+        }
+      })
+      this.navService.activeHome.next(currentHome);
+    }
+  }
+
+  decreaseItem(event: Item) {
+    const currentHome = this.navService.activeHome.value;
+    if (currentHome) {
+      currentHome.items.map(item => {
+        if (item && item.id && item.id == event.id && item.quantity > 0) {
+          --item.quantity;
+        }
+      })
+      this.navService.activeHome.next(currentHome);
     }
   }
 
