@@ -14,8 +14,10 @@
 
     display: flex;
     justify-content: space-evenly;
-
+    z-index: 0;
+    position: relative;
     .arrows {
+        z-index: 1000 !important;
         width: 0;
     }
 
@@ -26,8 +28,11 @@
         justify-content: center;
         align-items: center;
 
+
         &:hover {
             .arrows {
+                position: relative;
+                z-index: 999;
                 margin-left: 0px;
                 height: 40px;
                 display: flex;

@@ -20,13 +20,13 @@ export class HomeContentComponent implements OnInit {
   @Output() saveItem: EventEmitter<Item> = new EventEmitter();
   @Output() increaseThreshold: EventEmitter<Item> = new EventEmitter();
   @Output() decreaseThreshold: EventEmitter<Item> = new EventEmitter();
+  @Output() itemSelected: EventEmitter<Item> = new EventEmitter();
 
   // Local Variables
   currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');
   
   // Constructor for service injections
   constructor() { }
-
 
   ngOnInit(): void {
   }

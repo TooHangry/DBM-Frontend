@@ -22,6 +22,7 @@ export class MainComponent implements OnInit {
   user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   selectedHome: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
   selectedItem: Item | null = null;
+  currentItemToUpdate: Item | null = null;
 
   // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService,
@@ -137,6 +138,10 @@ export class MainComponent implements OnInit {
         }
       })
       this.navService.activeHome.next(currentHome);
+      this.navService.selectedCategory.next(this.navService.selectedCategory.value);
+      if (this.navService.activeSearch.value.length > 0) {
+        this.navService.activeSearch.next(this.navService.activeSearch.value);
+      }
     }
   }
 
@@ -151,10 +156,14 @@ export class MainComponent implements OnInit {
         }
       })
       this.navService.activeHome.next(currentHome);
+      this.navService.selectedCategory.next(this.navService.selectedCategory.value);
+      if (this.navService.activeSearch.value.length > 0) {
+        this.navService.activeSearch.next(this.navService.activeSearch.value);
+      }
     }
   }
 
-    // Precondition: The item to increase
+  // Precondition: The item to increase
   // Postcondition: Increases the item
   increaseThreshold(event: Item) {
     const currentHome = this.navService.activeHome.value;
@@ -165,6 +174,10 @@ export class MainComponent implements OnInit {
         }
       })
       this.navService.activeHome.next(currentHome);
+      this.navService.selectedCategory.next(this.navService.selectedCategory.value);
+      if (this.navService.activeSearch.value.length > 0) {
+        this.navService.activeSearch.next(this.navService.activeSearch.value);
+      }
     }
   }
 
@@ -179,7 +192,35 @@ export class MainComponent implements OnInit {
         }
       })
       this.navService.activeHome.next(currentHome);
+      this.navService.selectedCategory.next(this.navService.selectedCategory.value);
+      if (this.navService.activeSearch.value.length > 0) {
+        this.navService.activeSearch.next(this.navService.activeSearch.value);
+      }
     }
+  }
+
+  // Precondition: The item selected
+  // Postcondition: Opens modal to edit the item
+  itemSelected(item: Item): void {
+    this.currentItemToUpdate = item;
+
+    const modal = (document.getElementById('update-modal') as HTMLDivElement);
+    openModal(modal);
+  }
+
+  saveUpdatedItem(item: Item): void {
+    this.closeUpdateModal();
+    if (this.selectedHome.value) {
+      this.homeService.saveItem(item, this.selectedHome.value.id);
+      this.navService.emptySearch.next(null);
+      this.navService.selectedCategory.next(item.category);
+      this.navService.activeSearch.next('');
+    }
+  }
+
+  closeUpdateModal(): void {
+    const modal = (document.getElementById('update-modal') as HTMLDivElement);
+    closeModal(modal);
   }
 
   // Precondition: The item to save
@@ -187,6 +228,9 @@ export class MainComponent implements OnInit {
   saveItem(event: Item): void {
     if (this.selectedHome.value) {
       this.homeService.saveItem(event, this.selectedHome.value.id);
+      if (this.navService.activeSearch.value.length > 0) {
+        this.navService.activeSearch.next(this.navService.activeSearch.value);
+      }
     }
   }
 

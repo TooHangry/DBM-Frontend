@@ -19,6 +19,7 @@ export class HomeItemsComponent implements OnInit {
   @Output() decreaseItem: EventEmitter<Item> = new EventEmitter();
   @Output() increaseThreshold: EventEmitter<Item> = new EventEmitter();
   @Output() decreaseThreshold: EventEmitter<Item> = new EventEmitter();
+  @Output() itemSelected: EventEmitter<Item> = new EventEmitter();
   @Output() saveItem: EventEmitter<Item> = new EventEmitter();
 
   // Local variables
@@ -62,41 +63,46 @@ export class HomeItemsComponent implements OnInit {
     return pascalCase(itemName);
   }
 
-  // Precondition: The item to increase
+  // Precondition: The item to increase and button event
   // Postcondition: Marks the item and emits it
-  increase(item: Item): void {
+  increase(event: any, item: Item): void {
+    event.stopPropagation();
     this.markItem(item);
     this.increaseItem.emit(item);
   }
 
-  // Precondition: The item to deacrease
+  // Precondition: The item to deacrease and button event
   // Postcondition: Marks the item and emits it
-  decrease(item: Item): void {
+  decrease(event: any,item: Item): void {
+    event.stopPropagation();
     if (item.quantity > 0) {
       this.markItem(item);
       this.decreaseItem.emit(item);
     }
   }
 
-  // Precondition: The item to increase
+  // Precondition: The item to increase and button event
   // Postcondition: Marks the item and emits it
-  increaseThresholdValue(item: Item): void {
+  increaseThresholdValue(event: any,item: Item): void {
+    event.stopPropagation();
     this.markItem(item);
     this.increaseThreshold.emit(item);
   }
 
-  // Precondition: The item to deacrease
+  // Precondition: The item to deacrease and button event
   // Postcondition: Marks the item and emits it
-  decreaseThresholdValue(item: Item): void {
+  decreaseThresholdValue(event: any, item: Item): void {
+    event.stopPropagation();
     if (item.alertThreshold > 0) {
       this.markItem(item);
       this.decreaseThreshold.emit(item);
     }
   }
 
-  // Precondition: The item to save
+  // Precondition: The item to save and button event
   // Postcondition: Unmarks the item and emits it to be saved
-  saveChanges(item: Item) {
+  saveChanges(event: any, item: Item) {
+    event.stopPropagation();
     this.markedItems.next(this.markedItems.value.filter(i => i.id !== item.id));
     this.saveItem.emit(item);
 
@@ -104,6 +110,13 @@ export class HomeItemsComponent implements OnInit {
     if (itemDiv) {
       itemDiv.style.border = '0';
     }
+  }
+
+  // Precondition: The item to delete and the button event
+  // Postcondition: Emits a delete event
+  delete(event: any, item: Item): void {
+    event.stopPropagation();
+    this.deleteItem.emit(item);
   }
 
   // Check if the item is marked
@@ -121,10 +134,15 @@ export class HomeItemsComponent implements OnInit {
     this.markedItems.next([...this.markedItems.value, item]);
   }
 
+  hasNoItems(): boolean {
+    return this.items.value && this.items.value.length < 1;
+  }
+
   // Precondition: The category to filter on
   // Postcondition: Filters home items if they are in the category
   private categoryFilterResults(category: string): void {
     if (this.home) {
+      console.log('f', category)
       this.items.next(this.home.items.filter(item => item.category === category));
     }
   }
@@ -151,7 +169,7 @@ export class HomeItemsComponent implements OnInit {
   // Postcondition: Resets item results from filter
   private clearKeywordResults(): void {
     if (this.home) {
-      this.items.next(this.home.items);
+      this.items.next(this.home.items.filter(i => i.category === this.navService.selectedCategory.value));
       this.isFiltering = false;
       this.navService.emptySearch.next(null);
     }

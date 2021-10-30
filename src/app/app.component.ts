@@ -10,10 +10,12 @@ import { SnackbarService } from './services/snackbar/snackbar.service';
 })
 export class AppComponent implements OnInit{
   title = 'frontend';
-  loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  loading = false;
 
   // Constructor for service injection
-  constructor(private snackbarService: SnackbarService, private loadingService: LoadingService) {}
+  constructor(private snackbarService: SnackbarService, private loadingService: LoadingService) {
+    this.loading = false;
+  }
 
   // Initialization function to run once
   ngOnInit(): void {
@@ -30,6 +32,6 @@ export class AppComponent implements OnInit{
       }
     });
 
-    this.loadingService.isLoading.subscribe(value => this.loading.next(value));
+    this.loadingService.isLoading.subscribe(value => this.loading = value);
   }
 }

@@ -63,6 +63,7 @@ export class SidebarComponent implements OnInit {
   select(category: string): void {
     this.navService.emptySearch.next(null);
     this.navService.selectedCategory.next(category);
+    this.navService.activeSearch.next('');
   }
 
   // Precondition: The category to check

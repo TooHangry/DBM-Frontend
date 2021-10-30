@@ -48,7 +48,7 @@ export class HomeService {
         users: returnedHome.users,
         invites: returnedHome.invites
       };
-      
+
       // Sets the active category to the new item category, adds the item to the frontend-instance of the home
       this.navService.activeHome.next(newHome);
       this.navService.activeCategories.next(newHome.categories);
@@ -71,7 +71,25 @@ export class HomeService {
     this.loadingService.isLoading.next(true);
     this.client.put(`${this.getBaseURL()}/items/update/${item.id}/${homeID}`, formData).pipe(map((res: any) => res)).subscribe(
       (res) => {
-        this.snackbarService.setState(true, `Updated Quantity of ${pascalCase(item.item)} to ${item.quantity}`, 2500);
+        const home = this.navService.activeHome.value;
+        const cats = this.navService.activeCategories.value;
+        if (!cats.includes(item.category)) {
+          const newCats = [...this.navService.activeCategories.value, item.category];
+
+          // @ts-ignore
+          newCats.filter(cat => this.navService.activeHome && this.navService.activeHome.value.items.filter(i => i.category === cat).length > 0);
+          this.navService.activeCategories.next(newCats);
+          if (home) {
+            this.navService.activeHome.next({
+              ...home,
+              items: [...home.items.filter(i => i.id !== item.id), item],
+              categories: newCats
+            });
+
+            this.navService.selectedCategory.next(item.category);
+          }
+        }
+        this.snackbarService.setState(true, `Updated ${pascalCase(item.item)}`, 2500);
         this.loadingService.isLoading.next(false);
       },
       (err) => {
@@ -103,7 +121,7 @@ export class HomeService {
   }
 
   removeItem(home: Home, itemToRemove: Item): Observable<Item> {
-    return this.client.delete(`${this.getBaseURL()}/items/delete/${home.id}/${itemToRemove.id}`).pipe(map((res:any) => res));
+    return this.client.delete(`${this.getBaseURL()}/items/delete/${home.id}/${itemToRemove.id}`).pipe(map((res: any) => res));
   }
 
   // Precondition: Nothing

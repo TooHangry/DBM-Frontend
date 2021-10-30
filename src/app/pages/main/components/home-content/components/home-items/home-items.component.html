@@ -1,5 +1,9 @@
 <div class="container">
-    <div class="item">
+    <div class="container flex" *ngIf="hasNoItems()">
+        There aren't any items in this category! Hit the "+" button in the bottom corner to add items.
+    </div>
+
+    <div class="item" *ngIf="!hasNoItems()">
         <div class="big-attribute flex">
             Item Name
         </div>
@@ -17,7 +21,8 @@
         </div>
     </div>
 
-    <div *ngFor="let item of (items | async)" class="item item-card" [id]="'item' + item.id">
+
+    <div *ngFor="let item of (items | async)" class="item item-card" [id]="'item' + item.id" (click)="itemSelected.emit(item)">
         <div class="attribute flex">
             {{getPascalCase(item.item)}}
         </div>
@@ -27,10 +32,10 @@
                 {{item.quantity}}
             </div>
             <div class="arrows">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increase(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increase($event, item)">
                     <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="decrease(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="decrease($event, item)">
                     <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
                 </svg>
             </div>
@@ -41,17 +46,17 @@
                 {{item.alertThreshold}}
             </div>
             <div class="arrows">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increaseThresholdValue(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="increaseThresholdValue($event, item)">
                     <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="decreaseThresholdValue(item)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="decreaseThresholdValue($event, item)">
                     <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
                 </svg>
             </div>
         </div>
 
         <div class="attribute">
-            <div class="action negative flex" (click)="deleteItem.emit(item)">
+            <div class="action negative flex" (click)="delete($event, item)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <polyline points="3 7 5 7 21 7" fill="none" />
                     <path d="M18.5,7l-1,14H6.5L5.5,7M8,7l.5-3.5h7L16,7" fill="none" />
@@ -60,7 +65,7 @@
                 </svg>
             </div>
 
-            <div class="action positive flex" (click)="saveChanges(item)" *ngIf="itemIsMarked(item)">
+            <div class="action positive flex" (click)="saveChanges($event, item)" *ngIf="itemIsMarked(item)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <polygon points="21 6.5 21 21 3 21 3 3 17.5 3 21 6.5" fill="none"
                         stroke-miterlimit="10" />
