@@ -142,7 +142,6 @@ export class HomeItemsComponent implements OnInit {
   // Postcondition: Filters home items if they are in the category
   private categoryFilterResults(category: string): void {
     if (this.home) {
-      console.log('f', category)
       this.items.next(this.home.items.filter(item => item.category === category));
     }
   }
