@@ -37,7 +37,6 @@ export class ListsComponent implements OnInit {
       // Pic has been processed
       const wordsInPic: string[] = res.data.words.map((word: any) => word.text.toLowerCase());
       const wordsInList = this.list.map(item => item.toLowerCase());
-
       console.log(this.getOverlappingWords(wordsInList, wordsInPic));
     })
     .catch(console.error);
