@@ -1,6 +1,9 @@
-import { Environment } from "./environment";
+export interface Environment {
+  production: boolean,
+  apiUrl: string;
+}
 
 export const environment: Environment = {
   production: true,
-  apiUrl: 'htp://localhost:5000'
+  apiUrl: 'http://174.104.209.51:8084'
 };
