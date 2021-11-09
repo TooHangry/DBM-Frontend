@@ -12,6 +12,8 @@ export class HomeUsersComponent implements OnInit {
   @Input() home: HomeInfo | null = null;
   @Output() removeInvite: EventEmitter<Invite> = new EventEmitter();
   @Output() removeMember: EventEmitter<Member> = new EventEmitter();
+  @Output() closeAddUserModal: EventEmitter<null> = new EventEmitter();
+  @Output() newUser: EventEmitter<string> = new EventEmitter();
 
   // Local variables
   userToDelete: Member | null = null;

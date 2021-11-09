@@ -202,11 +202,12 @@ export class MainComponent implements OnInit {
   // Postcondition: Opens modal to edit the item
   itemSelected(item: Item): void {
     this.currentItemToUpdate = item;
-
     const modal = (document.getElementById('update-modal') as HTMLDivElement);
     openModal(modal);
   }
 
+  // Precondition: The item to save
+  // Postcondition: Saves the item
   saveUpdatedItem(item: Item): void {
     this.closeUpdateModal();
     if (this.selectedHome.value) {
@@ -217,6 +218,8 @@ export class MainComponent implements OnInit {
     }
   }
 
+  // Precondition: Nothing
+  // Postcondition: Closes update modal
   closeUpdateModal(): void {
     const modal = (document.getElementById('update-modal') as HTMLDivElement);
     closeModal(modal);
@@ -237,5 +240,11 @@ export class MainComponent implements OnInit {
   // Postcondition: Gets the current home categories (if exists, else empty list)
   getCategories(): string[] {
     return this.user.value ? this.user.value.categories.sort((a, b) => a.localeCompare(b)) : [];
+  }
+
+  addUserToHome(userToAdd: string): void {
+    if (this.navService.activeHome.value) {
+      this.homeService.addUser(userToAdd, this.navService.activeHome.value.id);
+    }
   }
 }
