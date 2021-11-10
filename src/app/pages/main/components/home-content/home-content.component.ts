@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HomeInfo, Invite, Member } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
+import { HomeService } from 'src/app/services/home-service/home.service';
+import { closeModal, openModal } from 'src/app/utils/animations.utils';
 
 @Component({
   selector: 'app-home-content',
@@ -21,6 +23,7 @@ export class HomeContentComponent implements OnInit {
   @Output() increaseThreshold: EventEmitter<Item> = new EventEmitter();
   @Output() decreaseThreshold: EventEmitter<Item> = new EventEmitter();
   @Output() itemSelected: EventEmitter<Item> = new EventEmitter();
+  @Output() newUser: EventEmitter<string> = new EventEmitter();
 
   // Local Variables
   currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');
@@ -35,5 +38,19 @@ export class HomeContentComponent implements OnInit {
   // Postcondition: Sets the state of this component
   setState(state: string): void {
     this.currentState.next(state);
+  }
+
+  // Precondition: Nothing
+  // Postcondition: Opens the add user modal
+  openAddUserModal(): void {
+    const userModal = document.getElementById('add-user-modal') as HTMLDivElement;
+    openModal(userModal);
+  }
+
+  // Precondition: Nothing
+  // Postcondition: Closes the add user modal
+  closeAddUserModal(): void {
+    const userModal = document.getElementById('add-user-modal') as HTMLDivElement;
+    closeModal(userModal);
   }
 }

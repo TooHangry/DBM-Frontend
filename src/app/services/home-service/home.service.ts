@@ -129,4 +129,25 @@ export class HomeService {
   private getBaseURL(): string {
     return this.envService.getBaseURL();
   }
+
+
+  addUser(user: string, homeID: number): void {
+    const formData = new FormData();
+    formData.append('user', user);
+    formData.append('homeID', homeID.toString());
+    this.client.post(`${this.getBaseURL()}/home/adduser`, formData).pipe(map((res: any) => res)).subscribe(res => {
+      if (res.status === 200) {
+        this.snackbarService.setState(true, "User added to home!", 2500);
+        if (this.navService.activeHome.value) {
+          this.navService.activeHome.next({
+            ...this.navService.activeHome.value,
+            users: this.navService.activeHome.value.users
+          })
+        }
+      }
+      else {
+        this.snackbarService.setState(false, "Could not add user", 2500);
+      }
+    })
+  }
 }

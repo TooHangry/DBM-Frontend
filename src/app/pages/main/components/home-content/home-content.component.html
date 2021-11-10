@@ -72,7 +72,11 @@
     </div>
 
     <div class="list navbarstyle card" *ngIf="(currentState | async) === 'users'">
-        <app-home-users *ngIf="home" [home]="home" (removeInvite)="removeInvite.emit($event)" (removeMember)="removeMember.emit($event)"></app-home-users>
+        <app-home-users *ngIf="home" [home]="home" 
+        (removeInvite)="removeInvite.emit($event)" 
+        (removeMember)="removeMember.emit($event)"
+        (closeAddUserModal)="closeAddUserModal()"
+        (newUser)="newUser.emit($event)"></app-home-users>
         <div class="container flex" *ngIf="home && home.users.length < 1">
             No users in your home!
         </div>
@@ -93,7 +97,7 @@
     </svg>
 </div>
 
-<div class="fab flex" *ngIf="(currentState | async) === 'users' && home && home.isAdmin">
+<div class="fab flex" *ngIf="(currentState | async) === 'users' && home && home.isAdmin" (click)="openAddUserModal()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <circle cx="8.5" cy="7" r="4" fill="none" />
         <polyline points="1 20.5 1 16.5 4 13.5 8.5 15 13 13.5 16 16.5 16 20.5" fill="none" />
