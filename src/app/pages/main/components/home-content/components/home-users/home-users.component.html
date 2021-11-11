@@ -1,7 +1,9 @@
 <div *ngIf="home" class="container">
     <div class="users" *ngIf="home && home.users.length > 0">
         <div class="header">
-            Users
+            <div class="item">
+                Users
+            </div>
         </div>
         <div class="user" *ngFor="let user of home.users">
             <div class="attribute flex">

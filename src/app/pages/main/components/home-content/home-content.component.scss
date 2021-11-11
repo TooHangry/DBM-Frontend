@@ -52,7 +52,7 @@
             display: flex;
             align-items: center;
             .selected {
-                background-color: $hover-color;
+                background-color: $foreground-color;
             }
             .stat {
                 width: calc(33% - 24px);

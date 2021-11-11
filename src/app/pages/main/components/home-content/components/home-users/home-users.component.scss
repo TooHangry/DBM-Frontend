@@ -5,15 +5,22 @@
     flex-direction: column;
     align-items: center;
     .users {
-        margin-top: 16px;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         .header {
-            font-size: 24px;
             width: calc(100% - 32px);
-            margin-bottom: 8px;
+            margin: 8px;
+            min-height: 64px;
+            max-height: 64px;
+            font-size: 24px;
+            display: flex;
+            .item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
 
@@ -24,9 +31,11 @@
         flex-direction: column;
         align-items: center;
         .header {
-            font-size: 24px;
             width: calc(100% - 32px);
-            margin-bottom: 8px;
+            margin: 8px;
+            min-height: 64px;
+            max-height: 64px;
+            font-size: 24px;
         }
     }
 

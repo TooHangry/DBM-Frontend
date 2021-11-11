@@ -1,21 +1,26 @@
 <div class="sidebar-container">
-    <div class="sidebar navbarstyle card">
-        <div class="header">
-            <div class="user hover navbutton" (click)="navigateToUser()">
-                <div class="icon">
+    <div class="sidebar navbarstyle">
+        <div class="content">
 
-                </div>
-                <div class="name">
-                    {{getName()}}
+            <div class="home" (click)="chooseNewHome()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <polyline points="10 5 3 12 10 19" fill="none" stroke-miterlimit="10" />
+                    <line x1="3" y1="12" x2="22" y2="12" fill="none" stroke-miterlimit="10" />
+                </svg>
+                {{getNickname()}}
+            </div>
+
+            <div class="search-area navbarstyle" *ngIf="shouldShowSearch | async">
+                <div class="search">
+                    <input type="text" id="navbar-search" placeholder="Search Home" (keyup)="keyUp($event)">
                 </div>
             </div>
-        </div>
-        <div class="content">
+
+
             <div *ngIf="home | async" class="data">
-                <div class="home" (click)="chooseNewHome()">
-                    {{getNickname()}}
-                </div>
-                <div *ngFor="let category of (categories | async)" class="category" [ngClass]="{'k': isSelected(category)}" (click)="select(category)">
+
+                <div *ngFor="let category of (categories | async)" class="category"
+                    [ngClass]="{'k': isSelected(category)}" (click)="select(category)">
                     {{category}}
                 </div>
             </div>

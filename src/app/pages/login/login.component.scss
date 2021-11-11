@@ -5,6 +5,7 @@
     height: 100%;
     display: flex;
     justify-content: center;
+    user-select: none;
     .login-container {
         margin: 16px 0 32px 0;
         width: calc(100% - 16px);
@@ -15,7 +16,6 @@
             max-height: 500px;
             width: 75%;
             max-width: 500px;
-            background-color: $foreground-color;
             border-radius: 6px;
             margin: 16px 16px 0 16px;
     
@@ -112,10 +112,12 @@
                     min-width: 96px;
                     max-width: 128px;
                     border-radius: 6px;
+                    transition: all 0.2s ease;
     
                     &:hover {
                         cursor: pointer;
                         filter: brightness(125%);
+                        transform: scale(1.05);
                     }
                 }
 

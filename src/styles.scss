@@ -51,12 +51,12 @@ html, body {
 
 .item-card {
     border-radius: 6px;
-    background-color: $hover-color;
+    background-color: $background-color;
     transition: all 0.2s ease;
 
     &:hover {
         cursor: pointer;
-        filter: brightness(125%);
+        transform: scale(1.01);
     }
 }
 

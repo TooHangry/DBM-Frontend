@@ -16,6 +16,10 @@
     align-items: center;
 }
 
+.item-card {
+    background-color: $hover-color;
+}
+
 .item {
     width: calc(100% - 32px);
     margin: 8px;

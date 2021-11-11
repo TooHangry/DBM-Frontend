@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HomeInfo, Invite, Member } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 import { HomeService } from 'src/app/services/home-service/home.service';
+import { NavService } from 'src/app/services/nav-service/nav.service';
 import { closeModal, openModal } from 'src/app/utils/animations.utils';
 
 @Component({
@@ -29,9 +30,14 @@ export class HomeContentComponent implements OnInit {
   currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');
   
   // Constructor for service injections
-  constructor() { }
+  constructor(private navService: NavService) { }
 
   ngOnInit(): void {
+    this.navService.selectedCategory.subscribe(category => {
+      if (category.length > 0) {
+        this.currentState.next('items')
+      }
+    });
   }
 
   // Precondition: The state to switch to

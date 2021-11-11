@@ -1,37 +1,33 @@
 .content {
     position: absolute;
     top: 0;
-    left: 20%;
-    width: calc(80% - 8px);
+    left: 96px;
+    width: calc(100% - 96px);
     height: 100%;
+    display: flex;
+    justify-content:  center;
+}
 
-    .nav {
-        height: 72px;
-        width: calc(80% - 8px);
-        position: fixed;
-        z-index: 100;
-    }
+.nav {
+    height: 100%;
+    width: 96px;
+    position: fixed;
+    left: 0;
+    z-index: 100;
+}
 
-    .nav-fixed {
-        height: 72px;
-        width: 100%;
-        position: fixed;
-        z-index: 100;
-    }
-    
-    .container {
-        position: absolute;
-        top: 72px;
-        height: calc(100% - 72px);
-        overflow: hidden;
-    }
+.container {
+    position: absolute;
+    height: calc(100% - 32px);
+    width: calc(100% - 16px);
+    overflow: hidden;
 }
 
 .sidebar {
     position: fixed;
-    left: 0;
+    left: 72px;
     top: 0;
-    width: 20%;
+    width: 72px;
     height: 100%;
 }
 

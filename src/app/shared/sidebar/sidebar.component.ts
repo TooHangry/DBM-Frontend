@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
   user: User | null = null;
   categories: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   home: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
+  shouldShowSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   // Constructor for service injection
   constructor(private router: Router, private navService: NavService, private authService: AuthService) { }
@@ -29,19 +30,36 @@ export class SidebarComponent implements OnInit {
       }
     });
 
+    // Determines if search should be shown
+    this.navService.showSearch.subscribe(shouldShowSearch => {
+      this.shouldShowSearch.next(shouldShowSearch);
+    });
+
+    // Clears the search bar if triggered
+    this.navService.emptySearch.subscribe(() => {
+      const searchBar = document.getElementById('navbar-search') as HTMLInputElement;
+      if (searchBar) {
+        searchBar.value = '';
+      }
+    })
+
     // Subscribes to the active home to reflect categories
     this.navService.activeHome.subscribe(home => {
-        this.home.next(home);
-        this.navService.activeCategories.subscribe((categories: string[]) => {
-          this.categories.next(categories);
-        });
-    });   
+      this.home.next(home);
+      this.navService.activeCategories.subscribe((categories: string[]) => {
+        this.categories.next(categories);
+      });
+    });
   }
 
-  // Precondition: Nothing
-  // Postcondition: Routes to the user page
-  navigateToUser(): void {
-    this.router.navigate(['/user']);
+  // Precondition: A keyup event (From HTML)
+  // Postcondition: Emits a filter event on the serach property
+  keyUp(event: any) {
+    const searchBar = document.getElementById('navbar-search') as HTMLInputElement;
+    if (searchBar) {
+      const navbarText = searchBar.value;
+      this.navService.activeSearch.next(navbarText.toLowerCase());
+    }
   }
 
   // Precondition: Nothing

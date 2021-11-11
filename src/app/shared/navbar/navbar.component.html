@@ -1,23 +1,30 @@
 <div class="nav-container">
-    <div class="navbar-container navbar navbarstyle card">
+    <div class="navbar-container navbar navbarstyle">
         <div class="buttons navbarstyle">
-            <div class="button flex navbutton hover" (click)="route('/homes')">
-                Manage Homes
+            <div class="button flex navbutton hover" (click)="route('/user')"
+                [ngClass]="{'active' : isActive('/user')}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="none" />
+                    <circle cx="12" cy="9.5" r="3.5" fill="none" />
+                    <polyline points="4.5 18.5 7.5 15.5 12 17 16.5 15.5 19.5 18.5" fill="none" />
+                </svg>
             </div>
-            <div class="button flex navbutton hover" (click)="route('/lists')">
-                My Lists
+            <div class="button flex navbutton hover" (click)="route('/homes')"
+                [ngClass]="{'active' : isActive('/home')}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M1,11,12,2l11,9" fill="none" />
+                    <path d="M20,8.5V22H4V8.5" fill="none" />
+                    <polyline points="9.5 22 9.5 14 14.5 14 14.5 22" fill="none" />
+                </svg>
             </div>
-        </div>
-
-        <div class="search-area navbarstyle" *ngIf="shouldShowSearch | async">
-            <div class="search">
-                <input type="text" id="navbar-search" placeholder="Search Home" (keyup)="keyUp($event)">
-
-                <!-- <div class="dropdown search">
-                    <div class="suggestion search" *ngFor="let suggestion of (suggestions | async)">
-                        {{suggestion}}
-                    </div>
-                </div> -->
+            <div class="button flex navbutton hover" (click)="route('/lists')"
+                [ngClass]="{'active' : isActive('/lists')}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <polygon points="5.5 20 18 20 19.5 18.5 19.5 3.5 18 2 5.5 2 5.5 20" fill="none"
+                        stroke-miterlimit="10" />
+                    <line x1="9" y1="20" x2="9" y2="22.5" fill="none" stroke-miterlimit="10" />
+                    <line x1="15" y1="2" x2="15" y2="20" fill="none" stroke-miterlimit="10" />
+                </svg>
             </div>
         </div>
     </div>

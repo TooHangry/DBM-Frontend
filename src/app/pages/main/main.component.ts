@@ -241,7 +241,7 @@ export class MainComponent implements OnInit {
   getCategories(): string[] {
     return this.user.value ? this.user.value.categories.sort((a, b) => a.localeCompare(b)) : [];
   }
-
+  
   addUserToHome(userToAdd: string): void {
     if (this.navService.activeHome.value) {
       this.homeService.addUser(userToAdd, this.navService.activeHome.value.id);
