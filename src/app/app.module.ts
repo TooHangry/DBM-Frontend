@@ -23,6 +23,7 @@ import { HomeListsComponent } from './pages/main/components/home-content/compone
 import { RemoveUserModalComponent } from './pages/main/components/home-content/components/home-users/remove-user-modal/remove-user-modal.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { AddUserModalComponent } from './pages/main/components/home-content/components/home-users/add-user-modal/add-user-modal.component';
+import { AddListModalComponent } from './pages/main/components/home-content/components/home-lists/add-list-modal/add-list-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AddUserModalComponent } from './pages/main/components/home-content/comp
     RemoveUserModalComponent,
     LoadingComponent,
     AddUserModalComponent,
+    AddListModalComponent,
   ],
   imports: [
     BrowserModule,

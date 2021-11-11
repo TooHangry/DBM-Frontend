@@ -34,13 +34,25 @@ export class HomesComponent implements OnInit {
         this.user.next(user);
         if (user.homes) {
           this.homes.next(user.homes);
+
+
+
+          //((((((((((()))))))))))
+          // REMOVE THIS
+          //@ts-ignore
+          this.homeSelected(user.homes[0])
+          //((((((((((()))))))))))
+
+
+
+
         }
       }
     });
 
     // Sets the active home (if applicable)
     this.navService.activeHome.subscribe(home => {
-        this.selectedHome.next(home);
+      this.selectedHome.next(home);
     });
   }
 
@@ -57,7 +69,7 @@ export class HomesComponent implements OnInit {
       this.navService.activeHome.next(home);
       const activeCategory = home.categories.length > 0 ? home.categories[0] : '';
       this.navService.selectedCategory.next(activeCategory);
-      
+
       // Routes to selected home
       this.loadingService.isLoading.next(false);
       this.router.navigate(['/home']);
@@ -80,7 +92,7 @@ export class HomesComponent implements OnInit {
   closeAddModal(): void {
     const modal = (document.getElementById('add-home-modal') as HTMLDivElement);
     modal.style.backgroundColor = 'rgba(0,0,0,0)';
-    
+
     setTimeout(() => {
       modal.style.transform = 'scale(0)';
     }, 150)

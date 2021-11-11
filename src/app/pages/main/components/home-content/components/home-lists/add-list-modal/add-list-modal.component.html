@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="edge" (click)="cancel()"></div>
+    <div class="modal-container">
+        <div class="content">
+            <div class="header">
+                New List
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    List Name
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search large">
+                        <input type="text" id="list-title" placeholder="Name Your List" (keyup)="checkSave()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="users">
+                <div class="user" *ngFor="let user of (users | async)">
+                    <div class="email">
+                    {{user.email}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="text">
+                <div class="label">
+                    List Name
+                </div>
+                <div class="search-area navbarstyle">
+                    <div class="search small">
+                        <input type="date" id="list-start-date" (input)="checkSave()">
+                    </div>
+                     - to -
+                    <div class="search small">
+                        <input type="date" [disabled]="shouldDisableEnd()" [min]="getMin()" id="list-end-date" (input)="checkSave()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="button flex navbutton negative" (click)="cancel()">
+                    Cancel
+                </div>
+
+                <div class="button flex navbutton positive" *ngIf="canSave | async" (click)="save()">
+                    Save
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="edge" (click)="cancel()"></div>
+</div>

@@ -67,7 +67,6 @@ export class HomeListsComponent implements OnInit {
     if (this.navService.activeHome.value) {
       // @ts-ignore
       const users = this.navService.activeHome.value.users.filter(u => u.id === userID);
-      console.log(users, this.navService.activeHome.value.users)
       return users.length > 0 ? users[0].fname + " " + users[0].lname : '';
     }
     return '';

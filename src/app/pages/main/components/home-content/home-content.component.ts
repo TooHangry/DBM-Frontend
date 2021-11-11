@@ -27,7 +27,7 @@ export class HomeContentComponent implements OnInit {
   @Output() newUser: EventEmitter<string> = new EventEmitter();
 
   // Local Variables
-  currentState: BehaviorSubject<string> = new BehaviorSubject<string>('items');
+  currentState: BehaviorSubject<string> = new BehaviorSubject<string>('lists');
   
   // Constructor for service injections
   constructor(private navService: NavService) { }
@@ -63,5 +63,11 @@ export class HomeContentComponent implements OnInit {
   createNewUser(event: string): void {
     this.newUser.emit(event);
     this.closeAddUserModal();
+  }
+
+  openAddListModal(): void {
+    const modal = document.getElementById('add-list-modal') as HTMLDivElement;
+    console.log(modal)
+    openModal(modal);
   }
 }
