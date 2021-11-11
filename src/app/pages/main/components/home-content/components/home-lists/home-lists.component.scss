@@ -1,6 +1,14 @@
+@import "../../../../../../../variables.scss";
+
 .container {
+
+    .edit-list {
+        width: calc(100% - 32px);
+        height: calc(100% - 32px);
+    }
     .lists {
         overflow-y: auto;
+        overflow-x: hidden;
         width: calc(100% - 32px);
         height: calc(100% - 32px);
         display: grid;
@@ -19,6 +27,13 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            background-color: $hover-color;
+            transition: all 0.2s ease;
+
+            &:hover {
+                transform: scale(1.01);
+                filter: brightness(125%);
+            }
             .title {
 
             }

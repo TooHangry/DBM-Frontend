@@ -5,7 +5,14 @@ export interface List {
     title: string;
     taskedUserID: number;
     items: Item[];
-    dateTasked: Date;
-    dateDue: Date;
+    dateTasked: string;
+    dateDue: string;
     isComplete: boolean;
+}
+
+export interface NewList {
+    title: string;
+    email: string;
+    startDate: string;
+    endDate: string
 }

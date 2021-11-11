@@ -83,7 +83,7 @@
     </div>
 
     <div class="list navbarstyle card" *ngIf="(currentState | async) === 'lists'">
-        <app-home-lists></app-home-lists>
+        <app-home-lists (closeAddListModal)="closeAddListModal()"></app-home-lists>
     </div>
 
 </div>

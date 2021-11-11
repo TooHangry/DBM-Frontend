@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { HomeInfo } from 'src/app/models/home.models';
+import { List } from 'src/app/models/list.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
@@ -17,6 +18,8 @@ export class SidebarComponent implements OnInit {
   categories: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   home: BehaviorSubject<HomeInfo | null> = new BehaviorSubject<HomeInfo | null>(null);
   shouldShowSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  state: BehaviorSubject<string> = new BehaviorSubject<string>('item');
+  lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
 
   // Constructor for service injection
   constructor(private router: Router, private navService: NavService, private authService: AuthService) { }
@@ -29,6 +32,16 @@ export class SidebarComponent implements OnInit {
         this.user = user;
       }
     });
+
+    this.navService.lists.subscribe(lists => {
+      if (lists) {
+        this.lists.next(lists);
+      }
+    });
+
+    this.navService.state.subscribe(state => {
+      this.state.next(state);
+    })
 
     // Determines if search should be shown
     this.navService.showSearch.subscribe(shouldShowSearch => {
@@ -84,6 +97,7 @@ export class SidebarComponent implements OnInit {
     this.navService.activeSearch.next('');
   }
 
+
   // Precondition: The category to check
   // Postcondition: Returns true if the current category matches the param category
   isSelected(category: string): boolean {
@@ -95,4 +109,18 @@ export class SidebarComponent implements OnInit {
   getName(): string {
     return this.user ? this.user.fname : '';
   }
+
+  // Precondition: The category to check
+  // Postcondition: Returns true if the current category matches the param category
+  isSelectedList(list: List): boolean {
+    return (this.navService.selectedList.value !== null && list.id === this.navService.selectedList.value.id);
+  }
+
+  // Precondition: The category to select
+  // Postcondition: Sets the active category
+  selectList(list: List): void {
+    this.navService.selectedList.next(list);
+  }
+
+
 }

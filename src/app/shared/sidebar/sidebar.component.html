@@ -1,4 +1,4 @@
-<div class="sidebar-container">
+<div class="sidebar-container" *ngIf="state && (state | async) == 'items'">
     <div class="sidebar navbarstyle">
         <div class="content">
 
@@ -22,6 +22,19 @@
                 <div *ngFor="let category of (categories | async)" class="category"
                     [ngClass]="{'k': isSelected(category)}" (click)="select(category)">
                     {{category}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sidebar-container" *ngIf="state && (state | async) == 'lists'">
+    <div class="sidebar navbarstyle">
+        <div class="content">
+            <div *ngIf="home | async" class="data">
+                <div *ngFor="let list of (lists | async)" class="category"
+                    [ngClass]="{'k': isSelectedList(list)}" (click)="selectList(list)">
+                    {{list.title}}
                 </div>
             </div>
         </div>

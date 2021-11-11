@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Member } from 'src/app/models/home.models';
+import { NewList } from 'src/app/models/list.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
@@ -11,14 +12,15 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
 })
 export class AddListModalComponent implements OnInit {
   // Inputs/Outputs 
-  @Output() closeAddUserModal: EventEmitter<null> = new EventEmitter();
-  @Output() newUser: EventEmitter<string> = new EventEmitter();
+  @Output() closeAddListModal: EventEmitter<null> = new EventEmitter();
+  @Output() newList: EventEmitter<NewList> = new EventEmitter();
 
   // Local component variables
   emailRegx = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   emails: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   users: BehaviorSubject<Member[]> = new BehaviorSubject<Member[]>([]);
   canSave: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  selectedEmail = '';
   userEmail = '';
 
   // Constructor for injections
@@ -35,7 +37,10 @@ export class AddListModalComponent implements OnInit {
 
     this.navService.activeHome.subscribe(home => {
       if (home && home.users) {
-        this.users.next(home.users);
+        this.emails.next(home.users.map(u => u.email));
+        if (home && home.invites) {
+          this.emails.next([...this.emails.value, ...home.invites.map(u => u.email)])
+        }
       }
     })
   }
@@ -43,24 +48,45 @@ export class AddListModalComponent implements OnInit {
   // Precondition: Nothing. Activated on 'save' button click
   // Postcondition: Creates a new home by emitting the 'addHome' event with a new home instance
   save(): void {
-    const email = this.emails.value && this.emails.value.length > 0 ? this.emails.value[0] : '';
-    if (email.length > 0) {
-      this.newUser.emit(email);
-      this.emails.next([]);
+    if (this.canSave.value) {
+      const newList: NewList = {
+        startDate: new Date((document.getElementById('list-start-date') as HTMLInputElement).value).toUTCString(),
+        endDate: new Date((document.getElementById('list-end-date') as HTMLInputElement).value).toUTCString(),
+        title: (document.getElementById('list-title') as HTMLInputElement).value,
+        email: this.selectedEmail
+      }
+      this.newList.emit(newList);
+      this.clear();
     }
   }
 
   // Precondition: Activated on 'cancel' button click
   // Postcondition: Emits the 'cancelModal' event to be captured by parent component
   cancel(): void {
-    this.closeAddUserModal.emit();
-    this.emails.next([]);
+    this.closeAddListModal.emit();
+    this.clear()
+  }
+
+  clear(): void {
+    (document.getElementById('list-start-date') as HTMLInputElement).value = '';
+    (document.getElementById('list-end-date') as HTMLInputElement).value = '';
+    (document.getElementById('list-title') as HTMLInputElement).value = '';
+    this.selectedEmail = '';
   }
 
   getDate(): string {
     const today = new Date()
     return today.toLocaleDateString();
   }
+
+  isSelected(email: string): boolean {
+    return this.selectedEmail === email
+  }
+
+  selectEmail(email: string): void {
+    this.selectedEmail = email;
+  }
+
 
   // changedStart(): void {
   //   const start = document.getElementById('list-start-date') as HTMLInputElement;
@@ -94,7 +120,7 @@ export class AddListModalComponent implements OnInit {
     const end = document.getElementById('list-end-date') as HTMLInputElement;
     const title = document.getElementById('list-title') as HTMLInputElement;
 
-    if (start.value.length > 0 && end.value.length > 0 && title.value.length > 0) { 
+    if (start.value.length > 0 && end.value.length > 0 && title.value.length > 0 && this.selectedEmail) {
       this.canSave.next(true);
     }
     else {

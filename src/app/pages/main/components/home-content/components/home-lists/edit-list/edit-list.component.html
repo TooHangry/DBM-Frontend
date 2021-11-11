@@ -1,0 +1,29 @@
+<div class="container" *ngIf="list">
+    <div class="content">
+        <div class="header">
+            <div class="title">
+                Home Items
+            </div>
+
+            <div class="title">
+                {{list.title}}
+            </div>
+        </div>
+
+        <div class="items">
+            <div class="item-list">
+                <div class="item" *ngFor="let item of (items | async)">
+                    <div class="title">
+                        {{item.item}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-list">
+
+            </div>
+        </div>
+        
+    </div>
+    
+</div>

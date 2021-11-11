@@ -35,7 +35,7 @@ export class HomeContentComponent implements OnInit {
   ngOnInit(): void {
     this.navService.selectedCategory.subscribe(category => {
       if (category.length > 0) {
-        this.currentState.next('items')
+        this.currentState.next('lists')
       }
     });
   }
@@ -44,6 +44,7 @@ export class HomeContentComponent implements OnInit {
   // Postcondition: Sets the state of this component
   setState(state: string): void {
     this.currentState.next(state);
+    this.navService.state.next(state);
   }
 
   // Precondition: Nothing
@@ -67,7 +68,11 @@ export class HomeContentComponent implements OnInit {
 
   openAddListModal(): void {
     const modal = document.getElementById('add-list-modal') as HTMLDivElement;
-    console.log(modal)
     openModal(modal);
+  }
+
+  closeAddListModal(): void {
+    const modal = document.getElementById('add-list-modal') as HTMLDivElement;
+    closeModal(modal);
   }
 }

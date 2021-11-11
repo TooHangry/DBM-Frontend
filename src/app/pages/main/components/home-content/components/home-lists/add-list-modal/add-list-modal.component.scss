@@ -103,17 +103,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-y: auto;
 
             .user {
                 height: 48px;
+                min-height: 48px;
                 width: calc(100% - 32px);
                 display: flex;
                 align-items: center;
                 background-color: $foreground-color;
                 border-radius: 6px;
-                margin: 16px;
+                margin: 8px 0 8px 0;
+                transition: all 0.2s ease;
+                cursor: pointer;
                 .email {
                     margin-left: 16px;
+                }
+
+                &:hover {
+                    transform: scale(1.025);
+                    filter: brightness(125%);
                 }
             }
         }
@@ -124,7 +133,6 @@
         .large {
             width: 100%;
         }
-
 
         .footer {
             position: relative;
@@ -157,4 +165,9 @@
             }
         }
     }
+}
+
+
+.selected {
+    border: 1px solid $positive-action;
 }

@@ -18,10 +18,9 @@ export class NavService {
   selectedList: BehaviorSubject<List | null> = new BehaviorSubject<List | null>(null);
   lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
 
-
   // Constructor
   constructor() { }
-
+ 
   // Precondition: The boolean value regarding visibility
   // Postcondition: Toggles the search bar up top
   toggleSearch(shouldShow: boolean) {

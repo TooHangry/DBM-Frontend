@@ -24,6 +24,7 @@ import { RemoveUserModalComponent } from './pages/main/components/home-content/c
 import { LoadingComponent } from './shared/loading/loading.component';
 import { AddUserModalComponent } from './pages/main/components/home-content/components/home-users/add-user-modal/add-user-modal.component';
 import { AddListModalComponent } from './pages/main/components/home-content/components/home-lists/add-list-modal/add-list-modal.component';
+import { EditListComponent } from './pages/main/components/home-content/components/home-lists/edit-list/edit-list.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AddListModalComponent } from './pages/main/components/home-content/comp
     LoadingComponent,
     AddUserModalComponent,
     AddListModalComponent,
+    EditListComponent,
   ],
   imports: [
     BrowserModule,

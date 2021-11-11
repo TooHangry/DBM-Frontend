@@ -18,16 +18,16 @@
             </div>
 
             <div class="users">
-                <div class="user" *ngFor="let user of (users | async)">
+                <div class="user" *ngFor="let email of (emails | async)" [ngClass]="{'selected' : isSelected(email)}" (click)="selectEmail(email)">
                     <div class="email">
-                    {{user.email}}
+                    {{email}}
                     </div>
                 </div>
             </div>
 
             <div class="text">
                 <div class="label">
-                    List Name
+                    Date Range
                 </div>
                 <div class="search-area navbarstyle">
                     <div class="search small">

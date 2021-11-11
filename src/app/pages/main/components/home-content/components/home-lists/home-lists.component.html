@@ -1,7 +1,7 @@
 <div class="container flex">
 
-    <div class="lists">
-        <div class="list navbarstyle item-card" *ngFor="let list of (lists | async)">
+    <div class="lists" *ngIf="!(selectedList | async)">
+        <div class="list item-card" *ngFor="let list of (lists | async)" (click)="selectList(list)">
             <div class="title">
                 {{list.title}}
             </div>
@@ -25,8 +25,13 @@
         </div>
     </div>
 
+
+    <div class="edit-list" *ngIf="(selectedList | async)">
+        <app-edit-list [list]="selectedList | async"></app-edit-list>
+    </div>
+
 </div>
 
 <div class="modal" id="add-list-modal">
-    <app-add-list-modal></app-add-list-modal>
+    <app-add-list-modal (closeAddListModal)="closeAddListModal.emit()" (newList)="createNewList($event)"></app-add-list-modal>
 </div>
