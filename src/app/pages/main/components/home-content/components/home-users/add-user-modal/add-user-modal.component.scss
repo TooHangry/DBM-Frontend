@@ -136,10 +136,11 @@
                 height: 48px;
                 min-width: 96px;
                 max-width: 128px;
-
+                transition: all 0.2s ease;
                 &:hover {
                     cursor: pointer;
                     filter: brightness(125%);
+                    transform: scale(1.05);
                 }
             }
 

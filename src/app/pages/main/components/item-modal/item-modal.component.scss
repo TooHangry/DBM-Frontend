@@ -27,7 +27,7 @@
 
         .content {
             width: calc(100% - 32px);
-            height: calc(100% - 32px);
+            height: calc(100% - 16px);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -87,10 +87,11 @@
             .button {
                 height: 48px;
                 width: 96px;
-
+                transition: all 0.2s ease;
                 &:hover {
                     cursor: pointer;
                     filter: brightness(125%);
+                    transform: scale(1.05);
                 }
             }
 

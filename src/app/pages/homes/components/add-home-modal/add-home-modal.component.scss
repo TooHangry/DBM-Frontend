@@ -27,7 +27,7 @@
 
         .content {
             width: calc(100% - 32px);
-            height: calc(100% - 32px);
+            height: calc(100% - 16px);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -97,7 +97,7 @@
 
         .emails {
             margin-top: 32px;
-            height: 45%;
+            height: 33%;
             width: 100%;
             overflow-y: auto;
             overflow-x: hidden;
@@ -143,10 +143,11 @@
                 height: 48px;
                 min-width: 96px;
                 max-width: 128px;
-
+                transition: all 0.2s ease;
                 &:hover {
                     cursor: pointer;
                     filter: brightness(125%);
+                    transform: scale(1.05);
                 }
             }
 

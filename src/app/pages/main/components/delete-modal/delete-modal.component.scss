@@ -54,9 +54,11 @@
         .button {
             height: 48px;
             width: 96px;
+            transition: all 0.2s ease;
             &:hover {
                 cursor: pointer;
                 filter: brightness(125%);
+                transform: scale(1.05);
             }
         }
 

@@ -23,10 +23,15 @@
                 width: 64px;
                 height: 64px;
                 margin-top: 16px;
-
                 svg {
                     width: 75%;
                     stroke: $text-color;
+                    transition: all 0.2s ease;
+                }
+                &:hover {
+                    svg {
+                        transform: scale(1.05);
+                    }
                 }
             }
 
