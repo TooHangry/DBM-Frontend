@@ -20,7 +20,6 @@ export interface HomeToAdd {
 }
 
 export interface Invite {
-    id: number;
     home: number;
     email: string;
 }

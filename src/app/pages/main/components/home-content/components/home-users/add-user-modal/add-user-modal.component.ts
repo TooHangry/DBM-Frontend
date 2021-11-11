@@ -35,8 +35,10 @@ export class AddUserModalComponent implements OnInit {
   // Postcondition: Creates a new home by emitting the 'addHome' event with a new home instance
   save(): void {
     const email = this.emails.value && this.emails.value.length > 0 ? this.emails.value[0] : '';
-    if (email.length > 0) 
+    if (email.length > 0) {
       this.newUser.emit(email);
+      this.emails.next([]);
+    }
   }
 
   // Precondition: Activated on 'cancel' button click

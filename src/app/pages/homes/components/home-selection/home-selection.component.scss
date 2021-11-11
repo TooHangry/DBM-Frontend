@@ -6,6 +6,8 @@
 
 .home-selection {
     overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 6px;
     width: 100%;
     height: calc(100% - 32px);
     display: grid;

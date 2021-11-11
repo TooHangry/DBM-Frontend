@@ -59,4 +59,9 @@ export class HomeContentComponent implements OnInit {
     const userModal = document.getElementById('add-user-modal') as HTMLDivElement;
     closeModal(userModal);
   }
+
+  createNewUser(event: string): void {
+    this.newUser.emit(event);
+    this.closeAddUserModal();
+  }
 }

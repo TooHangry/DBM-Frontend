@@ -89,17 +89,19 @@
         }
 
         .emails {
-            height: 48px;
+            height: 64px;
             width: 100%;
+            border-radius: 6px;
             overflow-y: auto;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
             .email {
                 width: 100%;
-                min-height: 48px;
-                max-height: 48px;
-                margin-bottom: 16px;
+                min-height: 64px;
+                max-height: 64px;
                 border-radius: 6px;
                 background-color: $hover-color;
                 display: flex;

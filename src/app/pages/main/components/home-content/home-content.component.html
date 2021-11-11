@@ -76,7 +76,7 @@
         (removeInvite)="removeInvite.emit($event)" 
         (removeMember)="removeMember.emit($event)"
         (closeAddUserModal)="closeAddUserModal()"
-        (newUser)="newUser.emit($event)"></app-home-users>
+        (newUser)="createNewUser($event)"></app-home-users>
         <div class="container flex" *ngIf="home && home.users.length < 1">
             No users in your home!
         </div>

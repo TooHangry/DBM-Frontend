@@ -167,8 +167,8 @@ export class AuthService {
     }
   }
 
-  removeInvite(id: number): void {
-    this.client.delete(`${this.getBaseURL()}/removeinvite/${id}`).pipe(map(res => res)).subscribe(
+  removeInvite(home: number, email: string): void {
+    this.client.delete(`${this.getBaseURL()}/removeinvite/${home}/${email}`).pipe(map(res => res)).subscribe(
       (res) => {
         this.snackbarService.setState(true, "Invite Deleted", 2500);
 
@@ -177,7 +177,7 @@ export class AuthService {
           oldHome
           this.navService.activeHome.next({
             ...oldHome,
-            invites: oldHome.invites.length > 0 ? oldHome.invites.filter(inv => inv.id !== id) : oldHome.invites
+            invites: oldHome.invites.length > 0 ? oldHome.invites.filter(inv => inv.email !== email) : oldHome.invites
           });
         }
       },

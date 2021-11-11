@@ -114,7 +114,7 @@ export class MainComponent implements OnInit {
   // Precondition: The invite to remove
   // Postcondition: Removes the invite
   removeInvite(event: Invite): void {
-    this.authService.removeInvite(event.id);
+    this.authService.removeInvite(event.home, event.email);
   }
 
   // Precondition: The member to remove

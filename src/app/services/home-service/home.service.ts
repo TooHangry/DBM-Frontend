@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Home, HomeInfo, HomeToAdd } from 'src/app/models/home.models';
+import { Home, HomeInfo, HomeToAdd, Invite, Member } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 import { pascalCase } from 'src/app/utils/casing.utils';
 import { AuthService } from '../auth-service/auth.service';
@@ -136,12 +136,32 @@ export class HomeService {
     formData.append('user', user);
     formData.append('homeID', homeID.toString());
     this.client.post(`${this.getBaseURL()}/home/adduser`, formData).pipe(map((res: any) => res)).subscribe(res => {
+      console.log(res)
+      // User
       if (res.status === 200) {
         this.snackbarService.setState(true, "User added to home!", 2500);
         if (this.navService.activeHome.value) {
+
+          const newUser: Member = {
+            ...res
+          }
+
           this.navService.activeHome.next({
             ...this.navService.activeHome.value,
-            users: this.navService.activeHome.value.users
+            users: [...this.navService.activeHome.value.users, newUser]
+          })
+        }
+      }
+      else if (res.status === 201) { // invite
+        this.snackbarService.setState(true, "User added to home!", 2500);
+
+        if (this.navService.activeHome.value) {
+          const newInvite: Invite = {
+            ...res
+          }
+          this.navService.activeHome.next({
+            ...this.navService.activeHome.value,
+            invites: [...this.navService.activeHome.value.invites, newInvite]
           })
         }
       }
