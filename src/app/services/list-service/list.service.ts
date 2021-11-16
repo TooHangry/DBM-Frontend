@@ -15,14 +15,17 @@ export class ListService {
   }
   baseURL = this.envService.getBaseURL();
   lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
-
+  initialLists: List[] = [];
 
   getListsForHome(homeID: number): Observable<List[]> {
-
     this.client.get(`${this.baseURL}/lists/home/${homeID}`).pipe(map((res: any) => res)).subscribe(
       (lists: List[]) => {
         this.lists.next(lists);
         this.navService.lists.next(this.lists.value);
+
+        this.lists.value.forEach(val => {
+          this.initialLists.push(Object.assign({}, val));
+        })
       }
     )
 
@@ -49,12 +52,72 @@ export class ListService {
 
   cancelEdits(): void {
     if (this.navService.selectedList.value) {
-      // @ts-ignore
-      const list = this.navService.selectedList.value;
-      const lists = this.lists.value.filter(l => l.id === list.id);
-      if (lists.length > 0) {
-        this.navService.selectedList.next(lists[0]);
+      const lists = this.lists.value;
+      const listID = this.navService.selectedList.value?.id;
+      lists.forEach(list => {
+        if (listID === list.id) {
+          console.log(list.items);
+          list.items = list.items.filter(item => item.isInAList);
+          console.log(list.items);
+        }
+      });
+      this.lists.next(lists);
+      this.navService.selectedList.next(lists.filter(list => list.id === listID)[0] ?? null);
+      console.log(lists, listID)
+    }
+  }
+
+  makeChange(list: List): void {
+    this.lists.value.forEach(l => {
+      if (list.id == l.id) {
+        l = list;
       }
+    });
+  }
+
+  saveChanges(): void {
+    const list = this.navService.selectedList.value;
+    const listToChange = this.lists.value.find(l => l.id === list?.id);
+
+    if (listToChange && list) {
+
+      const formData = new FormData();
+      formData.append('items', JSON.stringify(list.items))
+
+      this.client.put(`${this.baseURL}/lists/updateitems/${listToChange.id}`, formData).pipe(map((res: any) => res)).subscribe((data: List) => {
+
+        const initialIDs = this.initialLists.find(l => l.id === list.id)?.items.map(i => i.id);
+        const listIDs = data.items.map(i => i.id);
+
+        const difference = initialIDs?.filter(id => !listIDs?.includes(id));
+        console.log(initialIDs, listIDs)
+
+        this.navService.activeHome.value?.items.forEach(item => {
+          if (data.items.map(i => i.id).includes(item.id)) {
+            item.isInAList = true;
+          }
+          else if (difference?.includes(item.id)) {
+            item.isInAList = false;
+          }
+        });
+
+
+
+        const lists = this.lists.value;
+        lists.forEach(l => {
+          if (l.id === list?.id) {
+            l.items = data.items;
+          }
+        });
+
+        this.initialLists.forEach(l => {
+          if (l.id === list?.id) {
+            l.items = data.items;
+          }
+        })
+        this.lists.next([...lists]);
+        this.navService.selectedList.next(data);
+      })
     }
   }
 }

@@ -4,4 +4,5 @@ export interface Item {
     quantity: number;
     category: string;
     alertThreshold: number;
+    isInAList: boolean;
 }

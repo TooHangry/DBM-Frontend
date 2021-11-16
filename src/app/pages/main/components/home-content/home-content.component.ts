@@ -86,6 +86,7 @@ export class HomeContentComponent implements OnInit {
   saveEdits(): void {
     this.showListSave.next(false);
     this.navService.isEditingList.next(false);
+    this.listService.saveChanges();
   }
 
   cancelEdits(): void {

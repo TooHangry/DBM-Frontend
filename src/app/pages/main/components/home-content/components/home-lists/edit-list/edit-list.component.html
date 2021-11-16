@@ -26,8 +26,8 @@
                 </div>
             </div>
 
-            <div class="item-list" id="list">
-                <div class="item"  *ngFor="let item of list.items" (click)="switchToHome(item)">
+            <div class="item-list" id="list" *ngIf="list">
+                <div class="item" *ngFor="let item of list.items" (click)="switchToHome(item)">
 
                     <div class="end flip flex">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -38,6 +38,19 @@
 
                     <div class="title">
                         {{item.item}}
+                    </div>
+                    <div class="attribute">
+                        <div class="level">
+                            {{item.quantity}}
+                        </div>
+                        <div class="arrows">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>

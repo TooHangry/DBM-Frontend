@@ -30,7 +30,7 @@
             display: flex;
             justify-content: space-between;
             border-radius: 6px;
-            
+
             .item-list {
                 width: calc(50% - 8px);
                 height: calc(100% - 2px);
@@ -54,6 +54,62 @@
                     .title {
                         margin-left: 8px;
                         width: calc(100% - 56px);
+                    }
+
+                    .attribute {
+                        height: 100%;
+                        width: 48px;
+                        margin-right: 48px;
+
+                        font-size: 16px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .arrows {
+                            position: relative;
+                            z-index: 999;
+                            margin-left: 0px;
+                            height: 40px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-evenly;
+                        }
+                        svg {
+                            z-index: 999;
+                            width: 40px;
+                            stroke-width: 3px;
+                            stroke: $text-color;
+                        }
+
+                        .action {
+                            height: 100%;
+                            margin: 0 8px 0 8px;
+                        }
+
+                        .negative {
+                            svg {
+                                height: 50%;
+                                stroke: $negative-action;
+                                transition: all 0.2s ease;
+                            }
+                            &:hover {
+                                transform: scale(1.1);
+                                filter: brightness(1.1);
+                            }
+                        }
+
+                        .positive {
+                            svg {
+                                height: 50%;
+                                transition: all 0.2s ease;
+                                stroke: $positive-action;
+                            }
+                            &:hover {
+                                transform: scale(1.1);
+                                filter: brightness(1.1);
+                            }
+                        }
                     }
                     &:hover {
                         filter: brightness(125%);

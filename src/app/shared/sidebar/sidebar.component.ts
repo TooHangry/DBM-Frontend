@@ -136,4 +136,8 @@ export class SidebarComponent implements OnInit {
       this.listService.cancelEdits();
     }
   }
+
+  showBackButton(): boolean {
+    return this.navService.selectedList.value !== null;
+  }
 }

@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HomeInfo } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 import { List } from 'src/app/models/list.models';
+import { ListService } from 'src/app/services/list-service/list.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
 @Component({
@@ -11,20 +13,26 @@ import { NavService } from 'src/app/services/nav-service/nav.service';
 })
 export class EditListComponent implements OnInit {
   // Inputs and outputs 
-  @Input() list: List | null = null;
   @Output() editMade: EventEmitter<null> = new EventEmitter();
 
   // Local Variables
   items: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
-
-  constructor(private navService: NavService) { }
+  list: List | null = null;
+  home: HomeInfo | null = null;
+  constructor(private navService: NavService, private listService: ListService) { }
 
   ngOnInit(): void {
     this.navService.activeHome.subscribe(home => {
       if (home) {
-        this.items.next(home.items);
+        this.home = home;
+        this.items.next(home.items.filter(item => !item.isInAList));
       }
     });
+
+    this.navService.selectedList.subscribe(list => {
+      this.list = list;
+      this.items.next(this.home?.items.filter(item => !item.isInAList) ?? []);
+    })
 
     this.navService.isEditingList.subscribe(isEditing => {
       if (!isEditing) {
@@ -41,6 +49,7 @@ export class EditListComponent implements OnInit {
     if (this.list) {
       this.list.items = [...this.list.items, item];
       this.items.next(this.items.value.filter(i => i.id !== item.id));
+      this.listService.makeChange(this.list);
       this.changeMade();
     }
   }
