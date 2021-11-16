@@ -6,15 +6,28 @@
             </div>
 
             <div class="title">
-                {{list.title}}
+                {{list.value?.title}}
             </div>
         </div>
 
         <div class="items">
             <div class="item-list">
+                <div class="header">
+                    <div class="attribute">Item</div>
+                    <div class="attribute">Available Quantity</div>
+                </div>
                 <div class="item" *ngFor="let item of (items | async)" (click)="switchToList(item)">
                     <div class="title">
                         {{item.item}}
+                    </div>
+
+                    <div class="attribute">
+                        <div class="level">
+                            {{item.quantity}}
+                        </div>
+                    </div>
+
+                    <div class="attribute">
                     </div>
 
                     <div class="end flex">
@@ -27,7 +40,14 @@
             </div>
 
             <div class="item-list" id="list" *ngIf="list">
-                <div class="item" *ngFor="let item of list.items" (click)="switchToHome(item)">
+
+                <div class="header left">
+                    <div class="attribute">Item</div>
+                    <div class="attribute">Available Quantity</div>
+                    <div class="attribute">Needed</div>
+                </div>
+
+                <div class="item" *ngFor="let item of (list | async)?.items" (click)="switchToHome(item)">
 
                     <div class="end flip flex">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -36,22 +56,35 @@
                         </svg>
                     </div>
 
-                    <div class="title">
-                        {{item.item}}
-                    </div>
-                    <div class="attribute">
-                        <div class="level">
-                            {{item.quantity}}
+                    <div class="body">
+
+                        <div class="title">
+                            {{item.item}}
                         </div>
-                        <div class="arrows">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
-                            </svg>
+    
+                        <div class="attribute">
+                            <div class="level">
+                                {{item.quantity}}
+                            </div>
+                        </div>
+    
+                        <div class="attribute">
+                            <div class="level">
+                                {{item.needed ? item.needed : 0}}
+                            </div>
+                            <div class="arrows">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    (click)="increaseThresholdValue($event, item)">
+                                    <polyline points="19 15 12 8 5 15" fill="none" stroke-miterlimit="10" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                    (click)="decreaseThresholdValue($event, item)">
+                                    <polyline points="5 9 12 16 19 9" fill="none" stroke-miterlimit="10" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

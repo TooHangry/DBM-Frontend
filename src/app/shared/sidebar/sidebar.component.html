@@ -34,10 +34,23 @@
 
             <div *ngIf="home | async" class="data"
                 [ngClass]="{'editing' : (isEditingList | async), 'not-editing' : !(isEditingList | async)}">
-                <div *ngIf="showBackButton()" class="back" (click)="showListSelect()">
+
+                <div class="back" (click)="chooseNewHome()">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <polyline points="10 5 3 12 10 19" fill="none" stroke-miterlimit="10" />
                         <line x1="3" y1="12" x2="22" y2="12" fill="none" stroke-miterlimit="10" />
+                    </svg>
+                    {{getNickname()}}
+                </div>
+
+                <div *ngIf="showBackButton()" class="back" (click)="showListSelect()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <line x1="8" y1="6" x2="21" y2="6" fill="none" stroke-miterlimit="10" />
+                        <line x1="8" y1="12" x2="21" y2="12" fill="none" stroke-miterlimit="10" />
+                        <line x1="8" y1="18" x2="21" y2="18" fill="none" stroke-miterlimit="10" />
+                        <line x1="3" y1="6" x2="4.5" y2="6" fill="none" />
+                        <line x1="3" y1="12" x2="4.5" y2="12" fill="none" />
+                        <line x1="3" y1="18" x2="4.5" y2="18" fill="none" />
                     </svg>
                     Lists
                 </div>

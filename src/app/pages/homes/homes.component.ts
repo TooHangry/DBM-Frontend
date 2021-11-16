@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Home, HomeInfo, HomeToAdd } from 'src/app/models/home.models';
@@ -23,7 +23,8 @@ export class HomesComponent implements OnInit {
 
   // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService,
-    private router: Router, private loadingService: LoadingService, private listService: ListService) { }
+    private router: Router, private loadingService: LoadingService, private listService: ListService,
+    private cdref: ChangeDetectorRef) { }
 
   // Initialization function (runs once)
   ngOnInit(): void {
@@ -51,10 +52,15 @@ export class HomesComponent implements OnInit {
       }
     });
 
+
     // Sets the active home (if applicable)
     this.navService.activeHome.subscribe(home => {
       this.selectedHome.next(home);
     });
+  }
+
+  ngAfterContentChecked(): void {
+    this.cdref.detectChanges();
   }
 
   // Precondition: The home event received from child component

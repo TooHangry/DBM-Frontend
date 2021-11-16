@@ -56,14 +56,11 @@ export class ListService {
       const listID = this.navService.selectedList.value?.id;
       lists.forEach(list => {
         if (listID === list.id) {
-          console.log(list.items);
-          list.items = list.items.filter(item => item.isInAList);
-          console.log(list.items);
+          list.items = this.initialLists.find(l => l.id === listID)?.items ?? []
         }
       });
       this.lists.next(lists);
       this.navService.selectedList.next(lists.filter(list => list.id === listID)[0] ?? null);
-      console.log(lists, listID)
     }
   }
 
@@ -78,7 +75,6 @@ export class ListService {
   saveChanges(): void {
     const list = this.navService.selectedList.value;
     const listToChange = this.lists.value.find(l => l.id === list?.id);
-
     if (listToChange && list) {
 
       const formData = new FormData();
@@ -90,7 +86,6 @@ export class ListService {
         const listIDs = data.items.map(i => i.id);
 
         const difference = initialIDs?.filter(id => !listIDs?.includes(id));
-        console.log(initialIDs, listIDs)
 
         this.navService.activeHome.value?.items.forEach(item => {
           if (data.items.map(i => i.id).includes(item.id)) {

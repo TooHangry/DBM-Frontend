@@ -49,7 +49,8 @@ export class ItemModalComponent implements OnInit {
       quantity: parseFloat(quantity),
       alertThreshold: parseFloat(threshold),
       category: category,
-      isInAList: false
+      isInAList: false,
+      needed: parseFloat(quantity),
     };
 
     this.addItem.emit(item);

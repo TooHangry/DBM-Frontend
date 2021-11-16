@@ -23,12 +23,14 @@
 .item {
     width: calc(100% - 32px);
     margin: 8px;
+    padding-left: 8px;
     min-height: 64px;
     max-height: 64px;
     border-radius: 6px;
 
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     z-index: 0;
     position: relative;
     .arrows {
@@ -37,12 +39,13 @@
     }
 
     .attribute {
+        height: calc(100% - 16px);
         width: 25%;
         font-size: 16px;
         display: flex;
         justify-content: center;
         align-items: center;
-
+        transition: all 0.2s ease;
 
         &:hover {
             .arrows {
@@ -68,7 +71,7 @@
 
         .negative {
             svg {
-                height: 50%;
+                height: 75%;
                 stroke: $negative-action;
                 transition: all 0.2s ease;
             }
@@ -80,7 +83,7 @@
 
         .positive {
             svg {
-                height: 50%;
+                height: 75%;
                 transition: all 0.2s ease;
                 stroke: $positive-action;
             }

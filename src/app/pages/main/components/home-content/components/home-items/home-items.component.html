@@ -23,7 +23,7 @@
 
     <div class="items">
         <div *ngFor="let item of (items | async)" class="item item-card" [id]="'item' + item.id"
-            (click)="itemSelected.emit(item)">
+            (click)="itemSelected.emit(item)" [ngClass]="{'warn' : item.quantity <= item.alertThreshold}">
             <div class="attribute flex">
                 {{getPascalCase(item.item)}}
             </div>

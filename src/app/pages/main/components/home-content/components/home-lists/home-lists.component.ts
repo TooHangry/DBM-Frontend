@@ -73,6 +73,7 @@ export class HomeListsComponent implements OnInit {
 
     this.listService.newList(newList).subscribe(list => {
       this.lists.next([...this.lists.value, list]);
+      this.listService.lists.next([...this.listService.lists.value, list]);
       this.navService.lists.next(this.lists.value);
       this.closeAddListModal.emit();
       this.navService.selectedList.next(list);
