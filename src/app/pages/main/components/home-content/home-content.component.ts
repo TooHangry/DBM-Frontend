@@ -49,6 +49,8 @@ export class HomeContentComponent implements OnInit {
     if (!this.showListSave.value) {
       this.currentState.next(state);
       this.navService.state.next(state);
+      this.cancelEdits();
+      this.navService.selectedList.next(null);
     }
   }
 
@@ -93,5 +95,13 @@ export class HomeContentComponent implements OnInit {
     this.showListSave.next(false);
     this.navService.isEditingList.next(false);
     this.listService.cancelEdits();
+  }
+
+  getItemsInLists(): number {
+    return this.navService.activeHome.value?.items.filter(i => i.isInAList).length ?? 0;
+  }
+
+  getListCount(): number {
+    return this.listService.lists?.value.length;
   }
 }

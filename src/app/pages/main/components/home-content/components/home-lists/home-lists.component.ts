@@ -26,7 +26,7 @@ export class HomeListsComponent implements OnInit {
 
   // Initialization method to run once
   ngOnInit(): void {
-    this.listService.getListsForHome(1).subscribe(homeLists => {
+    this.listService.lists.subscribe(homeLists => {
       this.lists.next(homeLists);
     });
 

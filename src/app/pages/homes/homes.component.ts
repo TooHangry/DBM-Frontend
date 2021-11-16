@@ -5,6 +5,7 @@ import { Home, HomeInfo, HomeToAdd } from 'src/app/models/home.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { HomeService } from 'src/app/services/home-service/home.service';
+import { ListService } from 'src/app/services/list-service/list.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
@@ -22,7 +23,7 @@ export class HomesComponent implements OnInit {
 
   // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService, private authService: AuthService,
-    private router: Router, private loadingService: LoadingService) { }
+    private router: Router, private loadingService: LoadingService, private listService: ListService) { }
 
   // Initialization function (runs once)
   ngOnInit(): void {
@@ -69,6 +70,9 @@ export class HomesComponent implements OnInit {
       this.navService.activeHome.next(home);
       const activeCategory = home.categories.length > 0 ? home.categories[0] : '';
       this.navService.selectedCategory.next(activeCategory);
+
+      this.listService.getListsForHome(homeEvent.id).subscribe(homeLists => {
+      });
 
       // Routes to selected home
       this.loadingService.isLoading.next(false);
