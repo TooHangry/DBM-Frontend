@@ -40,7 +40,7 @@ export class HomesComponent implements OnInit {
           //((((((((((()))))))))))
           // REMOVE THIS
           //@ts-ignore
-          this.homeSelected(user.homes[0])
+          // this.homeSelected(user.homes[0])
           //((((((((((()))))))))))
 
 

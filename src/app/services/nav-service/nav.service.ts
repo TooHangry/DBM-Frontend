@@ -17,7 +17,7 @@ export class NavService {
   state: BehaviorSubject<string> = new BehaviorSubject<string>('items');
   selectedList: BehaviorSubject<List | null> = new BehaviorSubject<List | null>(null);
   lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
-
+  isEditingList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   // Constructor
   constructor() { }

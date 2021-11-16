@@ -3,7 +3,8 @@ import { Item } from "./item.models";
 export interface List {
     id: number;
     title: string;
-    taskedUserID: number;
+    taskedUser: number;
+    taskedUserEmail?: string;
     items: Item[];
     dateTasked: string;
     dateDue: string;

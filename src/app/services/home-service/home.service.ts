@@ -136,7 +136,6 @@ export class HomeService {
     formData.append('user', user);
     formData.append('homeID', homeID.toString());
     this.client.post(`${this.getBaseURL()}/home/adduser`, formData).pipe(map((res: any) => res)).subscribe(res => {
-      console.log(res)
       // User
       if (res.status === 200) {
         this.snackbarService.setState(true, "User added to home!", 2500);

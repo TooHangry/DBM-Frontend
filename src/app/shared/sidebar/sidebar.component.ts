@@ -5,6 +5,7 @@ import { HomeInfo } from 'src/app/models/home.models';
 import { List } from 'src/app/models/list.models';
 import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { ListService } from 'src/app/services/list-service/list.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
 @Component({
@@ -20,9 +21,10 @@ export class SidebarComponent implements OnInit {
   shouldShowSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   state: BehaviorSubject<string> = new BehaviorSubject<string>('item');
   lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
+  isEditingList: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   // Constructor for service injection
-  constructor(private router: Router, private navService: NavService, private authService: AuthService) { }
+  constructor(private router: Router, private navService: NavService, private authService: AuthService, private listService: ListService) { }
 
   // Initialization function to run once
   ngOnInit(): void {
@@ -63,6 +65,10 @@ export class SidebarComponent implements OnInit {
         this.categories.next(categories);
       });
     });
+
+    this.navService.isEditingList.subscribe(isEditing => {
+      this.isEditingList.next(isEditing);
+    })
   }
 
   // Precondition: A keyup event (From HTML)
@@ -119,8 +125,15 @@ export class SidebarComponent implements OnInit {
   // Precondition: The category to select
   // Postcondition: Sets the active category
   selectList(list: List): void {
-    this.navService.selectedList.next(list);
+    if (!this.isEditingList.value) {
+      this.navService.selectedList.next(list);
+    }
   }
 
-
+  showListSelect(): void {
+    if (!this.isEditingList.value) {
+      this.navService.selectedList.next(null);
+      this.listService.cancelEdits();
+    }
+  }
 }

@@ -33,7 +33,7 @@
             
             .item-list {
                 width: calc(50% - 8px);
-                height: 100%;
+                height: calc(100% - 2px);
                 border-radius: 6px;
                 background-color: $background-color;
                 display: flex;
@@ -49,8 +49,40 @@
                     align-items: center;
                     background-color: $foreground-color;
                     border-radius: 6px;
+                    transition: all 0.2s ease;
+                    cursor: pointer;
                     .title {
                         margin-left: 8px;
+                        width: calc(100% - 56px);
+                    }
+                    &:hover {
+                        filter: brightness(125%);
+                        transform: scale(1.025);
+                        animation-delay: 0.2s;
+                        .end {
+                            opacity: 1;
+                            width: 48px;
+                            transform: scale(1);
+                        }
+                    }
+
+                    .end {
+                        height: 100%;
+                        width: 0;
+                        opacity: 0;
+                        transform: scale(0);
+                        transition: all 0.2s ease;
+                        svg {
+                            height: 50%;
+                            fill: $text-color;
+                            stroke: $text-color;
+                        }
+                    }
+
+                    .flip {
+                        svg {
+                            transform: rotate(180deg);
+                        }
                     }
                 }
             }

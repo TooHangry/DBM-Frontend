@@ -12,18 +12,37 @@
 
         <div class="items">
             <div class="item-list">
-                <div class="item" *ngFor="let item of (items | async)">
+                <div class="item" *ngFor="let item of (items | async)" (click)="switchToList(item)">
+                    <div class="title">
+                        {{item.item}}
+                    </div>
+
+                    <div class="end flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polygon points="5.2 12 5.2 3 13 7.5 20.8 12 13 16.5 5.2 21 5.2 12"
+                                stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-list" id="list">
+                <div class="item"  *ngFor="let item of list.items" (click)="switchToHome(item)">
+
+                    <div class="end flip flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <polygon points="5.2 12 5.2 3 13 7.5 20.8 12 13 16.5 5.2 21 5.2 12"
+                                stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+
                     <div class="title">
                         {{item.item}}
                     </div>
                 </div>
             </div>
-
-            <div class="item-list">
-
-            </div>
         </div>
-        
+
     </div>
-    
+
 </div>

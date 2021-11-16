@@ -7,11 +7,11 @@
             </div>
 
             <div class="tasked-user">
-                Assigned to: {{getHomeUser(list.taskedUserID)}}
+                Assigned to: {{getHomeUser(list.taskedUser)}}
             </div>
             <div class="dates">
                 <div class="date">
-                    Assigned on: {{list.dateTasked | date:'shortDate'}}
+                    Start: {{list.dateTasked | date:'shortDate'}}
 
                 </div>
                 <div class="date">
@@ -27,7 +27,7 @@
 
 
     <div class="edit-list" *ngIf="(selectedList | async)">
-        <app-edit-list [list]="selectedList | async"></app-edit-list>
+        <app-edit-list [list]="selectedList | async" (editMade)="listEditMade()"></app-edit-list>
     </div>
 
 </div>
