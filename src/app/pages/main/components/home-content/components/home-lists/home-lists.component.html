@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div class="completion-status">
+            <div class="completion-status" [ngClass]="{'complete': list.isComplete}">
                 {{list.isComplete ? 'Completed': 'Not Complete'}}
             </div>
         </div>

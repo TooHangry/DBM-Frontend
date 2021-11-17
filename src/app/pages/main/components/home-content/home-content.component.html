@@ -116,11 +116,13 @@
         <polyline points="8 3 8 7 16 7 16 3" fill="none" stroke-miterlimit="10" />
     </svg>
 </div>
-<div class="fab flex" *ngIf="(currentState | async) === 'lists' && home && home.isAdmin" (click)="openAddListModal()" [ngClass]="{'disabled' : (showListSave | async)}"> 
+<div class="list-fab flex" *ngIf="(currentState | async) === 'lists' && home && home.isAdmin" (click)="openAddListModal()" [ngClass]="{'disabled' : (showListSave | async)}"> 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <circle cx="8.5" cy="7" r="4" fill="none" />
-        <polyline points="1 20.5 1 16.5 4 13.5 8.5 15 13 13.5 16 16.5 16 20.5" fill="none" />
-        <line x1="19.5" y1="6.5" x2="19.5" y2="13.5" fill="none" stroke-miterlimit="10" />
-        <line x1="23" y1="10" x2="16" y2="10" fill="none" stroke-miterlimit="10" />
+        <line x1="8" y1="6" x2="21" y2="6" fill="none" stroke-miterlimit="10" />
+        <line x1="8" y1="12" x2="21" y2="12" fill="none" stroke-miterlimit="10" />
+        <line x1="8" y1="18" x2="21" y2="18" fill="none" stroke-miterlimit="10" />
+        <line x1="3" y1="6" x2="4.5" y2="6" fill="none" />
+        <line x1="3" y1="12" x2="4.5" y2="12" fill="none" />
+        <line x1="3" y1="18" x2="4.5" y2="18" fill="none" />
     </svg>
 </div>

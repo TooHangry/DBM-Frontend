@@ -35,13 +35,18 @@
                 filter: brightness(125%);
             }
             .title {
-
+                font-size: 24px;
             }
             .tasked-user {
-
+                filter: brightness(75%);
+                margin: 4px;
             }
 
             .dates {
+                filter: brightness(75%);
+                display: flex;
+                flex-direction: column;
+                margin: 4px;
                 .date {
 
                 }
@@ -49,6 +54,10 @@
 
             .completion-status {
 
+            }
+
+            .complete {
+                color: $positive-action;
             }
         }
     }

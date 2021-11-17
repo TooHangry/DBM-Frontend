@@ -127,6 +127,33 @@
     }
 }
 
+.list-fab {
+    position: absolute;
+    bottom: 48px;
+    right: 48px;
+    width: 64px;
+    height: 64px;
+    background-color: $element-color;
+    z-index: 1000;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+        
+        width: 50%;
+        stroke: $text-color;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        filter: brightness(1.1);
+    }
+}
+
 .mini-fab {
     position: absolute;
     bottom: 120px;

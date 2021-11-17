@@ -51,6 +51,11 @@ export class HomeContentComponent implements OnInit {
       this.navService.state.next(state);
       this.cancelEdits();
       this.navService.selectedList.next(null);
+
+      if (state == 'lists') {
+        this.listService.getListsForHome(this.home?.id ?? 1).subscribe(homeLists => {
+        });
+      }
     }
   }
 

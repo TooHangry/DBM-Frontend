@@ -20,6 +20,8 @@ export class ListsComponent implements OnInit {
     'bananas'
   ]
 
+  img = '';
+
   // Constructor for service injection
   constructor() { }
 
@@ -32,14 +34,28 @@ export class ListsComponent implements OnInit {
   onFileChanged(event: any): void {
     const image = event.target.files[0];
 
+    // encode the file using the FileReader API
+    const reader = new FileReader();
+    reader.onloadend = () => {
+
+      // use a regex to remove data url part
+      this.img = reader.result as string;
+      // const base64String = reader.result?.replace('data:', '').replace(/^.+,/, '');
+
+      // log to console
+      // logs wL2dvYWwgbW9yZ...
+    };
+    reader.readAsDataURL(image);
+
     Tesseract.recognize(image)
-    .then((res: any) => {
-      // Pic has been processed
-      const wordsInPic: string[] = res.data.words.map((word: any) => word.text.toLowerCase());
-      const wordsInList = this.list.map(item => item.toLowerCase());
-      console.log(this.getOverlappingWords(wordsInList, wordsInPic));
-    })
-    .catch(console.error);
+      .then((res: any) => {
+        // Pic has been processed
+        const wordsInPic: string[] = res.data.words.map((word: any) => word.text.toLowerCase());
+        const wordsInList = this.list.map(item => item.toLowerCase());
+        console.log(this.getOverlappingWords(wordsInList, wordsInPic));
+        console.log(res.data.words);
+      })
+      .catch(console.error);
 
   }
 
