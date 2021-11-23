@@ -22,7 +22,7 @@
                     </svg>
                 </div>
 
-                <div class="flex positive"  *ngIf="!isNotAdmin(user)">
+                <div class="flex positive" *ngIf="!isNotAdmin(user)">
                     Admin
                 </div>
             </div>
@@ -31,7 +31,9 @@
 
     <div class="invites" *ngIf="home && home.invites.length > 0">
         <div class="header">
-            Pending Invites
+            <div class="item">
+                Pending Invites
+            </div>
         </div>
         <div class="user" *ngFor="let user of home.invites">
             <div class="attribute flex">
@@ -58,5 +60,6 @@
 </div>
 
 <div class="modal" id="add-user-modal">
-    <app-add-user-modal (closeAddUserModal)="closeAddUserModal.emit($event)" (newUser)="newUser.emit($event)"></app-add-user-modal>
+    <app-add-user-modal (closeAddUserModal)="closeAddUserModal.emit($event)" (newUser)="newUser.emit($event)">
+    </app-add-user-modal>
 </div>

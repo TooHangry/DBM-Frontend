@@ -5,6 +5,7 @@ import { Item } from 'src/app/models/item.models';
 import { List } from 'src/app/models/list.models';
 import { ListService } from 'src/app/services/list-service/list.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
+import { pascalCase } from 'src/app/utils/casing.utils';
 
 @Component({
   selector: 'app-edit-list',
@@ -99,5 +100,11 @@ export class EditListComponent implements OnInit {
         }
       });
     }
+  }
+
+  // Precondition: The name of the item to transform
+  // Postcondition: Converts the item name to have capital letters at the start of each word
+  getPascalCase(itemName: string): string {
+    return pascalCase(itemName);
   }
 }

@@ -42,9 +42,10 @@
                 padding-top: 8px;
 
                 .header {
-                    width: calc(100% - 32px);
+                    width: calc(100% - 80px);
                     height: 64px;
                     display: flex;
+                    text-align: center;
                     align-items: center;
                     color: $text-color;
                     .attribute {
@@ -57,7 +58,7 @@
                 }
 
                 .left {
-                    margin-left: 64px;
+                    margin-left: 52px;
                 }
 
                 .right {

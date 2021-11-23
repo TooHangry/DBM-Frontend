@@ -1,4 +1,4 @@
-<div class="sidebar-container" *ngIf="state && (state | async) == 'items'">
+<div class="sidebar-container" *ngIf="state && ((state | async) == 'items' || (state | async) === 'users')">
     <div class="sidebar navbarstyle">
         <div class="content">
 
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="sidebar-container" *ngIf="state && (state | async) == 'lists'">
+<div class="sidebar-container" *ngIf="state && (state | async) === 'lists'">
     <div class="sidebar navbarstyle">
         <div class="content">
 

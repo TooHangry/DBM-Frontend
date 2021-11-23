@@ -1,5 +1,19 @@
 @import "../../../../../../../variables.scss";
 
+.header {
+    width: calc(100% - 32px);
+    margin: 8px;
+    min-height: 64px;
+    max-height: 64px;
+    font-size: 24px;
+    display: flex;
+    .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -9,19 +23,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        .header {
-            width: calc(100% - 32px);
-            margin: 8px;
-            min-height: 64px;
-            max-height: 64px;
-            font-size: 24px;
-            display: flex;
-            .item {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
     }
 
     .invites {
@@ -30,13 +31,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        .header {
-            width: calc(100% - 32px);
-            margin: 8px;
-            min-height: 64px;
-            max-height: 64px;
-            font-size: 24px;
-        }
     }
 
     .user {
