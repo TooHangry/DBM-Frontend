@@ -4,14 +4,16 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { List } from 'src/app/models/list.models';
 import { EnvService } from '../env-service/env.service';
+import { LoadingService } from '../loading/loading.service';
 import { NavService } from '../nav-service/nav.service';
+import { SnackbarService } from '../snackbar/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListService {
 
-  constructor(private navService: NavService, private client: HttpClient, private envService: EnvService) {
+  constructor(private navService: NavService, private client: HttpClient, private envService: EnvService, private snackBar: SnackbarService, private loadingService: LoadingService) {
   }
   baseURL = this.envService.getBaseURL();
   lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
@@ -20,10 +22,16 @@ export class ListService {
   getListsForHome(homeID: number): Observable<List[]> {
     this.client.get(`${this.baseURL}/lists/home/${homeID}`).pipe(map((res: any) => res)).subscribe(
       (lists: List[]) => {
+
+        lists.forEach(val => {
+          val.isComplete = val.isComplete.toString().toLowerCase().includes("t");
+        });
+
         this.lists.next(lists);
         this.navService.lists.next(this.lists.value);
 
         this.lists.value.forEach(val => {
+          val.isComplete = val.isComplete.toString().toLowerCase().includes("t");
           this.initialLists.push(Object.assign({}, val));
         })
       }
@@ -40,7 +48,6 @@ export class ListService {
       const formData = new FormData();
       formData.append('title', listToCreate.title);
       formData.append('taskedUserID', user.toString());
-      formData.append('dateTasked', listToCreate.dateTasked);
       formData.append('dateDue', listToCreate.dateDue);
       formData.append('isComplete', 'true');
       formData.append('home', home.id.toString());
@@ -79,11 +86,15 @@ export class ListService {
 
       const formData = new FormData();
       formData.append('items', JSON.stringify(list.items))
+      formData.append('user', list.taskedUser.toString())
+      formData.append('title', list.title)
 
+      this.loadingService.isLoading.next(true);
       this.client.put(`${this.baseURL}/lists/updateitems/${listToChange.id}`, formData).pipe(map((res: any) => res)).subscribe((data: List) => {
 
         const initialIDs = this.initialLists.find(l => l.id === list.id)?.items.map(i => i.id);
         const listIDs = data.items.map(i => i.id);
+        data.isComplete = data.isComplete.toString().toLowerCase().includes("t");
 
         const difference = initialIDs?.filter(id => !listIDs?.includes(id));
 
@@ -96,23 +107,50 @@ export class ListService {
           }
         });
 
-
-
         const lists = this.lists.value;
         lists.forEach(l => {
           if (l.id === list?.id) {
             l.items = data.items;
+            l.isComplete = data.isComplete;
           }
         });
 
         this.initialLists.forEach(l => {
           if (l.id === list?.id) {
             l.items = data.items;
+            l.isComplete = data.isComplete;
           }
         })
         this.lists.next([...lists]);
         this.navService.selectedList.next(data);
+        this.loadingService.isLoading.next(false);
       })
     }
+  }
+
+  removeList(id: number): void {
+    this.loadingService.isLoading.next(true);
+    this.client.delete(`${this.baseURL}/lists/remove/${id}`).pipe(map((res: any) => res)).subscribe(
+      (lists: List[]) => {
+
+        lists.forEach(val => {
+          val.isComplete = val.isComplete.toString().toLowerCase().includes("t");
+        });
+
+        this.lists.next(lists);
+        this.navService.lists.next(this.lists.value);
+
+        this.lists.value.forEach(val => {
+          val.isComplete = val.isComplete.toString().toLowerCase().includes("t");
+          this.initialLists.push(Object.assign({}, val));
+        });
+        this.navService.selectedList.next(null);
+        this.snackBar.setState(true, 'List Deleted!', 3000);
+        this.loadingService.isLoading.next(false);
+      },
+      (err) => {
+        this.snackBar.setState(false, 'Failed to Delete List', 3000);
+        this.loadingService.isLoading.next(false);
+      })
   }
 }

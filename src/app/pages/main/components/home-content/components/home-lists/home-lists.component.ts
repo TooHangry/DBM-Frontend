@@ -55,9 +55,7 @@ export class HomeListsComponent implements OnInit {
   }
 
   createNewList(event: NewList): void {
-    const start = new Date(event.startDate); //'Mar 11 2015' current.getTime() = 1426060964567
     const end = new Date(event.endDate); //'Mar 11 2015' current.getTime() = 1426060964567
-    const newStart = new Date(start.getTime() + 86400000); // + 1 day in ms
     const newEnd = new Date(end.getTime() + 86400000); // + 1 day in ms
 
     const newList: List = {
@@ -66,7 +64,7 @@ export class HomeListsComponent implements OnInit {
       taskedUser: 0,
       taskedUserEmail: event.email,
       items: [],
-      dateTasked: newStart.toLocaleDateString(),
+      dateTasked: new Date().toLocaleDateString(),
       dateDue: newEnd.toLocaleDateString(),
       isComplete: false
     }
@@ -78,5 +76,22 @@ export class HomeListsComponent implements OnInit {
       this.closeAddListModal.emit();
       this.navService.selectedList.next(list);
     });
+  }
+
+  getDate(dateString: string): string {
+    const d = new Date(dateString);
+    // d.setDate(d.getDate() - 1);
+
+    return d.toLocaleDateString();
+  }
+
+  isOverdue(dateString: string): boolean {
+    const d = new Date(dateString);
+
+    return d <= new Date();
+  }
+
+  isComplete(list: List): string {
+    return list.isComplete ? 'Complete' : 'Active';
   }
 }

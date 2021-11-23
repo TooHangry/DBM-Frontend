@@ -50,7 +50,6 @@ export class AddListModalComponent implements OnInit {
   save(): void {
     if (this.canSave.value) {
       const newList: NewList = {
-        startDate: new Date((document.getElementById('list-start-date') as HTMLInputElement).value).toUTCString(),
         endDate: new Date((document.getElementById('list-end-date') as HTMLInputElement).value).toUTCString(),
         title: (document.getElementById('list-title') as HTMLInputElement).value,
         email: this.selectedEmail
@@ -68,7 +67,6 @@ export class AddListModalComponent implements OnInit {
   }
 
   clear(): void {
-    (document.getElementById('list-start-date') as HTMLInputElement).value = '';
     (document.getElementById('list-end-date') as HTMLInputElement).value = '';
     (document.getElementById('list-title') as HTMLInputElement).value = '';
     this.selectedEmail = '';
@@ -87,40 +85,20 @@ export class AddListModalComponent implements OnInit {
     this.selectedEmail = email;
   }
 
-
-  // changedStart(): void {
-  //   const start = document.getElementById('list-start-date') as HTMLInputElement;
-  //   // const date = new Date(start.value).getUTCDate();
-  //   if (start.value.length > 0) {
-  //     this.checkSave();
-  //   }
-  // }
-
-  // changedEnd(): void {
-  //   const end = document.getElementById('list-start-date') as HTMLInputElement;
-  //   // const date = new Date(start.value).getUTCDate();
-  //   if (end.value.length > 0) {
-  //     this.checkSave();
-  //   }
-  // }
-
-  shouldDisableEnd(): boolean {
-    const start = document.getElementById('list-start-date') as HTMLInputElement;
-    return !(start && start.value.length > 0);
-  }
-
   getMin(): string {
-    const start = document.getElementById('list-start-date') as HTMLInputElement;
-    return start ? start.value : '';
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate() + 1
+    const dateString =  year + "-" + month + "-" + day;
+    return dateString;
   }
-
 
   checkSave(): void {
-    const start = document.getElementById('list-start-date') as HTMLInputElement;
     const end = document.getElementById('list-end-date') as HTMLInputElement;
     const title = document.getElementById('list-title') as HTMLInputElement;
 
-    if (start.value.length > 0 && end.value.length > 0 && title.value.length > 0 && this.selectedEmail) {
+    if (end.value.length > 0 && title.value.length > 0 && this.selectedEmail) {
       this.canSave.next(true);
     }
     else {

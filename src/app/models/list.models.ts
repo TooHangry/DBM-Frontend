@@ -14,6 +14,5 @@ export interface List {
 export interface NewList {
     title: string;
     email: string;
-    startDate: string;
     endDate: string
 }

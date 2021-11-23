@@ -1,4 +1,43 @@
 <div class="container" *ngIf="list">
+
+    <div class="info">
+        <div class="inf">
+            <div class="desc">
+                Tasked To:
+            </div>
+            <div class="action">
+                <select name="user" id="list-user-update" #listUser (change)="onOptionsSelected(listUser.value)">
+                    <option *ngFor="let user of getUsersInHome()" class="search" [value]="user.id"
+                        [selected]="list.value ? user.id === list.value.taskedUser : 'none'">{{user.email}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="inf">
+            <div class="desc">
+                List Title:
+            </div>
+            <div class="action">
+                <div class="input" (keyup)="changeTitle(title.value)">
+                    <input type="text" #title [value]="list.value ? list.value.title : ''">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="inf-long">
+            <div class="toggle" [ngClass]="{'positive': list.value?.isComplete}">
+                {{list.value && list.value.isComplete ? 'Complete' : 'Active'}}
+            </div>
+
+            <div class="button" *ngIf="!isEditing" (click)="openDeleteModal()">DELETE</div>
+        </div>
+    </div>
+
+
+
     <div class="content">
         <div class="header">
             <div class="title">
@@ -61,13 +100,13 @@
                         <div class="title">
                             {{getPascalCase(item.item)}}
                         </div>
-    
+
                         <div class="attribute">
                             <div class="level">
                                 {{item.quantity}}
                             </div>
                         </div>
-    
+
                         <div class="attribute">
                             <div class="level">
                                 {{item.needed ? item.needed : 0}}
@@ -91,4 +130,10 @@
 
     </div>
 
+</div>
+
+
+<div class="modal" id="close-delete-modal">
+    <app-delete-list-modal (cancelModal)="closeDeleteModal()" (deleteItem)="deleteList()">
+    </app-delete-list-modal>
 </div>

@@ -25,6 +25,7 @@ import { LoadingComponent } from './shared/loading/loading.component';
 import { AddUserModalComponent } from './pages/main/components/home-content/components/home-users/add-user-modal/add-user-modal.component';
 import { AddListModalComponent } from './pages/main/components/home-content/components/home-lists/add-list-modal/add-list-modal.component';
 import { EditListComponent } from './pages/main/components/home-content/components/home-lists/edit-list/edit-list.component';
+import { DeleteListModalComponent } from './pages/main/components/home-content/components/home-lists/delete-list-modal/delete-list-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { EditListComponent } from './pages/main/components/home-content/componen
     AddUserModalComponent,
     AddListModalComponent,
     EditListComponent,
+    DeleteListModalComponent,
   ],
   imports: [
     BrowserModule,

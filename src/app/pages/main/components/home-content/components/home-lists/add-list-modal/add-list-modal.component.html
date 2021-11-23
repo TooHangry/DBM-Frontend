@@ -27,15 +27,11 @@
 
             <div class="text">
                 <div class="label">
-                    Date Range
+                    Date Due
                 </div>
                 <div class="search-area navbarstyle">
                     <div class="search small">
-                        <input type="date" id="list-start-date" (input)="checkSave()">
-                    </div>
-                     - to -
-                    <div class="search small">
-                        <input type="date" [disabled]="shouldDisableEnd()" [min]="getMin()" id="list-end-date" (input)="checkSave()">
+                        <input type="date" [min]="getMin()" id="list-end-date" (input)="checkSave()">
                     </div>
                 </div>
             </div>
