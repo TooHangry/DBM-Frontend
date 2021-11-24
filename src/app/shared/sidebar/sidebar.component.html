@@ -60,7 +60,7 @@
                 </div>
                 <div *ngFor="let list of (lists | async)" class="category" [ngClass]="{'k': isSelectedList(list)}"
                     (click)="selectList(list)">
-                    {{list.title}}
+                    {{getPascal(list.title)}}
                 </div>
             </div>
         </div>

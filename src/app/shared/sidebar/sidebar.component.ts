@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.models';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ListService } from 'src/app/services/list-service/list.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
+import { pascalCase } from 'src/app/utils/casing.utils';
 
 @Component({
   selector: 'app-sidebar',
@@ -139,5 +140,9 @@ export class SidebarComponent implements OnInit {
 
   showBackButton(): boolean {
     return this.navService.selectedList.value !== null;
+  }
+
+  getPascal(str: string): string {
+    return pascalCase(str);
   }
 }

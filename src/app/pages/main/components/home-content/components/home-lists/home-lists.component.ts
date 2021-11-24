@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { List, NewList } from 'src/app/models/list.models';
 import { ListService } from 'src/app/services/list-service/list.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { pascalCase } from 'src/app/utils/casing.utils';
@@ -24,7 +25,8 @@ export class HomeListsComponent implements OnInit {
 
 
   // Constructor
-  constructor(private navService: NavService, private listService: ListService, private snackBarService: SnackbarService) { }
+  constructor(private navService: NavService, private listService: ListService,
+    private snackBarService: SnackbarService, private loadingService: LoadingService) { }
 
   // Initialization method to run once
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class HomeListsComponent implements OnInit {
     if (this.navService.activeHome.value) {
       // @ts-ignore
       const users = this.navService.activeHome.value.users.filter(u => u.id === userID);
-      return users.length > 0 ? users[0].fname + " " + users[0].lname : '';
+      return this.getPascal(users.length > 0 ? users[0].fname + " " + users[0].lname : '');
     }
     return '';
   }
@@ -65,12 +67,15 @@ export class HomeListsComponent implements OnInit {
       title: event.title,
       taskedUser: 0,
       taskedUserEmail: event.email,
+      homeID: 0,
+      homeName: '',
       items: [],
       dateTasked: new Date().toLocaleDateString(),
       dateDue: newEnd.toLocaleDateString(),
       isComplete: false
     }
 
+    this.loadingService.isLoading.next(true);
     this.listService.newList(newList).subscribe(list => {
       this.lists.next([...this.lists.value, list]);
       this.listService.lists.next([...this.listService.lists.value, list]);
@@ -82,19 +87,17 @@ export class HomeListsComponent implements OnInit {
       this.navService.lists.next(this.lists.value);
       this.closeAddListModal.emit();
       this.navService.selectedList.next(list);
+      this.loadingService.isLoading.next(false);
     });
   }
 
   getDate(dateString: string): string {
     const d = new Date(dateString);
-    // d.setDate(d.getDate() - 1);
-
     return d.toLocaleDateString();
   }
 
   isOverdue(dateString: string): boolean {
     const d = new Date(dateString);
-
     return d <= new Date();
   }
 

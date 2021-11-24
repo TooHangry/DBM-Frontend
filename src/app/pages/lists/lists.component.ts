@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { List } from 'src/app/models/list.models';
+import { User } from 'src/app/models/user.models';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { ListService } from 'src/app/services/list-service/list.service';
+import { pascalCase } from 'src/app/utils/casing.utils';
 import * as Tesseract from 'tesseract.js';
 // import { Tesseract } from "tesseract.ts";
 
@@ -21,12 +27,22 @@ export class ListsComponent implements OnInit {
   ]
 
   img = '';
+  lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
 
   // Constructor for service injection
-  constructor() { }
+  constructor(private authService: AuthService, private listService: ListService) { }
 
   // Initialization function to run once (on component instantiation)
   ngOnInit(): void {
+    this.authService.getUser().subscribe((user: User | null) => {
+      if (user) {
+        this.listService.getUserLists(user.id);
+      }
+    });
+
+    this.listService.userLists.subscribe(lists => {
+      this.lists.next(lists)
+    })
   }
 
   // Precondition: File change event
@@ -77,5 +93,30 @@ export class ListsComponent implements OnInit {
     });
 
     return matchingWords;
+  }
+
+  getPascal(str: string): string {
+    return pascalCase(str);
+  }
+
+  isOverdue(dateString: string): boolean {
+    const d = new Date(dateString);
+    return d <= new Date();
+  }
+
+  getDate(dateString: string): string {
+    const d = new Date(dateString);
+    return d.toLocaleDateString();
+  }
+  
+  isComplete(list: List): string {
+    let isActive = false;
+
+    list.items.forEach(i => {
+      if (i.needed > i.quantity) 
+        isActive = true;
+    })
+
+    return isActive ? 'Active' : 'Complete';
   }
 }

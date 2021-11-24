@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Home, HomeInfo, Invite, Member } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
@@ -27,7 +28,7 @@ export class MainComponent implements OnInit {
   // Constructor for service injections
   constructor(private navService: NavService, private homeService: HomeService,
     private authService: AuthService, private snackbarService: SnackbarService,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService, private router: Router) { }
 
   // Initialization function to run once
   ngOnInit(): void {
@@ -241,7 +242,7 @@ export class MainComponent implements OnInit {
   getCategories(): string[] {
     return this.user.value ? this.user.value.categories.sort((a, b) => a.localeCompare(b)) : [];
   }
-  
+
   addUserToHome(userToAdd: string): void {
     if (this.navService.activeHome.value) {
       this.homeService.addUser(userToAdd, this.navService.activeHome.value.id);

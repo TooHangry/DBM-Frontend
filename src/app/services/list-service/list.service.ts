@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { HomeInfo } from 'src/app/models/home.models';
 import { Item } from 'src/app/models/item.models';
 import { List } from 'src/app/models/list.models';
+import { AuthService } from '../auth-service/auth.service';
 import { EnvService } from '../env-service/env.service';
 import { LoadingService } from '../loading/loading.service';
 import { NavService } from '../nav-service/nav.service';
@@ -15,11 +16,17 @@ import { SnackbarService } from '../snackbar/snackbar.service';
 })
 export class ListService {
 
-  constructor(private navService: NavService, private client: HttpClient, private envService: EnvService, private snackBar: SnackbarService, private loadingService: LoadingService) {
+  constructor(private navService: NavService, private client: HttpClient, private envService: EnvService,
+    private snackBar: SnackbarService, private loadingService: LoadingService, private authServie: AuthService) {
   }
   baseURL = this.envService.getBaseURL();
   lists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
+  userLists: BehaviorSubject<List[]> = new BehaviorSubject<List[]>([]);
   initialLists: List[] = [];
+
+
+
+
 
   getListsForHome(homeID: number): Observable<List[]> {
     this.client.get(`${this.baseURL}/lists/home/${homeID}`).pipe(map((res: any) => res)).subscribe(
@@ -53,7 +60,6 @@ export class ListService {
       formData.append('dateDue', listToCreate.dateDue);
       formData.append('isComplete', 'true');
       formData.append('home', home.id.toString());
-
       return this.client.post(`${this.baseURL}/lists/create`, formData).pipe(map((res: any) => res));
     }
     return of();
@@ -150,7 +156,7 @@ export class ListService {
           val.isComplete = val.isComplete.toString().toLowerCase().includes("t");
         });
 
-        this.lists.next(lists);
+        this.lists.next(lists.filter(l => l.homeID === this.navService.activeHome.value?.id));
         this.navService.lists.next(this.lists.value);
 
         this.lists.value.forEach(val => {
@@ -164,6 +170,15 @@ export class ListService {
       (err) => {
         this.snackBar.setState(false, 'Failed to Delete List', 3000);
         this.loadingService.isLoading.next(false);
-      })
+      });
+  }
+
+  getUserLists(id: number): void {
+    this.loadingService.isLoading.next(true);
+    this.client.get(`${this.baseURL}/lists/mine/${id}`).pipe(map((res: any) => res)).subscribe(
+      (lists: List[]) => {
+        this.userLists.next(lists);
+        this.loadingService.isLoading.next(false);
+      });
   }
 }

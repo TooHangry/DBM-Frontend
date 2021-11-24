@@ -1,4 +1,32 @@
-<p>lists works!</p>
+<div class="container grid">
+    <div class="container flex" *ngIf="(lists | async) && lists.value.length < 1">
+        No Current Lists.
+    </div>
+    <div class="lists" *ngIf="(lists | async) && lists.value.length > 0">
+        <div class="list item-card" *ngFor="let list of (lists | async)"
+            [ngClass]="{'overdue' : isOverdue(list.dateDue)}">
+            <div class="title">
+                {{getPascal(list.title)}}
+            </div>
+
+            <div class="tasked-user">
+                Home: {{list.homeName}}
+            </div>
+            <div class="dates">
+                <div class="date">
+                    Due: {{getDate(list.dateDue) | date:'shortDate'}}
+                </div>
+            </div>
+            <div class="tasked-user">
+                {{list.items.length}} items
+            </div>
+
+            <div class="completion-status" [ngClass]="{'complete': isComplete(list) === 'Complete'}">
+                {{isComplete(list)}}
+            </div>
+        </div>
+    </div>
+</div>
 
 <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
 <button (click)="fileInput.click()">Select File</button>

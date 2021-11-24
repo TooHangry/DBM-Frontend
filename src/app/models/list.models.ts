@@ -9,6 +9,8 @@ export interface List {
     dateTasked: string;
     dateDue: string;
     isComplete: boolean;
+    homeID: number;
+    homeName: string;
 }
 
 export interface NewList {

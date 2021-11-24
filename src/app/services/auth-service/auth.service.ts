@@ -35,7 +35,7 @@ export class AuthService {
     // That is, if the user has previously logged in
     if (this.getToken().length > 0) {
       this.loginWithToken();
-      this.user;
+      return this.user;
     }
 
     // If neither condition is met, the user must log in.
@@ -210,7 +210,8 @@ export class AuthService {
     this.setToken(user.token);
     this.user.next(user);
     this.navService.toggleSearch(true);
-    this.router.navigate(['/homes']);
+    if (!this.router.url.includes('list'))
+      this.router.navigate(['/homes']);
   }
 
   // Precondition: The user token
