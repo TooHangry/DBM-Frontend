@@ -21,15 +21,13 @@
             </div>
             <div class="action">
                 <div class="input" (keyup)="changeTitle(title.value)">
-                    <input type="text" #title [value]="list.value ? list.value.title : ''">
+                    <input type="text" #title [value]="list.value ? getPascal(list.value.title) : ''">
                 </div>
             </div>
-
         </div>
-
         <div class="inf-long">
-            <div class="toggle" [ngClass]="{'positive': list.value?.isComplete}">
-                {{list.value && list.value.isComplete ? 'Complete' : 'Active'}}
+            <div class="toggle" [ngClass]="{'positive': !getIsActive()}">
+                {{!getIsActive() ? 'Complete' : 'Active'}}
             </div>
 
             <div class="button" *ngIf="!isEditing" (click)="openDeleteModal()">DELETE</div>
@@ -37,18 +35,15 @@
     </div>
 
 
-
     <div class="content">
         <div class="header">
             <div class="title">
                 Home Items
             </div>
-
             <div class="title">
                 {{list.value?.title}}
             </div>
         </div>
-
         <div class="items">
             <div class="item-list">
                 <div class="header">
@@ -83,7 +78,7 @@
                 <div class="header left">
                     <div class="attribute">Item</div>
                     <div class="attribute">Current Quantity</div>
-                    <div class="attribute">Amount To Buy</div>
+                    <div class="attribute">Required Quantity</div>
                 </div>
 
                 <div class="item" *ngFor="let item of (list | async)?.items" (click)="switchToHome(item)">
@@ -123,13 +118,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 

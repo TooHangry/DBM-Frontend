@@ -145,7 +145,6 @@ export class EditListComponent implements OnInit {
   }
 
   deleteList(): void {
-    console.log('remove');
     this.closeDeleteModal();
 
     const list = this.navService.selectedList.value;
@@ -158,5 +157,21 @@ export class EditListComponent implements OnInit {
       })
       this.listService.removeList(list.id)
     }    
+  }
+
+
+  getIsActive(): boolean {
+    let isActive = false;
+
+    this.list.value?.items.forEach(i => {
+      if (i.needed > i.quantity) 
+        isActive = true;
+    });
+
+    return isActive;
+  }
+
+  getPascal(str: string): string {
+    return pascalCase(str);
   }
 }

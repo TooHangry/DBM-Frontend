@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { List, NewList } from 'src/app/models/list.models';
 import { ListService } from 'src/app/services/list-service/list.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { pascalCase } from 'src/app/utils/casing.utils';
 
 @Component({
   selector: 'app-home-lists',
@@ -22,7 +24,7 @@ export class HomeListsComponent implements OnInit {
 
 
   // Constructor
-  constructor(private navService: NavService, private listService: ListService) { }
+  constructor(private navService: NavService, private listService: ListService, private snackBarService: SnackbarService) { }
 
   // Initialization method to run once
   ngOnInit(): void {
@@ -72,6 +74,11 @@ export class HomeListsComponent implements OnInit {
     this.listService.newList(newList).subscribe(list => {
       this.lists.next([...this.lists.value, list]);
       this.listService.lists.next([...this.listService.lists.value, list]);
+
+      list.isComplete = list.isComplete.toString().toLowerCase().includes("t");
+      this.listService.initialLists.push(Object.assign({}, list));
+      this.snackBarService.setState(true, 'Created List ' + this.getPascal(list.title) + '!', 3000);
+
       this.navService.lists.next(this.lists.value);
       this.closeAddListModal.emit();
       this.navService.selectedList.next(list);
@@ -92,6 +99,17 @@ export class HomeListsComponent implements OnInit {
   }
 
   isComplete(list: List): string {
-    return list.isComplete ? 'Complete' : 'Active';
+    let isActive = false;
+
+    list.items.forEach(i => {
+      if (i.needed > i.quantity) 
+        isActive = true;
+    })
+
+    return isActive ? 'Active' : 'Complete';
+  }
+
+  getPascal(initial: string): string {
+    return pascalCase(initial);
   }
 }

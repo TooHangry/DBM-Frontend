@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HomeInfo } from 'src/app/models/home.models';
+import { Item } from 'src/app/models/item.models';
 import { List } from 'src/app/models/list.models';
 import { EnvService } from '../env-service/env.service';
 import { LoadingService } from '../loading/loading.service';
@@ -33,7 +35,7 @@ export class ListService {
         this.lists.value.forEach(val => {
           val.isComplete = val.isComplete.toString().toLowerCase().includes("t");
           this.initialLists.push(Object.assign({}, val));
-        })
+        });
       }
     )
 
@@ -91,14 +93,15 @@ export class ListService {
 
       this.loadingService.isLoading.next(true);
       this.client.put(`${this.baseURL}/lists/updateitems/${listToChange.id}`, formData).pipe(map((res: any) => res)).subscribe((data: List) => {
-
         const initialIDs = this.initialLists.find(l => l.id === list.id)?.items.map(i => i.id);
         const listIDs = data.items.map(i => i.id);
         data.isComplete = data.isComplete.toString().toLowerCase().includes("t");
 
         const difference = initialIDs?.filter(id => !listIDs?.includes(id));
 
-        this.navService.activeHome.value?.items.forEach(item => {
+        const oldItems = this.navService.activeHome.value?.items;
+
+        oldItems?.forEach(item => {
           if (data.items.map(i => i.id).includes(item.id)) {
             item.isInAList = true;
           }
@@ -106,6 +109,15 @@ export class ListService {
             item.isInAList = false;
           }
         });
+
+        if (this.navService.activeHome.value) {
+          const next: HomeInfo = {
+            ...this.navService.activeHome.value,
+            items: Object.assign([], oldItems?.map(val => Object.assign({}, val))) as Item[]
+          }
+          this.navService.activeHome.next(next)
+        }
+
 
         const lists = this.lists.value;
         lists.forEach(l => {
@@ -124,6 +136,7 @@ export class ListService {
         this.lists.next([...lists]);
         this.navService.selectedList.next(data);
         this.loadingService.isLoading.next(false);
+        this.snackBar.setState(true, 'Updated List!', 3000);
       })
     }
   }

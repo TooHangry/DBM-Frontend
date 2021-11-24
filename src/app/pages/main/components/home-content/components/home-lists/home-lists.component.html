@@ -1,9 +1,14 @@
 <div class="container flex">
 
-    <div class="lists" *ngIf="!(selectedList | async)">
-        <div class="list item-card" *ngFor="let list of (lists | async)" (click)="selectList(list)" [ngClass]="{'overdue' : isOverdue(list.dateDue)}">
+    <div class="container flex" *ngIf="(lists | async) && lists.value.length < 1">
+        Click the 'Add List' button to get started!
+    </div>
+
+    <div class="lists" *ngIf="!(selectedList | async) && lists.value.length > 0">
+        <div class="list item-card" *ngFor="let list of (lists | async)" (click)="selectList(list)"
+            [ngClass]="{'overdue' : isOverdue(list.dateDue)}">
             <div class="title">
-                {{list.title}}
+                {{getPascal(list.title)}}
             </div>
 
             <div class="tasked-user">
@@ -14,8 +19,11 @@
                     Due: {{getDate(list.dateDue) | date:'shortDate'}}
                 </div>
             </div>
+            <div class="tasked-user">
+                {{list.items.length}} items
+            </div>
 
-            <div class="completion-status" [ngClass]="{'complete': list.isComplete}">
+            <div class="completion-status" [ngClass]="{'complete': isComplete(list) === 'Complete'}">
                 {{isComplete(list)}}
             </div>
         </div>
@@ -29,5 +37,6 @@
 </div>
 
 <div class="modal" id="add-list-modal">
-    <app-add-list-modal (closeAddListModal)="closeAddListModal.emit()" (newList)="createNewList($event)"></app-add-list-modal>
+    <app-add-list-modal (closeAddListModal)="closeAddListModal.emit()" (newList)="createNewList($event)">
+    </app-add-list-modal>
 </div>

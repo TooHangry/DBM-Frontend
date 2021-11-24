@@ -38,9 +38,9 @@ export class AddListModalComponent implements OnInit {
     this.navService.activeHome.subscribe(home => {
       if (home && home.users) {
         this.emails.next(home.users.map(u => u.email));
-        if (home && home.invites) {
-          this.emails.next([...this.emails.value, ...home.invites.map(u => u.email)])
-        }
+        // if (home && home.invites) {
+        //   this.emails.next([...this.emails.value, ...home.invites.map(u => u.email)])
+        // }
       }
     })
   }
@@ -51,7 +51,7 @@ export class AddListModalComponent implements OnInit {
     if (this.canSave.value) {
       const newList: NewList = {
         endDate: new Date((document.getElementById('list-end-date') as HTMLInputElement).value).toUTCString(),
-        title: (document.getElementById('list-title') as HTMLInputElement).value,
+        title: (document.getElementById('list-title') as HTMLInputElement).value.trim().toLowerCase(),
         email: this.selectedEmail
       }
       this.newList.emit(newList);
