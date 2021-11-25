@@ -29,13 +29,15 @@ export class EditListComponent implements OnInit {
     this.navService.activeHome.subscribe(home => {
       if (home) {
         this.home = home;
-        this.items.next(home.items.filter(item => !item.isInAList));
+        const items = home.items.filter(item => !item.isInAList);
+        this.items.next([...items.filter(i => i.needed > i.quantity), ...items.filter(i => i.needed <= i.quantity)]);
       }
     });
 
     this.navService.selectedList.subscribe(list => {
       this.list.next(list);
-      this.items.next(this.home?.items.filter(item => !item.isInAList) ?? []);
+      const nextItems = this.home?.items.filter(item => !item.isInAList) ?? [];
+      this.items.next([...nextItems.filter(i => i.needed > i.quantity), ...nextItems.filter(i => i.needed <= i.quantity)]);
     })
 
     this.navService.isEditingList.subscribe(isEditing => {
@@ -55,12 +57,11 @@ export class EditListComponent implements OnInit {
       if (current) {
         current.items = [...current.items, item];
         this.list.next(current);
-        this.items.next(this.items.value.filter(i => i.id !== item.id));
+        const nextItems = this.items.value.filter(i => i.id !== item.id);
+        this.items.next([...nextItems.filter(i => i.needed > i.quantity), ...nextItems.filter(i => i.needed <= i.quantity)]);
         this.listService.makeChange(current);
         this.changeMade();
       }
-
-
     }
   }
 
@@ -156,7 +157,7 @@ export class EditListComponent implements OnInit {
         }
       })
       this.listService.removeList(list.id)
-    }    
+    }
   }
 
 
@@ -164,7 +165,7 @@ export class EditListComponent implements OnInit {
     let isActive = false;
 
     this.list.value?.items.forEach(i => {
-      if (i.needed > i.quantity) 
+      if (i.needed > i.quantity)
         isActive = true;
     });
 

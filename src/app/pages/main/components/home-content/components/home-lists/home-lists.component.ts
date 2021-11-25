@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { List, NewList } from 'src/app/models/list.models';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ListService } from 'src/app/services/list-service/list.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { NavService } from 'src/app/services/nav-service/nav.service';
@@ -26,7 +27,8 @@ export class HomeListsComponent implements OnInit {
 
   // Constructor
   constructor(private navService: NavService, private listService: ListService,
-    private snackBarService: SnackbarService, private loadingService: LoadingService) { }
+    private snackBarService: SnackbarService, private loadingService: LoadingService,
+    private authService: AuthService) { }
 
   // Initialization method to run once
   ngOnInit(): void {
@@ -94,6 +96,10 @@ export class HomeListsComponent implements OnInit {
   getDate(dateString: string): string {
     const d = new Date(dateString);
     return d.toLocaleDateString();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.getUserEmail() === this.navService.activeHome.value?.admin
   }
 
   isOverdue(dateString: string): boolean {

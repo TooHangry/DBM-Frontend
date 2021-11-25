@@ -4,7 +4,7 @@
         Click the 'Add List' button to get started!
     </div>
 
-    <div class="lists" *ngIf="!(selectedList | async) && lists.value.length > 0">
+    <div class="lists" *ngIf="!(selectedList | async) && lists.value.length > 0 && isAdmin()">
         <div class="list item-card" *ngFor="let list of (lists | async)" (click)="selectList(list)"
             [ngClass]="{'overdue' : isOverdue(list.dateDue)}">
             <div class="title">
@@ -27,6 +27,10 @@
                 {{isComplete(list)}}
             </div>
         </div>
+    </div>
+
+    <div class="container flex" *ngIf="!isAdmin()">
+        Check with your home admin to edit lists!
     </div>
 
 

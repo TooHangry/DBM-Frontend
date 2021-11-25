@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="edge" (click)="cancel()"></div>
+
+    <div class="modal-container">
+        <div class="content">
+            <div class="header">
+                Edit List:
+            </div>
+            <div class="subheader">
+                Edit the "Amount Bought" attribute to complete the list.<br/>Alternatively, you can scan a receipt to mark items as complete.
+            </div>
+
+            <div class="content" *ngIf="list">
+                <div class="items">
+                    <div class="table">
+                        <div class="attribute">
+                            Item
+                        </div>
+                        <div class="attribute">
+                            Amount Required
+                        </div>
+                        <div class="attribute">
+                            Amount Bought
+                        </div>
+                    </div>
+                    <div class="item" *ngFor="let item of list.items" [ngClass]="{'is-complete': isComplete(item)}">
+                        <div class="attribute">
+                            {{item.item}}
+                        </div>
+                        <div class="attribute">
+                            {{item.needed - item.quantity}}
+                        </div>
+                        <div class="attribute" *ngIf="!isComplete(item)">
+                            <input type="number" value="0" min="0" oninput="validity.valid||(value='');" #itemNumber (keyup)="alterItem(item, itemNumber.value)">
+                        </div>
+                        <div class="attribute" *ngIf="isComplete(item)">
+                           Complete
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="button flex navbutton negative" (click)="cancel()">
+                    Cancel
+                </div>
+
+                <div class="button flex navbutton positive" (click)="save()">
+                    Save
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="edge" (click)="cancel()"></div>
+</div>

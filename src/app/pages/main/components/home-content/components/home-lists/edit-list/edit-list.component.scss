@@ -118,7 +118,9 @@
 
             .item-list {
                 width: calc(50% - 8px);
-                height: calc(100% - 2px);
+                min-height: calc(100% - 2px);
+                max-height: calc(100% - 2px);
+                overflow-y: auto;
                 border-radius: 6px;
                 background-color: $background-color;
                 display: flex;
@@ -128,7 +130,8 @@
 
                 .header {
                     width: calc(100% - 80px);
-                    height: 64px;
+                    min-height: 64px;
+                    max-height: 64px;
                     display: flex;
                     text-align: center;
                     align-items: center;

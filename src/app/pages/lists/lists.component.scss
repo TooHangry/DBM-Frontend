@@ -29,7 +29,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background-color: $hover-color;
+            background-color: $foreground-color;
             transition: all 0.2s ease;
 
             &:hover {
@@ -62,5 +62,24 @@
                 color: $positive-action;
             }
         }
+    }
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+
+    transition: all 0.3s ease;
+    transform: scale(0);
+    app-list-modal {
+        width: 100%;
+        height: calc(90% - 16px);
     }
 }

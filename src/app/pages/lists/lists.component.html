@@ -4,7 +4,7 @@
     </div>
     <div class="lists" *ngIf="(lists | async) && lists.value.length > 0">
         <div class="list item-card" *ngFor="let list of (lists | async)"
-            [ngClass]="{'overdue' : isOverdue(list.dateDue)}">
+            [ngClass]="{'overdue' : isOverdue(list.dateDue)}" (click)="openList(list)">
             <div class="title">
                 {{getPascal(list.title)}}
             </div>
@@ -33,3 +33,8 @@
 
 
 <img [src]="img" style="width: 600px">
+
+<div class="modal" id="list-modal">
+    <app-list-modal (cancelModal)="cancelModal()" (saveList)="saveList()" [list]="selectedList | async" [initial]="initialItems | async" (changeItem)="alterItem($event)">
+    </app-list-modal>
+</div>

@@ -181,4 +181,22 @@ export class ListService {
         this.loadingService.isLoading.next(false);
       });
   }
+
+
+  saveListEdit(list: List): void {
+    const items = list.items;
+    const formData = new FormData();
+    formData.append('items', JSON.stringify(list.items))
+
+    this.loadingService.isLoading.next(true);
+    this.client.put(`${this.baseURL}/lists/shop/${list.id}`, formData).pipe(map((res: any) => res)).subscribe((list: List) => {
+      this.lists.value.forEach(l => {
+        if (l.id === list.id) {
+          l = list;
+        }
+      });
+      this.loadingService.isLoading.next(false);
+      window.location.reload();
+    })
+  }
 }
