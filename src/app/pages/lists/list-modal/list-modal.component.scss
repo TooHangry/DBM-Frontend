@@ -26,6 +26,17 @@
         font-size: 18px;
         color: #999999;
         height: 48px;
+        display: flex;
+        div {
+            padding-left: 4px;
+            padding-right: 4px;
+            color: $element-color;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.025);
+            }
+        }        
     }
 
     .modal-container {

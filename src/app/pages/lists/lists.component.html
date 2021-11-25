@@ -28,11 +28,6 @@
     </div>
 </div>
 
-<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-<button (click)="fileInput.click()">Select File</button>
-
-
-<img [src]="img" style="width: 600px">
 
 <div class="modal" id="list-modal">
     <app-list-modal (cancelModal)="cancelModal()" (saveList)="saveList()" [list]="selectedList | async" [initial]="initialItems | async" (changeItem)="alterItem($event)">

@@ -7,7 +7,11 @@
                 Edit List:
             </div>
             <div class="subheader">
-                Edit the "Amount Bought" attribute to complete the list.<br/>Alternatively, you can scan a receipt to mark items as complete.
+                Edit the "Amount Bought" attribute to complete the list.
+            </div>
+            <div class="subheader">
+                Alternatively, you can <div (click)="fileInput.click()">scan a receipt </div> to mark items as complete.
+                <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
             </div>
 
             <div class="content" *ngIf="list">
@@ -25,7 +29,7 @@
                     </div>
                     <div class="item" *ngFor="let item of list.items" [ngClass]="{'is-complete': isComplete(item)}">
                         <div class="attribute">
-                            {{item.item}}
+                            {{getPascal(item.item)}}
                         </div>
                         <div class="attribute">
                             {{item.needed - item.quantity}}
