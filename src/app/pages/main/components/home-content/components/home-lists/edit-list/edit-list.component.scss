@@ -74,6 +74,11 @@
             select,
             input {
                 all: unset;
+                -webkit-user-select: initial;
+                -khtml-user-select: initial;
+                -moz-user-select: initial;
+                -ms-user-select: initial;
+                user-select: initial;
                 height: 48px;
                 width: calc(100% - 8px);
                 border-radius: 6px;
@@ -140,6 +145,8 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        text-align: center;
+
                         width: 33%;
                         font-size: 16px;
                     }
@@ -177,6 +184,7 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        text-align: center;
                     }
 
                     .attribute {

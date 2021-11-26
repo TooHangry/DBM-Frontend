@@ -145,4 +145,8 @@ export class SidebarComponent implements OnInit {
   getPascal(str: string): string {
     return pascalCase(str);
   }
+
+  isAdmin(): boolean {
+    return this.authService.getUserEmail() === this.navService.activeHome.value?.admin
+  }
 }

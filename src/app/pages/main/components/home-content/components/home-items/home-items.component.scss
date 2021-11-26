@@ -60,19 +60,19 @@
                     z-index: 999;
                     width: 40px;
                     stroke-width: 3px;
-                    stroke: $text-color;
+                    stroke: $text-color !important;
                 }
             }
         }
         .action {
             height: 100%;
-            margin: 0 8px 0 8px;
+            margin: 0 16px;
         }
 
         .negative {
             svg {
                 height: 75%;
-                stroke: $negative-action;
+                stroke: $negative-action !important;
                 transition: all 0.2s ease;
             }
             &:hover {
@@ -85,7 +85,7 @@
             svg {
                 height: 75%;
                 transition: all 0.2s ease;
-                stroke: $positive-action;
+                stroke: $positive-action !important;
             }
             &:hover {
                 transform: scale(1.1);

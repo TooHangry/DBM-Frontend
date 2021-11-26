@@ -84,7 +84,7 @@
                     transition: all 0.2s ease;
                     svg {
                         width: 75%;
-                        stroke: $text-color;
+                        stroke: $text-color !important;
                     }
                     &:hover {
                         cursor: pointer;
@@ -125,7 +125,7 @@
                     cursor: pointer;
                     svg {
                         height: 50%;
-                        stroke: $negative-action;
+                        stroke: $negative-action !important;
                     }
                 }
             }

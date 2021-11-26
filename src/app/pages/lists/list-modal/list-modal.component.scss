@@ -36,7 +36,7 @@
             &:hover {
                 transform: scale(1.025);
             }
-        }        
+        }
     }
 
     .modal-container {
@@ -102,6 +102,11 @@
 
                     input {
                         all: unset;
+                        -webkit-user-select: initial;
+                        -khtml-user-select: initial;
+                        -moz-user-select: initial;
+                        -ms-user-select: initial;
+                        user-select: initial;
                         max-width: calc(100%-32px);
                         width: 75%;
                         height: 32px;

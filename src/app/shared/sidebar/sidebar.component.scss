@@ -58,6 +58,14 @@
                 align-items: center;
                 justify-content: center;
 
+                .cont {
+                    width: 100%;
+                    height: 48px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
                 .category {
                     width: calc(100% - 32px);
                     height: 48px;
@@ -74,8 +82,6 @@
     }
 }
 
-
-
 .search-area {
     width: calc(100% - 32px);
     height: 72px;
@@ -90,6 +96,11 @@
         transition: all 0.2s ease;
         input {
             all: unset;
+            -webkit-user-select: initial;
+            -khtml-user-select: initial;
+            -moz-user-select: initial;
+            -ms-user-select: initial;
+            user-select: initial;
             padding-left: 8px;
             padding-right: 8px;
             width: 100%;

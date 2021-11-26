@@ -58,9 +58,11 @@
                 <div *ngIf="!showBackButton()" class="back" (click)="showListSelect()">
                     Select a List
                 </div>
-                <div *ngFor="let list of (lists | async)" class="category" [ngClass]="{'k': isSelectedList(list)}"
-                    (click)="selectList(list)">
-                    {{getPascal(list.title)}}
+                <div *ngIf="isAdmin()" class="cont">
+                    <div *ngFor="let list of (lists | async)" class="category" [ngClass]="{'k': isSelectedList(list)}"
+                        (click)="selectList(list)">
+                        {{getPascal(list.title)}}
+                    </div>
                 </div>
             </div>
         </div>
