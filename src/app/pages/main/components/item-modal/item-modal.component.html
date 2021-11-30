@@ -72,7 +72,7 @@
                     Cancel
                 </div>
 
-                <div class="button flex navbutton positive" (click)="save()" *ngIf="canSave | async">
+                <div class="button flex navbutton positive" (click)="save()" *ngIf="(canSave | async) || itemToUpdate">
                     Save Item
                 </div>
             </div>
