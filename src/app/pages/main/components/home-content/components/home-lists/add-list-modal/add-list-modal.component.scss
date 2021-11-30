@@ -64,6 +64,11 @@
                     input,
                     select {
                         all: unset;
+                        -webkit-user-select: initial;
+                        -khtml-user-select: initial;
+                        -moz-user-select: initial;
+                        -ms-user-select: initial;
+                        user-select: initial;
                         padding-left: 8px;
                         padding-right: 8px;
                         width: 100%;
