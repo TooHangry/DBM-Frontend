@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Item } from 'src/app/models/item.models';
 import { NavService } from 'src/app/services/nav-service/nav.service';
 
@@ -17,12 +18,15 @@ export class ItemModalComponent implements OnInit {
   @Output() cancelModal: EventEmitter<null> = new EventEmitter();
 
   // Local variables
+  canSave: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  currentCategory = '';
 
   // Constructor for service injection
-  constructor() { }
+  constructor(private nav: NavService) { }
 
   // Initialization function (to run once)
   ngOnInit(): void {
+    this.nav.selectedCategory.subscribe(x => this.currentCategory = x);
   }
 
   // Precondition: Nothing
@@ -34,7 +38,7 @@ export class ItemModalComponent implements OnInit {
       this.itemToUpdate.item = (document.getElementById(`item-name${id}`) as HTMLInputElement).value.trim().toLowerCase();
       this.itemToUpdate.quantity = (document.getElementById(`item-quantity${id}`) as HTMLInputElement).value.trim() as unknown as number;
       this.itemToUpdate.alertThreshold = (document.getElementById(`item-threshold${id}`) as HTMLInputElement).value.trim() as unknown as number;
-      this.itemToUpdate.category =(document.getElementById(`item-category${id}`) as HTMLSelectElement).value.trim();
+      this.itemToUpdate.category = (document.getElementById(`item-category${id}`) as HTMLSelectElement).value.trim();
       this.saveItem.emit(this.itemToUpdate);
       this.clearForm();
       return;
@@ -63,11 +67,19 @@ export class ItemModalComponent implements OnInit {
     this.cancelModal.emit();
   }
 
-
   private clearForm(): void {
     (document.getElementById('item-name') as HTMLInputElement).value = "";
-    (document.getElementById('item-quantity') as HTMLInputElement).value = "";
-    (document.getElementById('item-threshold') as HTMLInputElement).value = "";
+    (document.getElementById('item-quantity') as HTMLInputElement).value = "0";
+    (document.getElementById('item-threshold') as HTMLInputElement).value = "0";
     (document.getElementById('item-category') as HTMLSelectElement).value = this.categories.length > 0 ? this.categories[0] : '';
+  }
+
+  checkSave(title: string): void {
+    const itemName = (document.getElementById('item-name') as HTMLInputElement).value.trim().toLowerCase();
+    const quantity = (document.getElementById('item-quantity') as HTMLInputElement).value.trim();
+    const threshold = (document.getElementById('item-threshold') as HTMLInputElement).value.trim();
+    const category = (document.getElementById('item-category') as HTMLSelectElement).value.trim();
+
+    this.canSave.next(itemName.length > 0 && quantity.length > 0 && threshold.length > 0 && category.length > 0)
   }
 }

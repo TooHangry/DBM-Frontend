@@ -87,6 +87,7 @@ export class SidebarComponent implements OnInit {
   chooseNewHome(): void {
     this.navService.activeHome.next(null);
     this.navService.emptySearch.next(null);
+    this.navService.state.next('items');
     this.router.navigate(['/homes']);
   }
 

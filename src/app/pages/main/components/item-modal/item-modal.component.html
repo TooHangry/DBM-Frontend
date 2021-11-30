@@ -15,7 +15,9 @@
                 </div>
                 <div class="search-area navbarstyle">
                     <div class="search">
-                        <input type="text" [id]="itemToUpdate ? 'item-name' + itemToUpdate.id : 'item-name'" placeholder="Enter item name" [value]="itemToUpdate ? itemToUpdate.item : ''">
+                        <input type="text" [id]="itemToUpdate ? 'item-name' + itemToUpdate.id : 'item-name'" #itemTitle
+                            (keyup)="checkSave(itemTitle.value)" placeholder="Enter item name"
+                            [value]="itemToUpdate ? itemToUpdate.item : ''">
                     </div>
                 </div>
             </div>
@@ -26,8 +28,11 @@
                 </div>
                 <div class="search-area navbarstyle">
                     <div class="search">
-                        <select name="Category" [id]="itemToUpdate ? 'item-category' + itemToUpdate.id : 'item-category'">
-                            <option *ngFor="let category of categories" class="search" [value]="category" [selected]="itemToUpdate ? category === itemToUpdate.category : 'none'">{{category}}
+                        <select name="Category"
+                            [id]="itemToUpdate ? 'item-category' + itemToUpdate.id : 'item-category'">
+                            <option *ngFor="let category of categories" class="search" [value]="category"
+                                [selected]="itemToUpdate ? category === itemToUpdate.category : category === currentCategory">
+                                {{category}}
                             </option>
                         </select>
                     </div>
@@ -41,7 +46,9 @@
                 </div>
                 <div class="search-area navbarstyle">
                     <div class="search">
-                        <input type="number" [id]="itemToUpdate ? 'item-quantity' + itemToUpdate.id : 'item-quantity'" placeholder="Enter item quantity" [value]="itemToUpdate ? itemToUpdate.quantity : ''">
+                        <input type="number" [id]="itemToUpdate ? 'item-quantity' + itemToUpdate.id : 'item-quantity'"
+                            placeholder="Enter item quantity" [value]="itemToUpdate ? itemToUpdate.quantity : '0'"
+                            (click)="checkSave(quantity.value)" #quantity (keyup)="checkSave(quantity.value)">
                     </div>
                 </div>
             </div>
@@ -52,7 +59,10 @@
                 </div>
                 <div class="search-area navbarstyle">
                     <div class="search">
-                        <input type="number" [id]="itemToUpdate ? 'item-threshold' + itemToUpdate.id : 'item-threshold'" placeholder="Enter alert threshold" [value]="itemToUpdate ? itemToUpdate.alertThreshold : ''">
+                        <input type="number" [id]="itemToUpdate ? 'item-threshold' + itemToUpdate.id : 'item-threshold'"
+                            placeholder="Enter alert threshold"
+                            [value]="itemToUpdate ? itemToUpdate.alertThreshold : '0'" (click)="checkSave(threshold.value)"
+                            #threshold (keyup)="checkSave(threshold.value)">
                     </div>
                 </div>
             </div>
@@ -62,7 +72,7 @@
                     Cancel
                 </div>
 
-                <div class="button flex navbutton positive" (click)="save()">
+                <div class="button flex navbutton positive" (click)="save()" *ngIf="canSave | async">
                     Save Item
                 </div>
             </div>
