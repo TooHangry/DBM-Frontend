@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
     .users {
         width: 100%;
         display: flex;
